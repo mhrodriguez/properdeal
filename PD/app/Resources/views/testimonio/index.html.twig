@@ -1,0 +1,104 @@
+{% extends 'base2.html.twig' %}
+
+{% block body %}
+    <div id="container">
+            {% for flash_message in app.session.flashbag.get('notice') %}
+                <div class="flash-notice">
+                    {{ flash_message }}
+                </div>
+            {% endfor %}
+            <br>
+            <div class="row">
+                <div class="col s12">
+                    <div class="comentario blue lighten-5 z-depth-2">
+                        <h6>Llevamos 2 años utilizando la plataforma de iRealty y no podríamos estar más contentos.</h6>
+                        <h6>¡Sigan con su excelente trabajo!</h6>
+                        <h6 class="bold">- Horacio Ramos, Metro por Metro</h6>
+                    </div>
+                </div>
+            </div>
+
+        <div class="row">
+            <div class="col s12">
+                <div class="comentario blue lighten-5 z-depth-2">
+                    <h6>Llevamos 2 años utilizando la plataforma de iRealty y no podríamos estar más contentos.</h6>
+                    <h6>¡Sigan con su excelente trabajo!</h6>
+                    <h6 class="bold">- Horacio Ramos, Metro por Metro</h6>
+                </div>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col s12">
+                <div class="comentario blue lighten-5 z-depth-2">
+                    <h6>Llevamos 2 años utilizando la plataforma de iRealty y no podríamos estar más contentos.</h6>
+                    <h6>¡Sigan con su excelente trabajo!</h6>
+                    <h6 class="bold">- Horacio Ramos, Metro por Metro</h6>
+                </div>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col s12">
+                <div class="comentario blue lighten-5 z-depth-2">
+                    <h6>Llevamos 2 años utilizando la plataforma de iRealty y no podríamos estar más contentos.</h6>
+                    <h6>¡Sigan con su excelente trabajo!</h6>
+                    <h6 class="bold">- Horacio Ramos, Metro por Metro</h6>
+                </div>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col s12">
+                <div class="comentario blue lighten-5 z-depth-2">
+                    <h6>Llevamos 2 años utilizando la plataforma de iRealty y no podríamos estar más contentos.</h6>
+                    <h6>¡Sigan con su excelente trabajo!</h6>
+                    <h6 class="bold">- Horacio Ramos, Metro por Metro</h6>
+                </div>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col s12">
+                <div class="comentario blue lighten-5 z-depth-2">
+                    <h6>Llevamos 2 años utilizando la plataforma de iRealty y no podríamos estar más contentos.</h6>
+                    <h6>¡Sigan con su excelente trabajo!</h6>
+                    <h6 class="bold">- Horacio Ramos, Metro por Metro</h6>
+                </div>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col s12">
+                <div class="comentario blue lighten-5 z-depth-2">
+                    <h6>Llevamos 2 años utilizando la plataforma de iRealty y no podríamos estar más contentos.</h6>
+                    <h6>¡Sigan con su excelente trabajo!</h6>
+                    <h6 class="bold">- Horacio Ramos, Metro por Metro</h6>
+                </div>
+            </div>
+        </div>
+        <br>
+
+    </div>
+{% endblock %}
+
+{% block stylesheets %}
+    <style>
+        div .comentario
+        {
+            margin-left: 40px;
+            margin-right: 40px;
+
+            padding: 20px;
+        }
+
+        .bold {
+            font-weight: bold;
+        }
+
+
+
+
+    </style>
+{% endblock %}
+

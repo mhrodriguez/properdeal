@@ -1,0 +1,116 @@
+{% extends 'baseabc.html.twig' %}
+
+{% block body %}
+
+<div id="wrapper">
+    <div id="container">
+        <!-- Page Layout here -->
+        <br/>
+        <div class="row">
+            <a href="#" id="imprimir" onclick="window.print();">Imprimir</a>
+        </div>
+
+        <div class="row">
+            <h5 class="center-align">Propiedades</h5>
+        </div>
+
+        <div class="row">
+            <table class="striped">
+                <thead>
+                </thead>
+
+                <tbody>
+                {% set index=0 %}
+                {% for inmueble in inmuebles %}
+                <tr>
+                    <td>
+                        {% if (inmueble.Imagenes|length>0) %}
+                        <img class="imginmueble" src="{{ inmueble.Imagenes[0].getWebPath() }}">
+                        {% endif %}
+                        <p><i class="material-icons left">camera_alt</i>{{ inmueble.imagenes | length }}</p>
+                    </td>
+                    <td>
+                        <h5>ID: {{ inmueble.idInmueble }} {{ inmueble.nombreid }} </h5>
+                        <h5>{{ inmueble.idTipoInmueble.nombre }} en {{ inmueble.idOperacionInmueble.nombre }}</h5>
+                        <ul>
+                            <li><i class="material-icons left">location_on</i>{{ inmueble.calle }}, {{ inmueble.idEstado.nombre }}, {{ inmueble.idMunicipio.nombre }} </li>
+                            <li>Zona: {{ inmueble.idZona.nombre }}</li>
+                            <br>
+                            <li>{{ inmueble.idMoneda.simbolo }} {{inmueble.precio|number_format(2, '.', ',')}}</li>
+                            <br>
+                            <li>{{ inmueble.recamaras }} Recámaras</li>
+                            <li>{{ inmueble.banos }} Baño(s)</li>
+
+                            {% if inmueble.mediobanos is not null %}
+                                {{ inmueble.mediobanos }} Medios Baño(s)<br>
+                            {% endif %}
+
+                            {% if inmueble.metrosconstruccion is not null %}
+                                {{ inmueble.metrosconstruccion }} Metros de Construcción<br>
+                            {% endif %}
+
+                            {% if inmueble.metrosterreno is not null %}
+                                {{ inmueble.metrosterreno }} Metros de Terreno<br>
+                            {% endif %}
+
+                            {% if inmueble.comision is not null %}
+                            <li>{{ inmueble.comision | number_format(2, '.', ',') }}
+                                {% if inmueble.idOperacionInmueble.idOperacionInmueble == 2 %}
+                                %
+                                {%  else %}
+                                Mensualidades
+                                {%  endif %}
+                            </li>
+                            {% endif %}
+
+                            {% if inmueble.plantas > 0 %}
+                            <li>{{ inmueble.plantas }} Plantas</li>
+                            {% endif %}
+
+                            <br>
+                            {% if inmueble.fechaModificacion is not null %}
+                            <li>Modificado el {{ inmueble.fechaModificacion | date('d/m/Y') }}</li>
+                            <li>Por {{ inmueble.idUsuariomodifico.nombre }}</li>
+                            {% endif %}
+
+                            <li>
+                                <p>Visitas: {{ visitas[index] }}</p>
+                                {% set index = index + 1 %}
+                            </li>
+                        </ul>
+                    </td>
+                </tr>
+                {% endfor %}
+                </tbody>
+            </table>
+        </div>
+
+    </div>
+</div>
+
+<script>
+
+</script>
+{% endblock %}
+
+{% block stylesheets %}
+
+<style>
+    body {
+        background: white;
+        height: 100vh;
+    }
+    p
+    {
+        font-size: small;
+    }
+    .imginmueble
+    {
+        width: 160px;
+        height: 128px;
+    }
+</style>
+
+
+
+{% endblock %}

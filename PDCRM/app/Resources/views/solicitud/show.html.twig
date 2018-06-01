@@ -1,0 +1,89 @@
+{% extends 'baseabc.html.twig' %}
+
+{% block body %}
+
+    <table>
+        <tbody>
+            <tr>
+                <td>
+                    <h5>{{ solicitud.idEstado.nombre }}, {{ solicitud.ciudad }}, {{ solicitud.colonia }} </h5>
+                    <p>Tipo de Inmueble: {{ solicitud.idTipoInmueble.nombre }}<br>
+                        Operación: {{ solicitud.idOperacionInmueble.nombre }}</p>
+                    <ul>
+                        {% if (solicitud.precio != false) %}
+                            <li>
+                                <p>Precio</p>
+                                Desde: {{ solicitud.idMoneda.simbolo }} {{ solicitud.precio|number_format(2, '.', ',') }}
+                            </li>
+                        {% endif  %}
+                        {% if (solicitud.preciomax != false) %}
+                            <li>
+                                Hasta: {{ solicitud.idMoneda.simbolo }} {{ solicitud.preciomax|number_format(2, '.', ',') }}
+                            </li>
+                        {% endif  %}
+
+                        {% if (solicitud.metrosconstruccion != false) %}
+                            <li>
+                                <p>Metros de Construcción</p>
+                                Desde: {{ solicitud.metrosconstruccion|number_format(2, '.', ',') }} m2
+                            </li>
+                        {% endif  %}
+                        {% if (solicitud.metrosconstruccionmax != false) %}
+                            <li>
+                                Hasta: {{ solicitud.metrosconstruccionmax|number_format(2, '.', ',') }} m2
+                            </li>
+                        {% endif  %}
+
+                        {% if (solicitud.metrosterreno != false) %}
+                            <li>
+                                <p>Metros de Terreno</p>
+                                Desde: {{ solicitud.metrosterreno|number_format(2, '.', ',') }}
+                            </li>
+                        {% endif  %}
+
+                        {% if (solicitud.metrosterrenomax != false) %}
+                            <li>
+                                Hasta: {{ solicitud.metrosterrenomax|number_format(2, '.', ',') }}
+                            </li>
+                        {% endif  %}
+
+                        {% if (solicitud.caracteristicas|length > 0) %}
+                            <li>
+                                <p>Características</p>
+                                <ul>
+                                    {% for caracteristica in solicitud.caracteristicas  %}
+                                        <li>{{ caracteristica.nombre }}</li>
+                                    {%  endfor  %}
+                                </ul>
+                            </li>
+                        {% endif  %}
+                        <br>
+                        Mi cliente busca: {{ solicitud.descripcion }}
+                    </ul>
+                </td>
+                <td></td>
+            </tr>
+            <tr>
+                <td>
+                    {# form_start(delete_form) #}
+                    <!--input type="submit" value="Borrar" class="btn red darken-4 right" style="margin-right: 10px"-->
+                    {# form_end(delete_form) #}
+                </td>
+                <td>
+                    <a onclick="self.history.back(-1);" class="btn blue darken-4 right">< Regresar</a>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+
+    <style>
+        table
+        {
+            background-color: white;
+        }
+        body
+        {
+            height:70vh;
+        }
+    </style>
+{% endblock %}

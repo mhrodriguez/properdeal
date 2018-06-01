@@ -1,0 +1,101 @@
+{% extends 'baseabc.html.twig' %}
+
+{% form_theme form with ['forms/custom_time_widget.html.twig'] %}
+
+{% block body %}
+
+    <div class="container">
+        <br/>
+        <div class="row">
+            <nav>
+                <div class="nav-wrapper z-depth-1">
+                    <div class="col s12  blue darken-1 ">
+                        <a href="#!" class="breadcrumb">Noticias</a>
+                        <a href="#!" class="breadcrumb">Nuevo</a>
+                    </div>
+                </div>
+            </nav>
+        </div>
+
+        <div class="row">
+            <div class="formcontainer">
+                <div>
+                    {{ form_start(form) }}
+
+                    <div class="row">
+                        <div class="input-field col s12">
+                            {{ form_widget(form.titulo) }}
+                            {{ form_label(form.titulo) }}
+                            {{ form_errors(form.titulo) }}
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <div class="input-field col s12">
+                            {{ form_widget(form.descripcion) }}
+                            {{ form_label(form.descripcion) }}
+                            {{ form_errors(form.descripcion) }}
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <div class="input-field col s12">
+                            {{ form_widget(form.url) }}
+                            {{ form_label(form.url) }}
+                            {{ form_errors(form.url) }}
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <div class="input-field col s12">
+                            {{ form_widget(form.publicar) }}
+                            {{ form_label(form.publicar) }}
+                            {{ form_errors(form.publicar) }}
+                        </div>
+                    </div>
+
+                    <br><br><br>
+
+                    <div class="row">
+                        <div class="input-field col s6 activelabel">
+                            {{ form_widget(form.fechaPublicacion) }}
+                            {{ form_label(form.fechaPublicacion) }}
+                            {{ form_errors(form.fechaPublicacion) }}
+                        </div>
+                    </div>
+
+                    <input type="submit" value="Guardar" class="waves-effect waves-light btn blue darken-4 right"/>
+                    <a href="{{ path('noticia_index', {}) }}" class="waves-effect waves-light btn blue darken-4 right">Cancelar</a>
+                    {{ form_end(form) }}
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <style>
+        body{
+            background-color: white;
+            height: 150vh;
+        }
+
+        .activelabel label {
+            font-size: 0.8rem;
+            -webkit-transform: translateY(-140%);
+            transform: translateY(-140%);
+        }
+    </style>
+
+    <script>
+        $(document).ready(function() {
+            $('select').material_select();
+
+        });
+
+        $('#noticia_fechaPublicacion_date').pickadate({
+            selectMonths: true, // Creates a dropdown to control month
+            selectYears: 15, // Creates a dropdown of 15 years to control year
+            format: 'yyyy-mm-dd'
+        });
+    </script>
+
+{% endblock %}

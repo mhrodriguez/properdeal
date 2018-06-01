@@ -1,0 +1,72 @@
+{% extends 'baseabc.html.twig' %}
+
+{% block body %}
+    <div id="wrapper">
+        <div id="container">
+            <!-- Page Layout here -->
+            <br/>
+            <div class="row">
+                <nav>
+                    <div class="nav-wrapper z-depth-1">
+                        <div class="col s12  blue darken-1 ">
+                            <a href="#!" class="breadcrumb">Dashboard</a>
+                        </div>
+                    </div>
+                </nav>
+            </div>
+
+            <div class="row">
+                <div class='circle'>
+                    <br>
+                    <br>
+                    <br>
+                    <br>
+                    <h5>10 Casas</h5>
+                    <div class='arc'></div>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}
+
+{% block stylesheets %}
+
+    <style>
+        body {
+            background: white;
+            height: 100vh;
+        }
+
+        .circle {
+            position: relative;
+            margin: 7em auto;
+            width: 16em; height: 16em;
+            border-radius: 50%;
+            background: lightblue;
+            text-align: center;
+        }
+        .arc {
+
+            overflow: hidden;
+            position: absolute;
+            /* make sure top & left values are - the width of the border */
+            /* the bottom right corner is the centre of the parent circle */
+            top: -1em; right: 50%; bottom: 50%; left: -1em;
+            /* the transform origin is the bottom right corner */
+            transform-origin: 100% 100%;
+            /* rotate by any angle */
+            /* the skew angle is 90deg - the angle you want for the arc */
+            transform: rotate(90deg) skewX(30deg);
+        }
+        .arc:before {
+            box-sizing: border-box;
+            display: block;
+            border: solid 1em navy;
+            width: 200%; height: 200%;
+            border-radius: 50%;
+            transform: skewX(-30deg);
+            content: '';
+        }
+    </style>
+
+{% endblock %}

@@ -1,0 +1,56 @@
+{% extends 'baseabc.html.twig' %}
+
+{% block body %}
+
+    <div class="container">
+        <br/>
+        <div class="row">
+            <nav>
+                <div class="nav-wrapper z-depth-1">
+                    <div class="col s12  blue darken-1 ">
+                        <a href="#!" class="breadcrumb">Propiedad</a>
+                        <a href="#!" class="breadcrumb">Palabras clave</a>
+                    </div>
+                </div>
+            </nav>
+        </div>
+
+        <div class="row">
+            <div class="formcontainer">
+                <div>
+                    {{ form_start(edit_form) }}
+
+                    <div class="row">
+                        <div class="input-field col s12">
+                            {{ form_widget(edit_form.keywords) }}
+                            {{ form_label(edit_form.keywords) }}
+                            {{ form_errors(edit_form.keywords) }}
+                        </div>
+                    </div>
+
+                    <p>Ejemplo: <i>"Casa Desarrollo Preventa"</i></p>
+
+                    <input type="submit" value="Guardar" class="waves-effect waves-light btn blue darken-4 right"/>
+
+
+                    <a href="{{ path('inmueble_index', {}) }}" class="waves-effect waves-light btn blue darken-4 right">Cancelar</a>
+
+                    {{ form_end(edit_form) }}
+
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <style>
+        body{
+            background-color: white;
+            height: 150vh;
+        }
+    </style>
+
+    <script>
+
+    </script>
+
+{% endblock %}

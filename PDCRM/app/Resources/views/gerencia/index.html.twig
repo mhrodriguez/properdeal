@@ -1,0 +1,62 @@
+{% extends 'baseabc.html.twig' %}
+
+{% block body %}
+    <div id="wrapper">
+        <div id="container">
+            <!-- Page Layout here -->
+            <br/>
+            <div class="row">
+                <nav>
+                    <div class="nav-wrapper z-depth-1">
+                        <div class="col s12  blue darken-1 ">
+                            <a href="#!" class="breadcrumb">Gerencias</a>
+                        </div>
+                    </div>
+                </nav>
+            </div>
+            <div class="row">
+                <a href="{{ path('gerencia_new', {}) }}" class="waves-effect waves-light btn blue darken-1 right"><i class="material-icons left">add</i>Nueva Gerencia</a>
+            </div>
+            <div class="row">
+                <table class="striped">
+                    <thead>
+                    <tr>
+                        <th>Gerencia</th>
+                        <th>Gerente</th>
+                        <th>Operaciones</th>
+                    </tr>
+                    </thead>
+
+                    <tbody>
+                    {% for gerencia in gerencias %}
+                        <tr>
+                            <td>
+                                {{ gerencia.gerencia }}
+                            </td>
+                            <td>
+                                {{ gerencia.gerente }}
+                            </td>
+                            <td>
+                                <a href="{{ path ('gerencia_edit', {'id': gerencia.id}) }}"><i class="material-icons left">mode_edit</i></a>
+                            </td>
+                        </tr>
+                    {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+{% endblock %}
+
+{% block stylesheets %}
+    <style>
+        body {
+            background: white;
+            height: 200vh;
+        }
+    </style>
+
+{% endblock %}
+
+{% block javascripts %}
+{% endblock %}

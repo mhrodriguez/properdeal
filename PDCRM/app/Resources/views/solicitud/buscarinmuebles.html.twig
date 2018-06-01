@@ -1,0 +1,160 @@
+{% extends 'baseabc.html.twig' %}
+
+{% block body %}
+
+    <div id="container">
+        <br/>
+
+        {% if idProspecto is not null %}
+        <div class="row">
+            <a href="#" onclick="portafolioInmuebles()" class="btn blue darken-4 right"><i class="material-icons left">person_add</i>Agregar propiedades a portafolio</a>
+        </div>
+        {% endif %}
+
+        <div class="row">
+            <table class="striped">
+                <thead>
+                <tr>
+                    <th data-field="id"><p>Propiedad</p></th>
+                    <th></th>
+                    <th></th>
+                </tr>
+                </thead>
+
+                <tbody>
+                {% set index=0 %}
+                {% for inmueble in inmuebles %}
+                    <tr>
+                        <td>
+                            {% if (inmueble.Imagenes|length>0) %}
+                                <img class="imginmueble" src="{{ inmueble.Imagenes[0].getWebPath() }}">
+                            {% endif %}
+                            <p><i class="material-icons left">camera_alt</i>{{ inmueble.imagenes | length }}</p>
+                        </td>
+                        <td>
+                            <h5>ID: {{ inmueble.legacyid }} {{ inmueble.nombreid }} </h5>
+                            <h5>{{ inmueble.idTipoInmueble.nombre }} en {{ inmueble.idOperacionInmueble.nombre }}</h5>
+                            <ul>
+                                <li><i class="material-icons left">location_on</i>{{ inmueble.idMunicipio.nombre }}, {{ inmueble.idEstado.nombre }}, {{ inmueble.calle }}</li>
+                                <li>Zona: {{ inmueble.idZona.nombre }}</li>
+                                <br>
+                                <li>{{ inmueble.idMoneda.simbolo }} {{inmueble.precio|number_format(2, '.', ',')}}</li>
+                                <li></li>
+                                <li>{{ inmueble.recamaras }} Recámaras</li>
+
+                                <li>{{ inmueble.banos }} Baño(s)</li>
+
+                                {% if inmueble.mediobanos is not null %}
+                                    {{ inmueble.mediobanos }} Medios Baño(s)<br>
+                                {% endif %}
+
+                                {% if inmueble.metrosconstruccion is not null %}
+                                    {{ inmueble.metrosconstruccion }} Metros de Construcción<br>
+                                {% endif %}
+
+                                {% if inmueble.metrosterreno is not null %}
+                                    {{ inmueble.metrosterreno }} Metros de Terreno<br>
+                                {% endif %}
+
+                                {% if inmueble.comision is not null %}
+                                    <li>Comisión: {{ inmueble.comision | number_format(2, '.', ',') }}
+                                        {% if inmueble.idOperacionInmueble.idOperacionInmueble == 2 %}
+                                            %
+                                        {%  else %}
+                                            Mensualidades
+                                        {%  endif %}
+                                    </li>
+                                {% endif %}
+
+                                {% if inmueble.plantas > 0 %}
+                                    <li>{{ inmueble.plantas }} Plantas</li>
+                                {% endif %}
+
+                                <br>
+                                <li>Alta por: {{ inmueble.idUsuario.nombre }}</li>
+
+                                <br>
+                                {% if inmueble.fechaModificacion is not null %}
+                                    <li>Modificado el {{ inmueble.fechaModificacion | date('d/m/Y') }}</li>
+                                    <li>Por {{ inmueble.idUsuariomodifico.nombre }}</li>
+                                {% endif %}
+
+                                {% if inmueble.porcentajecompartir is not null %}
+                                    <li>Porcentaje a compartir: {{ inmueble.porcentajecompartir }} %</li>
+                                {% endif %}
+                            </ul>
+                        </td>
+                        <td>
+                            {% if idProspecto is not null %}
+                            <input type="checkbox" id="chkPortafolio{{ index }}" value="{{ inmueble.idInmueble }}" />
+                            <label for="chkPortafolio{{ index }}">Agregar a portafolio</label>
+                            {% else %}
+                            <a href="#" onclick="var url; if (window.location.href.indexOf('#') > 0) { url = window.location.href.substring(0, window.location.href.indexOf('#')); } else { url = window.location.href; }  window.location.href='{{ path('prospecto_asignarpropiedad', {}) }}?idInmueble={{ inmueble.idInmueble }}&url=' + url.replace(/&/g, 'AMP') + 'SHARPtr{{ inmueble.idInmueble }}';" class="tooltipped" data-tooltip="Agregar prospecto" data-position="top"><i class="material-icons left">person_add</i></a>
+                            {% endif %}
+                        </td>
+                    </tr>
+                    {% set index=index+1 %}
+                {% endfor %}
+                </tbody>
+            </table>
+        </div>
+
+        {% if idProspecto is not null %}
+        <div class="row">
+            <a href="#" onclick="portafolioInmuebles()" class="btn blue darken-4 right"><i class="material-icons left">person_add</i>Agregar propiedades a portafolio</a>
+        </div>
+        {% endif %}
+    </div>
+
+    <script>
+        {% if idProspecto is not null %}
+        function portafolioInmuebles()
+        {
+            var inmueblesIds="";
+            var checkbox;
+
+            {% set index = 0 %}
+            {% for inmueble in inmuebles %}
+
+            checkbox = document.getElementById("chkPortafolio{{ index }}");
+            if (checkbox.checked == true)
+            {
+                inmueblesIds=inmueblesIds+checkbox.value + ",";
+            }
+
+            {% set index = index + 1 %}
+            {% endfor %}
+
+            inmueblesIds = inmueblesIds.substring(0, inmueblesIds.length - 1);
+
+            if (inmueblesIds=="")
+            {
+                alert("No hay propiedades seleccionadas.");
+            }
+            else {
+                //var url = window.location.href;
+                window.location.href = "{{ path ('prospecto_asignarpropiedades', {}) }}?idInmuebles=" + inmueblesIds + "&idProspecto={{ idProspecto }}";
+            }
+        }
+        {% endif %}
+    </script>
+{% endblock %}
+
+{% block stylesheets %}
+
+    <style>
+        body {
+            background: white;
+            height: 90vh;
+        }
+        p
+        {
+            font-size: small;
+        }
+        .imginmueble
+        {
+            width: 160px;
+            height: 128px;
+        }
+    </style>
+{% endblock %}

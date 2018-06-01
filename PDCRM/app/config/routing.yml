@@ -1,0 +1,54 @@
+app:
+    resource: "@AppBundle/Controller/"
+    type:     annotation
+
+logout:
+    path: /logout
+
+tarea_new:
+      path:      /tarea/new
+      defaults:
+          _controller: AppBundle:Tarea:new
+          indexAsesor: -1
+
+inmuebleimagen_index:
+      path:      /inmuebleimagen/
+      defaults:
+        _controller: AppBundle:InmuebleImagen:index
+        idInmueble: 0
+
+inmuebleimagen_new:
+      path:      /inmuebleimagen/new
+      defaults:
+        _controller: AppBundle:InmuebleImagen:new
+        idInmueble: 0
+
+municipio_json_index:
+      path:     /municipio/index
+      defaults:
+        _controller: AppBundle:Municipio:index
+        indexEstado: -1
+
+colonia_json_index:
+      path:     /colonia/index
+      defaults:
+        _controller: AppBundle:Colonia:index
+        indexEstado: -1
+        indexMunicipio: -1
+
+prospecto_json_index:
+      path:     /prospecto/index
+      defaults:
+        _controller: AppBundle:Prospecto:index
+        indexAsesor: -1
+
+colaborador_json_handshake:
+      path:     /colaborador/handshake
+      defaults:
+        _controller: AppBundle:Colaborador:handshake
+        idUsuarioColaborador: -1
+
+_demo:
+      resource: "@SaadTaziGChartBundle/Resources/config/routing.yml"
+      type:     yaml
+      prefix:   /gchart

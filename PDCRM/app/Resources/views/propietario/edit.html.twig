@@ -1,0 +1,120 @@
+{% extends 'baseabc.html.twig' %}
+
+{% form_theme form with ['forms/custom_checkbox_widget.html.twig'] %}
+
+{% block body %}
+
+    <div class="container">
+        <br/>
+        <div class="row">
+            <nav>
+                <div class="nav-wrapper z-depth-1">
+                    <div class="col s12  blue darken-1 ">
+                        <a href="#!" class="breadcrumb">Propietarios</a>
+                        <a href="#!" class="breadcrumb">Editar</a>
+                    </div>
+                </div>
+            </nav>
+        </div>
+        <br/>
+        <div class="row">
+            <div class="formcontainer">
+                <div>
+                    {{ form_start(form) }}
+
+                    <div class="row">
+                        <div class="input-field col s6">
+                            {{ form_widget(form.nombre) }}
+                            {{ form_label(form.nombre) }}
+                            {{ form_errors(form.nombre) }}
+                        </div>
+                        <div class="input-field col s6">
+                            {{ form_widget(form.apellidos) }}
+                            {{ form_label(form.apellidos) }}
+                            {{ form_errors(form.apellidos) }}
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <div class="input-field col s6">
+                            {{ form_widget(form.telefono) }}
+                            {{ form_label(form.telefono) }}
+                            {{ form_errors(form.telefono) }}
+                        </div>
+                        <div class="input-field col s6">
+                            {{ form_widget(form.telefonomovil) }}
+                            {{ form_label(form.telefonomovil) }}
+                            {{ form_errors(form.telefonomovil) }}
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <div class="input-field col s6">
+                            {{ form_widget(form.oficina) }}
+                            {{ form_label(form.oficina) }}
+                            {{ form_errors(form.oficina) }}
+                        </div>
+                        <div class="input-field col s6">
+                            {{ form_widget(form.email) }}
+                            {{ form_label(form.email) }}
+                            {{ form_errors(form.email) }}
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <div class="input-field col s6">
+                            {{ form_widget(form.horariovisita) }}
+                            {{ form_label(form.horariovisita) }}
+                            {{ form_errors(form.horariovisita) }}
+                        </div>
+                        <div class="input-field col s6">
+                            {{ form_widget(form.canalCaptacion) }}
+                            {{ form_label(form.canalCaptacion) }}
+                            {{ form_errors(form.canalCaptacion) }}
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <div class="input-field col s6">
+                            {{ form_widget(form.comision) }}
+                            {{ form_label(form.comision) }}
+                            {{ form_errors(form.comision) }}
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <div class="input-field col s6">
+                            {{ form_widget(form.enviarmail) }}
+                            {{ form_label(form.enviarmail) }}
+                            {{ form_errors(form.enviarmail) }}
+                        </div>
+                        <div class="input-field col s6">
+                            {{ form_widget(form.mostrardatos) }}
+                            {{ form_label(form.mostrardatos) }}
+                            {{ form_errors(form.mostrardatos) }}
+                        </div>
+                    </div>
+
+                    <input type="submit" value="Guardar" class="waves-effect waves-light btn blue darken-4 right"/>
+
+                    {{ form_end(form) }}
+                    <a href="{{ path('inmueble_index', {}) }}" class="waves-effect btn blue darken-4 left">Cancelar</a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <style>
+        body{
+            background-color: white;
+            height: 200vh;
+        }
+    </style>
+
+    <script>
+        $(document).ready(function() {
+            $('select').material_select();
+        });
+    </script>
+
+{% endblock %}

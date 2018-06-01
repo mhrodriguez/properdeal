@@ -1,0 +1,243 @@
+{% extends 'baseabc.html.twig' %}
+
+{% block body %}
+
+<div id="fb-root"></div>
+<script>(function(d, s, id) {
+        var js, fjs = d.getElementsByTagName(s)[0];
+        if (d.getElementById(id)) return;
+        js = d.createElement(s); js.id = id;
+        js.src = "//connect.facebook.net/es_LA/sdk.js#xfbml=1&version=v2.7&appId=360356374032013";
+        fjs.parentNode.insertBefore(js, fjs);
+    }(document, 'script', 'facebook-jssdk'));</script>
+
+<div style="background-color: white">
+    <div class="row">
+        <div class="col s8 m9 l9">
+
+            {% if inmueble.nombreedificio is not null  %}
+                <h4>{{ inmueble.nombreedificio }}</h4>
+            {% endif %}
+            {% if inmueble.nombreplaza is not null  %}
+                <h4>{{ inmueble.nombreplaza }}</h4>
+            {% endif %}
+
+            <h4>{{ inmueble.idMunicipio.nombre }}, {{ inmueble.idEstado.nombre }}, {{ inmueble.calle }} </h4>
+            <h5>ID: {{ inmueble.legacyid }} {{ inmueble.nombreid  }}</h5>
+            <h5>{{ inmueble.idTipoInmueble.nombre }} en {{ inmueble.idOperacionInmueble.nombre }}</h5>
+
+            {% if inmueble.idOperacionInmueble.idOperacionInmueble == 2 %}
+                <h5>Desde: {{ inmueble.idMoneda.simbolo }} {{ inmueble.precio|number_format(2, '.', ',') }} Hasta: {{ inmueble.idMoneda.simbolo }} {{ inmueble.preciohasta|number_format(2, '.', ',') }}</h5>
+            {% else %}
+                <h5>Precio: {{ inmueble.idMoneda.simbolo }} {{ inmueble.precio|number_format(2, '.', ',') }} </h5>
+            {% endif %}
+
+            <div class="fb-share-button" data-href="http://104.236.50.14/PD/web/app.php/buscarinmueble/{{ inmueble.idInmueble }}" data-layout="button_count" data-size="small" data-mobile-iframe="true"><a class="fb-xfbml-parse-ignore" target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=https%3A%2F%2Fdevelopers.facebook.com%2Fdocs%2Fplugins%2F&amp;src=sdkpreparse">Compartir</a></div>
+
+            <table>
+                <tr>
+                    <td>
+                        <ul>
+                            {% if inmueble.recamaras is not null %}
+                            <li>{{ inmueble.recamaras }} Recámara(s)</li>
+                            {% endif %}
+
+                            {% if inmueble.metrosconstruccion is not null %}
+                                {% if inmueble.metrosconstruccion > 0 %}
+                                    {{ inmueble.metrosconstruccion }} Metros de Construcción<br>
+                                {% endif %}
+                            {% endif %}
+
+                            {% if inmueble.metrosterreno is not null %}
+                                {% if inmueble.metrosterreno > 0 %}
+                                    {{ inmueble.metrosterreno }} Metros de Terreno<br>
+                                {% endif %}
+                            {% endif %}
+
+                            {% if inmueble.plantas > 0 %}
+                                <li>{{ inmueble.plantas }} Plantas</li>
+                            {% endif %}
+
+                            {% if inmueble.banos is not null %}
+                            <li>{{ inmueble.banos }} Baño(s)</li>
+                            {% endif %}
+
+                            {% if inmueble.mediobanos is not null %}
+                                {% if inmueble.mediobanos > 0 %}
+                                    {{ inmueble.mediobanos }} Medios Baño(s)<br>
+                                {% endif %}
+                            {% endif %}
+
+                            {% if inmueble.espacioautos is not null %}
+                                {% if inmueble.espacioautos > 0 %}
+                                    {{ inmueble.espacioautos }} Estacionamiento(s)<br>
+                                {% endif %}
+                            {% endif %}
+                         </ul>
+                    </td>
+                    <td>
+                        <button class="waves-effect waves-light btn right blue-grey darken-4" type="button" onclick="$('#modalEnviarAmigo').openModal();">Enviar a un amigo</button>
+                    </td>
+                </tr>
+            </table>
+
+            {% if (inmueble.imagenes is not null and inmueble.imagenes|length>0) %}
+            <div class="slider" style="width:100%; height:480px; margin-right: auto; margin-left: auto; max-width: 600px;">
+                <ul class="slides">
+
+                    {% for imagen in inmueble.imagenes %}
+                    <li>
+                        <img src="{{ imagen.getWebPath() }}"> <!-- random image -->
+                        <div class="caption center-align">
+                            <!--h3>This is our big Tagline!</h3>
+                            <h5 class="light grey-text text-lighten-3">Here's our small slogan.</h5-->
+                        </div>
+                    </li>
+                    {% endfor %}
+
+                </ul>
+            </div>
+            {% endif %}
+
+            {% if inmueble.nombreedificio is not null  %}
+                <h5>{{ inmueble.nombreedificio }}</h5>
+            {% else %}
+                <h5>Descripción</h5>
+            {% endif %}
+            <p style="font-size: medium">
+                {{ inmueble.descripcion }}
+            </p>
+
+            <h5>Características</h5>
+
+            {%  for caracteristica in inmueble.caracteristicas %}
+            <p style="font-size: medium">
+            - {{ caracteristica.nombre }}<br>
+            </p>
+            {% endfor %}
+
+            <div id="map-canvas" style="height:400px;" class="form-control z-depth-1"></div>
+        </div>
+
+        <div class="col s4 m3 l3">
+            <div class="card large">
+                <div class="card-image">
+                    {% if (inmueble.idUsuario.getWebPathFoto() is null)  %}
+                        {% image '@FrameworkBundle/Resources/public/images/ic_usuario.jpg' %}
+                        <img src="{{ asset_url }}" alt="" class="activator">
+                        {% endimage %}
+                    {% else %}
+                        <img src="{{ inmueble.idUsuario.getWebPathFoto() }}" class="activator"/>
+                    {%  endif  %}
+                </div>
+                <div class="card-content">
+                    <p><b>{{ inmueble.idUsuario.nombre }}</b></p>
+                    <p><i class="material-icons left">phone</i>{{ inmueble.idUsuario.telefono }}</p>
+                    <p><a href="mailto:{{ inmueble.idUsuario.email }}?Subject=Información de propiedad clave: {{ inmueble.idInmueble }}"><i class="material-icons left">email</i>{{ inmueble.idUsuario.email }}</a></p>
+
+                    {# if is_granted('IS_AUTHENTICATED_FULLY') #}
+                        <!--p><a href="#" onclick="$('#modal1').openModal();"><i class="material-icons left">message</i>Enviar mensaje directo</a></p-->
+                    {# else #}
+                        <p><a href="{{ path('mensaje_anonimo', {'idUsuario' : inmueble.idUsuario.id, 'idInmueble' : inmueble.idInmueble, 'urlBack' : path('buscarinmueble_show', {'id': inmueble.idInmueble}) }) }}"><i class="material-icons left">message</i>Enviar mensaje directo</a></p>
+                    {# endif #}
+                    <!--div id="modal1" class="modal">
+                        <div class="modal-content">
+                            <iframe id="frmMensaje" src="{{ path('mensaje_new', {'idUsuario' : inmueble.idUsuario.id, 'idInmueble' : inmueble.idInmueble, 'urlBack' : path('buscarinmueble_show', {'id': inmueble.idInmueble}) }) }}" style="width:100%; height:300px; margin-top:8px; padding-top:0px" frameBorder="0"></iframe>
+                        </div>
+                        <div class="modal-footer">
+                        </div>
+                    </div-->
+                </div>
+                <div class="card-action">
+                    <a href="#!" onclick="abrirURLTop('{{ path('inmueble_index', {}) }}?idAsesor={{ inmueble.idUsuario.id }}');">Mis propiedades</a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Modal Structure -->
+    <div id="modalEnviarAmigo" class="modal">
+        <form action="{{ path('buscarinmueble_compartirinmueble', {}) }}" method="get">
+        <div class="modal-content">
+            <h5>Enviar a un amigo</h5>
+            <br/>
+            {% if not is_granted('IS_AUTHENTICATED_FULLY') %}
+                <div class="input-field col s12">
+                    <input type="text" id="txtNombre" name="txtNombre" required="required"/>
+                    <label for="txtNombre" class="required">Nombre</label>
+                </div>
+            {% endif %}
+
+            <div class="input-field col s12">
+                <input type="text" id="txtMail" name="txtMail" required="required"/>
+                <label for="txtMail" class="required">E-mail</label>
+            </div>
+            <input type="hidden" id="backUrl" name="backUrl" value="{{ backUrl }}"/>
+            <input type="hidden" id="idInmueble" name="idInmueble" value="{{ inmueble.idInmueble }}"/>
+        </div>
+        <div class="modal-footer">
+            <input type="submit" value="Enviar" class="modal-action modal-close btn-flat"/>
+            <a href="#!" class=" modal-action modal-close waves-effect waves-green btn-flat">Cancelar</a>
+        </div>
+        </form>
+    </div>
+
+
+    <script>
+        $(document).ready(function(){
+            $('.slider').slider({full_width: true, height: 480 });
+        });
+    </script>
+
+    <script type="text/javascript"
+            src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCmOj1JP2fKLOHkJSKhAdrIVOJlovubgkY">
+    </script>
+
+    {% javascripts '@FrameworkBundle/Resources/public/js/*'%}
+        <script src="{{ asset_url }}"></script>
+    {% endjavascripts %}
+
+    <script type="text/javascript">
+        var mapOptions = {
+            zoom: 14,
+            mapTypeId: google.maps.MapTypeId.TERRAIN
+        };
+
+        setMapControl(document.getElementById('map-canvas'), mapOptions);
+
+        posiciones = geocodeDireccion("{{ inmueble.colonia }} {{ inmueble.idMunicipio.nombre }} {{ inmueble.getIdEstado().nombre }} {{ inmueble.cp }}", direccionObtenida);
+
+        function direccionObtenida(resultado, direcciones, mensajeError)
+        {
+            if (resultado)
+            {
+                centrarEnMapa(direcciones[0]);
+            }
+        }
+
+        function mensajeCancelar()
+        {
+            $('#modal1').closeModal();
+        }
+        function mensajeEnviado()
+        {
+            alert('Su mensaje ha sido enviado con éxito. En breve nuestro asesor le contactará.');
+            $('#modal1').closeModal();
+            document.getElementById('frmMensaje').src=document.getElementById('frmMensaje').src.replace('&amp;','&');
+        }
+
+        function abrirURLTop($url)
+        {
+            window.top.location.href = $url;
+        }
+    </script>
+
+    <style>
+        .circle
+        {
+            vertical-align:middle;
+        }
+    </style>
+</div>
+
+{% endblock %}

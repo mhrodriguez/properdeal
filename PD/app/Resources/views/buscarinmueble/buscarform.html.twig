@@ -1,0 +1,244 @@
+<div class="z-depth-1" style="background-color: white">
+    <div class="row">
+        <nav>
+            <div class="nav-wrapper z-depth-1">
+                <div class="col s12 black">
+                    <i class="material-icons left">search</i><h5>Encuentra tu Hogar</h5>
+                </div>
+            </div>
+        </nav>
+    </div>
+    <br/>
+    <div class="row">
+        <div class="formcontainer">
+            <div>
+                {{ form_start(form, {'method': 'GET', 'action': path('buscarinmueble_buscarpanel')}) }}
+
+                <div class="row">
+                    <div class="input-field col s2">
+                        {{ form_widget(form.legacyid) }}
+                        {{ form_label(form.legacyid) }}
+                        {{ form_errors(form.legacyid) }}
+                    </div>
+
+                    <div class="input-field col s2">
+                        {{ form_widget(form.id_tipo_inmueble) }}
+                        {{ form_label(form.id_tipo_inmueble) }}
+                        {{ form_errors(form.id_tipo_inmueble) }}
+                    </div>
+
+                    <input id="buscar_inmueble_id_categoria_inmueble" name="buscar_inmueble[id_categoria_inmueble]" type="hidden" value="-1"/>
+
+                    <div class="input-field col s2">
+                        {{ form_widget(form.id_operacion_inmueble) }}
+                        {{ form_label(form.id_operacion_inmueble) }}
+                        {{ form_errors(form.id_operacion_inmueble) }}
+                    </div>
+                    <div class="input-field col s2">
+                        {{ form_widget(form.id_estado) }}
+                        {{ form_label(form.id_estado) }}
+                        {{ form_errors(form.id_estado) }}
+                    </div>
+                    <div class="input-field col s2">
+                        {{ form_widget(form.id_municipio) }}
+                        {{ form_label(form.id_municipio) }}
+                        {{ form_errors(form.id_municipio) }}
+                    </div>
+                    <div class="input-field col s2">
+                        {{ form_widget(form.colonia) }}
+                        {{ form_label(form.colonia) }}
+                        {{ form_errors(form.colonia) }}
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="input-field col s2">
+                        {{ form_widget(form.precio) }}
+                        {{ form_label(form.precio) }}
+                        {{ form_errors(form.precio) }}
+                    </div>
+                    <div class="input-field col s2">
+                        {{ form_widget(form.preciomax) }}
+                        {{ form_label(form.preciomax) }}
+                        {{ form_errors(form.preciomax) }}
+                    </div>
+                    <div class="input-field col s2">
+                        {{ form_widget(form.id_moneda) }}
+                        {{ form_label(form.id_moneda) }}
+                        {{ form_errors(form.id_moneda) }}
+                    </div>
+                    <div class="input-field col s2">
+                        {{ form_widget(form.recamaras) }}
+                        {{ form_label(form.recamaras) }}
+                        {{ form_errors(form.recamaras) }}
+                    </div>
+                    <div class="input-field col s1">
+                        {{ form_widget(form.plantas) }}
+                        {{ form_label(form.plantas) }}
+                        {{ form_errors(form.plantas) }}
+                    </div>
+
+                    <div class="input-field col s2">
+                        <div class="row">
+                            {{ form_widget(form.amueblado) }}
+                            {{ form_label(form.amueblado) }}
+                            {{ form_errors(form.amueblado) }}
+                        </div>
+                        <div class="row">
+                            {{ form_widget(form.alberca) }}
+                            {{ form_label(form.alberca) }}
+                            {{ form_errors(form.alberca) }}
+                        </div>
+                    </div>
+                </div>
+
+
+
+
+                <div class="row">
+                        <div class="input-field col s3">
+                            {{ form_widget(form.metrosterreno) }}
+                            {{ form_label(form.metrosterreno) }}
+                            {{ form_errors(form.metrosterreno) }}
+                        </div>
+                        <div class="input-field col s3">
+                            {{ form_widget(form.metrosterrenomax) }}
+                            {{ form_label(form.metrosterrenomax) }}
+                            {{ form_errors(form.metrosterrenomax) }}
+                        </div>
+                        <div class="input-field col s3">
+                            {{ form_widget(form.metrosconstruccion) }}
+                            {{ form_label(form.metrosconstruccion) }}
+                            {{ form_errors(form.metrosconstruccion) }}
+                        </div>
+                        <div class="input-field col s3">
+                            {{ form_widget(form.metrosconstruccionmax) }}
+                            {{ form_label(form.metrosconstruccionmax) }}
+                            {{ form_errors(form.metrosconstruccionmax) }}
+                        </div>
+                </div>
+
+                <button type="submit" class="waves-effect waves-light btn right blue-grey darken-4">
+                    Buscar
+                    <i class="material-icons left">search</i>
+                </button>
+
+                {{ form_end(form) }}
+            </div>
+        </div>
+    </div>
+
+    <style>
+    </style>
+
+    <script>
+
+        $(document).ready(function() {
+            $('select').material_select();
+        });
+
+        var selectorOperacion = document.getElementById('buscar_inmueble_id_operacion_inmueble');
+        opcionOperacion = new Option("Todos", -1)
+        opcionOperacion.selected=true;
+        selectorOperacion.options.add(opcionOperacion, 0);
+
+        var selectorEstado = document.getElementById('buscar_inmueble_id_estado');
+        opcionEstado = new Option("Todos", -1);
+        opcionEstado.selected=true;
+        selectorEstado.options.add(opcionEstado, 0);
+
+        var selectorMunicipio = document.getElementById('buscar_inmueble_id_municipio');
+        selectorMunicipio.options.add(new Option("Todos", -1), 0);
+
+        /*var selectorColonia = document.getElementById('buscar_inmueble_id_colonia');
+        selectorColonia.options.add(new Option("Todos", -1), 0);*/
+
+        function onChangeEstado()
+        {
+            var selectorEstado = document.getElementById('buscar_inmueble_id_estado');
+            var url = 'http://' + window.location.hostname  + '{{ path('municipio_index2', {}) }}?indexEstado=' + selectorEstado.value;
+
+            //alert(url);
+            $.ajax({
+                url: url,
+                dataType: "json",
+                success: function(data) {
+                    var options, index, select, option;
+
+                    // Get the raw DOM object for the select box
+                    select = document.getElementById('buscar_inmueble_id_municipio');
+
+                    // Clear the old options
+                    select.options.length = 0;
+
+                    select.options.add(new Option('Todos', -1));
+
+                    // Load the new options
+                    options = data; // Or whatever source information you're working with
+                    for (index = 0; index < options.length; ++index) {
+                        option = options[index];
+
+                        select.options.add(new Option(option.nombre, index));
+                    }
+
+                    $('select').material_select();
+
+                    //onChangeMunicipio();
+                }
+            });
+        }
+
+        /*function onChangeMunicipio()
+        {
+            var selectorEstado = document.getElementById('buscar_inmueble_id_estado');
+            var selectorMunicipio = document.getElementById('buscar_inmueble_id_municipio');
+            var url = 'http://' + window.location.hostname  + '{{ path('colonia_index', {}) }}?indexMunicipio=' + selectorMunicipio.value + '&indexEstado=' + selectorEstado.value;
+
+            $.ajax({
+                url: url,
+                dataType: "json",
+                success: function(data) {
+                    var options, index, select, option;
+
+                    // Get the raw DOM object for the select box
+                    select = document.getElementById('buscar_inmueble_id_colonia');
+
+                    // Clear the old options
+                    select.options.length = 0;
+                    select.options.add(new Option('Todos', -1));
+
+                    // Load the new options
+                    options = data; // Or whatever source information you're working with
+                    for (index = 0; index < options.length; ++index) {
+                        option = options[index];
+
+                        select.options.add(new Option(option.nombre, index));
+                    }
+                    $('select').material_select();
+                }
+            });
+        }
+
+        function onChangeColonia() {
+
+        }*/
+
+        document.getElementById('buscar_inmueble_colonia').required=false;
+
+        document.getElementById('buscar_inmueble_precio').required=false;
+        document.getElementById('buscar_inmueble_preciomax').required=false;
+        document.getElementById('buscar_inmueble_metrosterreno').required=false;
+        document.getElementById('buscar_inmueble_metrosterrenomax').required=false;
+        document.getElementById('buscar_inmueble_recamaras').required=false;
+        document.getElementById('buscar_inmueble_plantas').required=false;
+
+        document.getElementById('buscar_inmueble_legacyid').required=false;
+
+        document.getElementById('buscar_inmueble_alberca').required=false;
+        document.getElementById('buscar_inmueble_amueblado').required=false;
+
+        document.getElementById('buscar_inmueble_metrosconstruccion').required=false;
+        document.getElementById('buscar_inmueble_metrosconstruccionmax').required=false;
+
+    </script>
+</div>

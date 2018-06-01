@@ -1,0 +1,117 @@
+<?php
+/**
+ * Created by PhpStorm.
+ * User: davatar
+ * Date: 3/18/16
+ * Time: 6:45 p.m.
+ */
+
+namespace AppBundle\Entity;
+
+use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Validator\Constraints as Assert;
+use Symfony\Component\Serializer\Annotation as Srz;
+
+/**
+ * @ORM\Table(name="propietario")
+ * @ORM\Entity(repositoryClass="AppBundle\Repository\PropietarioRepository")
+ */
+class Propietario
+{
+    /**
+     * @ORM\Column(name="id", type="integer")
+     * @ORM\Id
+     * @ORM\GeneratedValue(strategy="AUTO")
+     */
+    private $id;
+
+    /**
+     * @ORM\Column(type="string", length=50)
+     * @Assert\NotBlank(message="Este campo es requerido.")
+     */
+    private $nombre;
+
+    /**
+     * @ORM\Column(type="string", length=100)
+     * @Assert\NotBlank(message="Este campo es requerido.")
+     */
+    private $apellidos;
+
+    /**
+     * @ORM\Column(type="string", length=50, nullable=true)
+     */
+    private $telefono;
+
+    /**
+     * @ORM\Column(type="string", length=50)
+     * @Assert\NotBlank(message="Este campo es requerido.")
+     */
+    private $telefonoMovil;
+
+    /**
+     * @ORM\Column(type="string", length=50)
+     * @Assert\NotBlank(message="Este campo es requerido.")
+     */
+    private $oficina;
+
+    /**
+     * @ORM\Column(type="string", length=50)
+     * @Assert\NotBlank(message="Este campo es requerido.")
+     *
+     * @Assert\Email(
+     *  message = "El e-mail '{{ value }}' no es válido.",
+     *  checkMX = true
+     * )
+     */
+    private $email;
+
+    /**
+     * @ORM\Column(type="string", length=50)
+     * @Assert\NotBlank(message="Este campo es requerido.")
+     */
+    private $horariovisita;
+
+    /**
+     * @ORM\Column(type="string", length=50)
+     * @Assert\NotBlank(message="Este campo es requerido.")
+     */
+    private $comision;
+
+    /**
+     * @ORM\Column(name="enviarmail", type="boolean", options={"default" = 0})
+     */
+    private $enviarmail;
+
+    /**
+     * @ORM\Column(name="mostrardatos", type="boolean", options={"default" = 0})
+     */
+    private $mostrardatos;
+
+  /**
+     * @ORM\ManyToOne(targetEntity="CanalCaptacion")
+     * @ORM\JoinColumn(name="id_canal_captacion", referencedColumnName="id", nullable=false)
+     */
+    protected $canalCaptacion;
+
+    /**
+     * @ORM\Column(type="datetime")
+     */
+    private $fecha;
+
+    /**
+     * @ORM\Column(name="activo", type="boolean", options={"default" = 1})
+     */
+    private $activo;
+
+    /**
+     * Constructor
+     */
+    public function __construct()
+    {
+        $this->fecha = new \DateTime();
+    }
+
+
+    
+
+}

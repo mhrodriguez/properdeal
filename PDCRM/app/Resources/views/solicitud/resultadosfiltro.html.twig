@@ -1,0 +1,120 @@
+{% extends 'baseabc.html.twig' %}
+
+{% block body %}
+    <div id="wrapper">
+        <div id="container">
+            <!-- Page Layout here -->
+            <br/><br/>
+
+            {% if mostrarbotonatras == true %}
+            <div class="row">
+                <button onclick="window.history.back();" class="waves-effect waves-light btn right blue darken-1">
+                    Regresar
+                </button>
+            </div>
+            {% endif %}
+
+            <div class="row">
+                {%  if filtro > 0 %}
+                <a href="{{ path('solicitud_resultadosfiltro', {}) }}.xls?filtro={{ filtro }}" class="waves-effect waves-light btn blue darken-1 left">Generar Excel</a>
+                <a href="{{ path('solicitud_resultadosimprimirfiltro', {}) }}?filtro={{ filtro }}" class="waves-effect waves-light btn blue darken-1 right" target="_blank">Imprimir</a>
+                {%  endif %}
+            </div>
+
+            <div class="row">
+
+                    {% set index=0 %}
+                    {% for solicitud in solicitudes %}
+
+                        <div class="col s{{ columnas }} m{{ columnas }} l{{ columnas }} ">
+
+                            <div class="z-depth-1">
+
+                            {% if solicitudinmuebles is not null %}
+
+                                {% if solicitudinmuebles[index] is not null %}
+                                    <div style="padding: 10px">
+                                    {% set inmueble = solicitudinmuebles[index] %}
+                                    <h5>ID: {{ inmueble.legacyid }} {{ inmueble.nombreid }} </h5>
+                                    <h5>{{ inmueble.idTipoInmueble.nombre }} en {{ inmueble.idOperacionInmueble.nombre }}</h5>
+                                    {{ inmueble.idUsuario.nombre }} (ProperDeal)<br>
+                                    Alta: {{ inmueble.fechaCreacion | date('d/m/Y') }}<br>
+                                    Modificado: {{ inmueble.fechaModificacion | date('d/m/Y') }}
+                                    </div>
+                                {% endif %}
+                            {% endif %}
+
+                            <div class="card large">
+                                <div class="card-image">
+                                    {% image '@FrameworkBundle/Resources/public/images/solicitud.png' %}
+                                        <img src="{{ asset_url }}" alt="" class="activator">
+                                    {% endimage %}
+
+                                </div>
+                                <div class="card-content">
+                                    <p>
+                                        Publica: {{ solicitud.idUsuario.nombre }} (ProperDeal) - {{ solicitud.fecha | date('d/m/Y') }}<br>
+                                        {{ solicitud.idTipoInmueble.nombre }} en {{ solicitud.idOperacionInmueble.nombre }}<br>
+                                    </p>
+                                </div>
+                                <div class="card-action">
+                                    Ubicación: {{ solicitud.ciudad }}, {{ solicitud.colonia }}<br>
+                                    {% if (solicitud.precio != false) %}
+                                        Desde: {{ solicitud.idMoneda.simbolo }} {{ solicitud.precio|number_format(2, '.', ',') }}<br>
+                                    {% endif  %}
+                                    {% if (solicitud.preciomax != false) %}
+                                        Hasta: {{ solicitud.idMoneda.simbolo }} {{ solicitud.preciomax|number_format(2, '.', ',') }}<br>
+                                    {% endif  %}
+
+                                    {% if (solicitud.metrosterreno != false) %}
+                                        Desde: {{ solicitud.metrosterreno|number_format(2, '.', ',') }} m2
+                                    {% endif  %}
+
+                                    {% if (solicitud.metrosterrenomax != false) %}
+                                        Hasta: {{ solicitud.metrosterrenomax|number_format(2, '.', ',') }} m2
+                                    {% endif  %}
+                                    <br><br>
+                                    <a href="{{ path ('solicitud_show', {'id': solicitud.idSolicitud}) }}">VER</a>
+
+                                    {% if (ida == solicitud.idUsuario.id) or (is_granted('ROLE_SUPERADMIN') == true) %}
+                                    <a href="#!" onclick="window.parent.location.href = '{{ path ('solicitud_edit', {'id': solicitud.idSolicitud}) }}';">EDITAR</a>
+                                    {% endif %}
+
+                                    {% if (ida == solicitud.idUsuario.id) or (is_granted('ROLE_SUPERADMIN') == true) %}
+                                    <a href="{{ path('solicitud_borrar', {'id':solicitud.idSolicitud}) }}" onclick="if (confirm('¿Está seguro que desea borrar este registro?')) { return true; } else { return false; }">BORRAR</a>
+                                    {% endif %}
+
+                                    <a href="#!" onclick="window.parent.location.href = '{{ path('mensaje_new', {}) }}?tipoMensaje=4&idSolicitud={{ solicitud.idSolicitud }}&idAsesor={{ solicitud.idUsuario.id }}'">
+                                        RESPONDER
+                                    </a>
+
+                                </div>
+                            </div>
+
+                            </div>
+
+                        </div>
+
+                    {% set index=index+1 %}
+                    {% endfor %}
+
+            </div>
+
+        </div>
+    </div>
+{% endblock %}
+
+{% block stylesheets %}
+
+    <style>
+        body {
+            background: white;
+            height: 100vh;
+        }
+        p
+        {
+            font-size: small;
+        }
+    </style>
+
+{% endblock %}

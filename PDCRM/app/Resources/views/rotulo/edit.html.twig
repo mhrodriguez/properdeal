@@ -1,0 +1,88 @@
+{% extends 'baseabc.html.twig' %}
+
+{% block body %}
+    <div class="container">
+        <br/>
+        <div class="row">
+            <nav>
+                <div class="nav-wrapper z-depth-1">
+                    <div class="col s12  blue darken-1 ">
+                        <a href="#" class="breadcrumb">Rotulo</a>
+                        <a href="#" class="breadcrumb">Editar</a>
+                    </div>
+                </div>
+            </nav>
+        </div>
+        <br/><br/>
+
+        {{ form_start(form) }}
+
+        <div class="row">
+            <div class="input-field col s12">
+                {{ form_widget(form.asesor) }}
+                {{ form_label(form.asesor) }}
+                {{ form_errors(form.asesor) }}
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="input-field col s6">
+                {{ form_widget(form.accion) }}
+                {{ form_label(form.accion) }}
+                {{ form_errors(form.accion) }}
+            </div>
+            <div class="input-field col s6">
+                {{ form_widget(form.elementos) }}
+                {{ form_label(form.elementos) }}
+                {{ form_errors(form.elementos) }}
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="input-field col s12">
+                {{ form_widget(form.tamano) }}
+                {{ form_label(form.tamano) }}
+                {{ form_errors(form.tamano) }}
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="input-field col s12">
+                {{ form_widget(form.inmueble) }}
+                {{ form_label(form.inmueble) }}
+                {{ form_errors(form.inmueble) }}
+            </div>
+        </div>
+
+        <input type="submit" value="Guardar" class="waves-effect waves-light btn blue darken-4 right" onclick="return fechaHoraConFormato();" />
+        <a href="{{ path('rotulo_index', {}) }}" class="waves-effect waves-light btn blue darken-4 right">Cancelar</a>
+
+        {{ form_end(form) }}
+
+        <script>
+
+            $(document).ready(function() {
+                $('select').material_select();
+            });
+
+        </script>
+
+        <style>
+            body{
+                background-color: white;
+                height: 100vh;
+            }
+
+            #solicitud_caracteristicas label
+            {
+                margin-right: 20px;
+            }
+
+            .activelabel label {
+                font-size: 0.8rem;
+                -webkit-transform: translateY(-140%);
+                transform: translateY(-140%);
+            }
+        </style>
+    </div>
+{% endblock %}

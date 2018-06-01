@@ -1,0 +1,48 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+    <h1>Archivo</h1>
+
+    <table>
+        <tbody>
+            <tr>
+                <th>Idarchivo</th>
+                <td>{{ archivo.idArchivo }}</td>
+            </tr>
+            <tr>
+                <th>Nombre</th>
+                <td>{{ archivo.nombre }}</td>
+            </tr>
+            <tr>
+                <th>Fechacreacion</th>
+                <td>{% if archivo.fechaCreacion %}{{ archivo.fechaCreacion|date('Y-m-d H:i:s') }}{% endif %}</td>
+            </tr>
+            <tr>
+                <th>Privado</th>
+                <td>{% if archivo.privado %}Yes{% else %}No{% endif %}</td>
+            </tr>
+            <tr>
+                <th>Comentarios</th>
+                <td>{{ archivo.comentarios }}</td>
+            </tr>
+            <tr>
+                <th>Activo</th>
+                <td>{% if archivo.activo %}Yes{% else %}No{% endif %}</td>
+            </tr>
+        </tbody>
+    </table>
+
+    <ul>
+        <li>
+            <a href="{{ path('archivo_index') }}">Back to the list</a>
+        </li>
+        <li>
+            <a href="{{ path('archivo_edit', { 'id': archivo.idArchivo }) }}">Edit</a>
+        </li>
+        <li>
+            {{ form_start(delete_form) }}
+                <input type="submit" value="Delete">
+            {{ form_end(delete_form) }}
+        </li>
+    </ul>
+{% endblock %}

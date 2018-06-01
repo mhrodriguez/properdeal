@@ -1,0 +1,21 @@
+<nav class="transparent header z-depth-0" role="navigation">
+    <div class="nav-wrapper">
+        <ul class="right hide-on-med-and-down">
+            <li><a href="{{ path('panel_ids', {}) }}" style="font-size:13px;"><i class="material-icons left" style="font-size:20px;">add_shopping_cart</i>IDS</a></li>
+            <li><a href="{{ path('panel_documento', {}) }}" style="font-size:13px;"><i class="material-icons left" style="font-size:20px;">file_download</i>Documentos</a></li>
+            <li><a href="{{ path('inmueble_index', {}) }}.xls" style="font-size:13px;"><i class="material-icons left" style="font-size:20px;">grid_on</i>Excel</a></li>
+            <!--li><a href="{{ path('minisitio_index', {}) }}/{{ minisitiokey }}" style="font-size:13px;"><i class="material-icons left" style="font-size:20px;">home</i>MiniSitio</a></li-->
+            <li><a href="http://104.236.50.14/PD/web/app.php" style="font-size:13px;"><i class="material-icons left" style="font-size:20px;">home</i>MiniSitio</a></li>
+            <li>
+                <a href="{{ path('panel_solicitud2', {}) }}" style="font-size:13px;"><i class="material-icons right" style="font-size:20px;">warning</i>Solicitudes
+                    <div class="chip">
+                        {{ countSolicitudes }}
+                    </div>
+                </a>
+            </li>
+            <li class="brown lighten-4" style="font-size:13px;">
+                <a href="#" style="font-size:13px;" onclick="alert('Estimado usuario en caso de presentar dificultades en el sistema favor de contactarse al siguiente correo electrónico: jorge@834.mx');"><i class="material-icons left" style="font-size:20px;">warning</i>Soporte 24h</a>
+            </li>
+        </ul>
+    </div>
+</nav>

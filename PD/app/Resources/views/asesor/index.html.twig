@@ -1,0 +1,51 @@
+{% extends 'base2.html.twig' %}
+
+{% block body %}
+    <div id="container">
+        <br>
+        <div class="row">
+
+            {%  for asesor in asesores  %}
+            <div class="col s3 m3 l3 ">
+                <div class="card medium">
+                    <div class="card-image">
+                        {% if (asesor.getWebPathFoto() is null)  %}
+                            {% image '@FrameworkBundle/Resources/public/images/ic_usuario.jpg' %}
+                            <img src="{{ asset_url }}" alt="" class="activator">
+                            {% endimage %}
+                        {% else %}
+                            <img src="{{ asesor.getWebPathFoto() }}" class="activator"/>
+                        {%  endif  %}
+                    </div>
+                    <div class="card-content">
+                        <p><b>{{ asesor.nombre }}</b></p>
+                        <p><i class="material-icons left">phone</i>{{ asesor.telefono }}</p>
+                        <p><i class="material-icons left">email</i>{{ asesor.email }}</p>
+                    </div>
+                    <div class="card-action">
+                        <a href="{{ path('inmueble_index', {}) }}?idAsesor={{ asesor.id }}">Mis propiedades</a>
+                    </div>
+                </div>
+            </div>
+            {% endfor %}
+
+        </div>
+
+    </div>
+
+{% endblock %}
+
+{% block stylesheets %}
+    <style>
+        #container
+        {
+            margin-left: 20px;
+        }
+
+        body{
+            background-color: white;
+        }
+
+    </style>
+{% endblock %}
+

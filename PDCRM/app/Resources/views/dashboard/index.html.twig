@@ -1,0 +1,261 @@
+{% extends 'baseabc.html.twig' %}
+
+{% block body %}
+    <div id="wrapper">
+        <div id="container">
+            <!-- Page Layout here -->
+            <div class="row">
+                <nav>
+                    <div class="nav-wrapper z-depth-1">
+                        <div class="col s12  blue darken-1 ">
+                            <a href="#!" class="breadcrumb">Dashboard</a>
+                        </div>
+                    </div>
+                </nav>
+            </div>
+
+            <div class="row">
+                <div class="chip">
+                    <i class="material-icons left">visibility</i>
+                    Vistos: 0
+                </div>
+                <div class="chip">
+                    <div class="chip">
+                        <i class="material-icons left">print</i>
+                        Impresos: 0
+                    </div>
+                </div>
+                <div class="chip">
+                    <div class="chip">
+                        <i class="material-icons left">send</i>
+                        Enviados: 0
+                    </div>
+                </div>
+                <div class="chip">
+                    <div class="chip">
+                        <i class="material-icons left">monetization_on</i>
+                        &nbsp;
+                    </div>
+                </div>
+            </div>
+
+
+            <div class="row">
+                <h5>Propiedades Registradas</h5>
+                <div id="chart2">&nbsp;</div>
+                    <script>
+                        $(function() {
+                        {{ gchart_column_chart(dataTable2, 'chart2', 800, 400, '') }}
+                    });
+                    </script>
+            </div>
+
+            <div class="row">
+                <h5>Propiedades Inactivas</h5>
+                <h5 class=".center-align">{{ "now"|date("d/m/Y") }}</h5>
+                <div id="chart3">&nbsp;</div>
+                <script>
+                    $(function() {
+                        {{ gchart_column_chart(dataTable3, 'chart3', 800, 400, '') }}
+                    });
+                </script>
+            </div>
+
+            <div class="row">
+                <div class="col s6 m6 l6">
+                    <h5>Top Captadores</h5>
+                    <ul class="collection">
+
+                        {%  for asesor in topCaptadores  %}
+                            <li class="collection-item avatar">
+
+                                {% if asesor.url_foto != null %}
+                                    <img src="{{ asesor.url_foto }}" alt="" class="circle">
+                                {% else %}
+                                    {% image '@FrameworkBundle/Resources/public/images/ic_usuario.jpg' %}
+                                    <img id="imgFotografia" src="{{ asset_url }}" alt="" class="circle" style="width:10%">
+                                    {% endimage %}
+                                {% endif %}
+
+                                <span class="title">{{ asesor.nombre }} ({{ asesor.total }})</span>
+                                <a href="#!" class="secondary-content"><i class="material-icons">grade</i></a>
+                            </li>
+                        {%  endfor  %}
+                    </ul>
+                </div>
+                <div class="col s6 m6 l6">
+                    <h5>Top Prospectadores</h5>
+                    <ul class="collection">
+
+                    {%  for asesor in topProspectadores  %}
+                        <li class="collection-item avatar">
+
+                            {% if asesor.url_foto != null %}
+                                <img src="{{ asesor.url_foto }}" alt="" class="circle">
+                            {% else %}
+                                {% image '@FrameworkBundle/Resources/public/images/ic_usuario.jpg' %}
+                                <img id="imgFotografia" src="{{ asset_url }}" alt="" class="circle" style="width:10%">
+                                {% endimage %}
+                            {% endif %}
+
+                            <span class="title">{{ asesor.nombre }} ({{ asesor.total }}</span>
+                            <a href="#!" class="secondary-content"><i class="material-icons">grade</i></a>
+                        </li>
+                    {%  endfor  %}
+                    </ul>
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col s6 m6 l6">
+                    <h5>Top Propiedades Enviadas en Portafolio</h5>
+                    <ul class="collection">
+                        {%  for inmueble in topInmueblesEnviados  %}
+                            <li class="collection-item avatar">
+                                <span class="title">ID: {{ inmueble.legacyid }} ({{ inmueble.colonia }} {{ inmueble.calle }})</span>
+                                <a href="#!" class="secondary-content"><i class="material-icons">grade</i></a>
+                            </li>
+                        {%  endfor  %}
+                    </ul>
+                </div>
+                <div class="col s6 m6 l6">
+                    <h5>Top Propiedades Recomendadas</h5>
+                    <ul class="collection">
+                        {%  for inmueble in topInmueblesRecomendados  %}
+                            <li class="collection-item avatar">
+                                <span class="title">ID: {{ inmueble.legacyid }} ({{ inmueble.colonia }} {{ inmueble.calle }})</span>
+                                <a href="#!" class="secondary-content"><i class="material-icons">grade</i></a>
+                            </li>
+                        {% endfor %}
+                    </ul>
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col s6 m6 l6">
+                    <h5>Venta/Renta</h5>
+                    <div id="chart1">&nbsp;</div>
+                    <script>
+                        $(function() {
+                            {{ gchart_pie_chart(dataTable1, 'chart1', 400, 200, '') }}
+                        });
+                    </script>
+                </div>
+                <div class="col s6 m6 l6">
+
+                    <h1>Casas</h1>
+                    <h2>{{ totalCasas }}</h2>
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col s6 m6 l6">
+                    <h5>Propiedad por Tipo</h5>
+                    <div id="chart4">&nbsp;</div>
+                    <script>
+                        $(function() {
+                            {{ gchart_pie_chart(dataTable4, 'chart4', 400, 200, '') }}
+                        });
+                    </script>
+                </div>
+                <div class="col s6 m6 l6">
+
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col s12 m12 l12">
+                    <h5>Resumen de Mis Propiedades</h5>
+                    <table class="striped">
+                        <thead>
+                        <tr>
+                            <th></th>
+                            <th>Totales Activas</th>
+                            <th>Totales Inactivas</th>
+                            <th></th>
+                            <th>Mes Actual Activas</th>
+                            <th>Mes Actual Inactivas</th>
+                        </tr>
+                        </thead>
+
+                        <tbody>
+                        {% for linea in reporteTotales %}
+                            <tr>
+                                <td>
+                                   {{ linea.tipoinmuebleNombre }} - {{ linea.operacionInmuebleNombre }}
+                                </td>
+                                <td>
+                                    {{ linea.totalActivo }}
+                                </td>
+                                <td>
+                                    {{ linea.totalInactivo }}
+                                </td>
+                                <td>
+
+                                </td>
+                                <td>
+                                    {{ linea.fechaActivo }}
+                                </td>
+                                <td>
+                                    {{ linea.fechaInactivo }}
+                                </td>
+                            </tr>
+                        {% endfor %}
+
+                        <tr>
+                            <td>
+                                <p>TOTALES</p>
+                            </td>
+                            <td>
+                                {{ totalActivas }}
+                            </td>
+                            <td>
+                                {{ totalInactivas }}
+                            </td>
+                            <td>
+
+                            </td>
+                            <td>
+                                {{ totalMensualActivas }}
+                            </td>
+                            <td>
+                                {{ totalMensualInactivas }}
+                            </td>
+                        </tr>
+
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+
+{% endblock %}
+
+{% block javascripts %}
+    <script type="text/javascript" src="https://www.google.com/jsapi"></script>
+    <script type="text/javascript">
+        google.load("visualization", "1", {packages:["corechart", 'table', 'treemap', 'gauge']});
+        google.load('jquery', '1.6.0');
+    </script>
+{% endblock %}
+
+{% block stylesheets %}
+
+    <style>
+        body {
+            background: white;
+            height: 100vh;
+        }
+
+        h1, h2, h5 {
+            width:100%;
+            display:flex;
+            justify-content: center;
+        }
+        thead
+        {
+            background-color: #3a87ad;
+            color: white;
+        }
+    </style>
+
+{% endblock %}

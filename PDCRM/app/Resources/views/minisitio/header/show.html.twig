@@ -1,0 +1,29 @@
+<nav class="white header" role="navigation">
+    <div class="nav-wrapper container">
+
+        <a href="#" data-activates="nav-mobile" class="button-collapse"><i class="material-icons">menu</i></a>
+
+        {% image '@FrameworkBundle/Resources/public/images/logotipo.png' %}
+            <a href="{{ path('minisitio_index', {}) }}" class="brand-logo">
+                <img src="{{ asset_url }}" class="header-logo" alt="Logo"/>
+            </a>
+        {% endimage %}
+
+            <ul class="right hide-on-med-and-down">
+                    <li><a href="{{ path('login', {}) }}">Login</a></li>
+                    <li><a href="{{ path('usuario_new', {}) }}">Registrarse</a></li>
+            </ul>
+
+            <ul id="nav-mobile" class="side-nav">
+                  <li><a href="{{ path('login', {}) }}">Login</a></li>
+                  <li><a href="{{ path('usuario_new', {}) }}">Registrarse</a></li>
+            </ul>
+
+            <style>
+                .circle
+                {
+                    vertical-align:middle;
+                }
+            </style>
+    </div>
+</nav>

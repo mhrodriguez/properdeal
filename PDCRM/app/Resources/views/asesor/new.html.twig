@@ -1,0 +1,83 @@
+{% extends 'baseabc.html.twig' %}
+
+{% block body %}
+
+    <div class="container">
+        <br/>
+        <div class="row">
+        <nav>
+            <div class="nav-wrapper z-depth-1">
+                <div class="col s12  blue darken-1 ">
+                    <a href="#!" class="breadcrumb">Asesores</a>
+                    <a href="#!" class="breadcrumb">Nuevo</a>
+                </div>
+            </div>
+        </nav>
+        </div>
+
+        <div class="row">
+                <div class="formcontainer">
+                    <div>
+                        {{ form_start(form) }}
+
+                        <div class="row">
+                            <div class="input-field col s12">
+                                {{ form_widget(form.nombre) }}
+                                {{ form_label(form.nombre) }}
+                                {{ form_errors(form.nombre) }}
+                            </div>
+                        </div>
+
+                        <div class="row">
+                            <div class="input-field col s12">
+                                {{ form_widget(form.empresa) }}
+                                {{ form_label(form.empresa) }}
+                                {{ form_errors(form.empresa) }}
+                            </div>
+                        </div>
+
+                        <div class="row">
+                            <div class="input-field col s12">
+                                {{ form_widget(form.email) }}
+                                {{ form_label(form.email) }}
+                                {{ form_errors(form.email) }}
+                            </div>
+                        </div>
+
+                        <div class="row">
+                            <div class="input-field col s12">
+                                {{ form_widget(form.telefono) }}
+                                {{ form_label(form.telefono) }}
+                                {{ form_errors(form.telefono) }}
+                            </div>
+                        </div>
+
+                        <div class="row">
+                            <div class="input-field col s6">
+                                {{ form_widget(form.password.first) }}
+                                {{ form_label(form.password.first) }}
+                                {{ form_errors(form.password.first) }}
+                            </div>
+                            <div class="input-field col s6">
+                                {{ form_widget(form.password.second) }}
+                                {{ form_label(form.password.second) }}
+                                {{ form_errors(form.password.second) }}
+                            </div>
+                        </div>
+
+                        <input type="submit" value="Guardar" class="waves-effect waves-light btn blue darken-4 right"/>
+                        <a href="{{ path('asesor_index', {}) }}" class="waves-effect waves-light btn blue darken-4 right">Cancelar<a/>
+                        {{ form_end(form) }}
+                    </div>
+                </div>
+        </div>
+    </div>
+    
+    <style>
+        body{
+            background-color: white;
+            height: 100vh;
+        }
+    </style>
+
+{% endblock %}

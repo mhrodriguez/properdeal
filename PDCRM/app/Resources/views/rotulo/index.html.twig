@@ -1,0 +1,70 @@
+{% extends 'baseabc.html.twig' %}
+
+{% block body %}
+
+<div id="container">
+
+    <div class="row">
+        <nav>
+            <div class="nav-wrapper z-depth-1">
+                <div class="col s12  blue darken-1 ">
+                    <a href="#" class="breadcrumb">Rotulos</a>
+                </div>
+            </div>
+        </nav>
+    </div>
+
+    <div class="row">
+        <a href="{{ path('rotulo_new', {}) }}" class="waves-effect waves-light btn blue darken-1 right"><i class="material-icons left">add</i>Nuevo Rotulo</a>
+    </div>
+
+    <div class="row" >
+        <div class="col s12 m12 l12">
+
+            <table>
+                <thead>
+                <tr>
+                    <th>Rotulo</th>
+                    <th>Propiedad</th>
+                    <th>Tamaño</th>
+                    <th>Operaciones</th>
+                </tr>
+                </thead>
+                <tbody>
+
+                {% for rotulo in rotulos %}
+                <tr>
+                    <td>
+                        {{ rotulo.accion.nombre }}<br><br>
+                        {% for elemento in rotulo.elementos  %}
+                           - {{ elemento.nombre }}<br>
+                        {% endfor %}
+                    </td>
+                    <td>
+                        ID: {{ rotulo.inmueble.legacyid }}
+                    </td>
+                    <td>
+                        {{ rotulo.tamano.nombre }}
+                    </td>
+                    <td>
+                        <a href="{{ path ('rotulo_edit', {'id': rotulo.id}) }}"><i class="material-icons left">mode_edit</i></a>
+                    </td>
+                </tr>
+                {% endfor %}
+
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+</div>
+
+<style>
+    body {
+        height:100vh;
+        background-color: white;
+    }
+</style>
+
+{% endblock %}
+

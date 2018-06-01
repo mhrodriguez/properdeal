@@ -1,0 +1,93 @@
+{% extends 'baseabc.html.twig' %}
+
+{% form_theme form with ['forms/custom_checkbox_widget.html.twig'] %}
+
+{% block body %}
+
+<div class="container">
+    <br/>
+    <div class="row">
+        <nav>
+            <div class="nav-wrapper z-depth-1">
+                <div class="col s12  blue darken-1 ">
+                    <a href="#" class="breadcrumb">Propiedades</a>
+                    <a href="#" class="breadcrumb">Accesorios</a>
+                </div>
+            </div>
+        </nav>
+    </div>
+    <br/>
+    <div class="row">
+        <div class="formcontainer">
+            <div>
+                {{ form_start(form, {'attr': {'onsubmit' : 'document.getElementById("progressGuardar").style.display=""; return true;'}}) }}
+
+                <div class="row">
+                    <div class="input-field col s9">
+                        <br/><br/>
+                        {{ form_widget(form.accesorios) }}
+                        {{ form_errors(form.accesorios) }}
+                    </div>
+                </div>
+
+                <input type="submit" value="Guardar" class="btn blue darken-4 right"/>
+                <a href="{{ path('inmueble_index', {}) }}" class="btn blue darken-4 right" style="margin-right: 10px">Cancelar</a>
+
+            </div>
+
+            <div id="progressGuardar" style="display:none">
+                <label>Guardando, espere un momento por favor...</label>
+                <div id="divProgress2" class="progress" >
+                    <div class="indeterminate"></div>
+                </div>
+            </div>
+    </div>
+</div>
+
+
+
+    <style>
+        body{
+            background-color: white;
+            height: 170vh;
+        }
+
+        #inmueble_accesorios label
+        {
+            margin-right: 20px;
+        }
+    </style>
+
+
+    <script>
+/*
+        var labels = document.getElementsByTagName('LABEL');
+        for (var i = 0; i < labels.length; i++) {
+            if (labels[i].htmlFor != '') {
+                var elem = document.getElementById(labels[i].htmlFor);
+                if (elem)
+                    elem.label = labels[i];
+            }
+        }
+
+        for (i=0; i<{# form.caracteristicas|length #}; i++)
+        {
+            var caracteristica = document.getElementById('inmueble_caracteristicas_' + i);
+
+            {# for caracteristicaDesc in caracteristicasDesc #}
+
+            if (caracteristica.label.innerHTML == '{# caracteristicaDesc #}')
+            {
+                caracteristica.checked = true;
+            }
+
+            {# endfor #}
+        }*/
+    </script>
+
+    <script>
+
+
+    </script>
+
+{% endblock %}

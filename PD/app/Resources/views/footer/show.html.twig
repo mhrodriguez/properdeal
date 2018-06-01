@@ -1,0 +1,56 @@
+<footer class="page-footer black" style="margin-top: -18px">
+    <div class="container">
+        <div class="row">
+            <div class="col l3 s3 m3">
+                {% image '@FrameworkBundle/Resources/public/images/logotipo.png' %}
+                <a href="{{ path('homepage', {}) }}" class="brand-logo">
+                    <img src="{{ asset_url }}" class="header-logo" alt="Logo"/>
+                </a>
+                {% endimage %}
+            </div>
+            <div class="col l3 s3 m3 white-text">
+                <p style="font-size: medium"><b>Contacto</b></p>
+
+                <p class="pfooter"><i class="material-icons left" style="font-size:1rem">home</i>Av. José Vasconcelos 150 Ote.<br>
+                Plaza O2 local M2A Col. Del Valle<br>
+                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;San Pedro GG N.L.<br>
+                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;66257 México<br>
+                <i class="material-icons left" style="font-size:1rem">phone</i>(81) 8356-2248, 8356-6269</p>
+                <p class="pfooter"><i class="material-icons left" style="font-size:1rem">email</i>info@properdeal.mx</p>
+            </div>
+            <div class="col l3 s3 m3 white-text">
+                <p style="font-size: medium"><b>Enlaces</b></p>
+
+                <p class="pfooter">
+                    <i class="material-icons left" style="font-size:1rem">home</i><a href="{{ path('homepage', {}) }}" style="color:white">Inicio</a><br><br>
+                    <i class="material-icons left" style="font-size:1rem">assignment_ind</i><a href="{{ path('quienessomos_index', {}) }}" style="color:white">¿Quiénes somos?</a><br><br>
+                    <i class="material-icons left" style="font-size:1rem">lightbulb_outline</i><a href="{{ path('servicios_index', {}) }}" style="color:white">Servicios</a><br><br>
+                    <i class="material-icons left" style="font-size:1rem">supervisor_account</i><a href="{{ path('asesor_index', {}) }}" style="color:white">Asesores</a><br><br>
+                    <i class="material-icons left" style="font-size:1rem">contact_mail</i><a href="{{ path('contactanos_index', {}) }}" style="color:white">Contacto</a><br><br>
+                </p>
+            </div>
+            <div class="col l3 s3 m3 white-text">
+                <p style="font-size: medium"><b>Síguenos</b></p>
+                {% image '@FrameworkBundle/Resources/public/images/img_facebook.jpg' %}
+                <a href="https://www.facebook.com/properdealmx" class="brand-logo">
+                    <img src="{{ asset_url }}" class="header-logo" alt="Logo"/>
+                </a>
+                {% endimage %}
+            </div>
+        </div>
+    </div>
+    <div class="footer-copyright">
+        <div class="container">
+            ProperDeal ® 2016 | Todos los Derechos Reservados. | <a href="http://104.236.50.14/PDCRM/web/app.php/login"><i class="material-icons" style="font-size:1rem">lock_outline</i> Login</a>
+        </div>
+    </div>
+
+    <style>
+        p.pfooter
+        {
+            font-size: 0.8rem;
+            line-height: 120%;
+        }
+
+    </style>
+</footer>

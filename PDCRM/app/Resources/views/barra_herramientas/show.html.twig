@@ -1,0 +1,168 @@
+<nav class="blue lighten-5 header z-depth-1" role="navigation">
+    <div class="nav-wrapper">
+
+        <a href="#" data-activates="nav-mobile-herramientas" class="button-collapse"><i class="material-icons">menu</i></a>
+
+        <ul class="left hide-on-med-and-down">
+            {% if (indexSeleccionado==0) %}
+            <li  class="active">
+            {% else %}
+            <li>
+            {% endif %}
+            <a href="{{ path('panel_principal', {}) }}"><i class="material-icons left">dashboard</i>Dashboard</a></li>
+
+            {% if (indexSeleccionado==1) %}
+            <li  class="active">
+                {% else %}
+            <li>
+                {% endif %}
+                <a href="{{ path('panel_resumen', {}) }}">
+                    <i class="material-icons left">insert_drive_file</i>Resumen
+                </a>
+            </li>
+
+            {% if (indexSeleccionado==2) %}
+            <li  class="active">
+                {% else %}
+            <li>
+                {% endif %}
+                <a href="{{ path('panel_blog', {}) }}">
+                    <i class="material-icons left">list</i>Blog
+                    <div class="chip">
+                        {{ countNoticias }}
+                    </div>
+                </a>
+            </li>
+
+            {% if (indexSeleccionado==3) %}
+            <li  class="active">
+                {% else %}
+            <li>
+                {% endif %}
+                <a href="{{ path('panel_inmueble', {}) }}"><i class="material-icons left">home</i>Mis Propiedades
+                    <div class="chip tooltipped" data-tooltip="Inactivas: {{ countInmueblesInactivos }}" data-position="top">
+                        {{ countInmuebles + countInmueblesInactivos }}
+                    </div>
+                </a>
+            </li>
+
+            {% if (indexSeleccionado==4) %}
+            <li  class="active">
+                {% else %}
+            <li>
+                {% endif %}
+                <a href="{{ path('panel_prospecto', {}) }}"><i class="material-icons left">person</i>Prospectos
+                    <div class="chip">
+                        {{ countProspectos }}
+                    </div>
+                </a>
+            </li>
+
+            {% if (indexSeleccionado==5) %}
+            <li  class="active">
+                {% else %}
+            <li>
+                {% endif %}
+                <a href="{{ path('panel_solicitud', {}) }}"><i class="material-icons left">bookmark</i>Solicitudes
+                    <div class="chip">
+                        {{ countSolicitudes }}
+                    </div>
+                </a>
+            </li>
+
+            {% if (indexSeleccionado==6) %}
+            <li  class="active">
+                {% else %}
+            <li>
+                {% endif %}
+                <a href="{{ path('panel_mensaje', {}) }}"><i class="material-icons left">email</i>Mensajes
+                    <div class="chip">
+                        {{ countMensajes }}
+                    </div>
+                </a>
+            </li>
+        </ul>
+
+
+        <ul id="nav-mobile-herramientas" class="side-nav">
+            {% if (indexSeleccionado==0) %}
+            <li  class="active">
+        {% else %}
+            <li>
+                {% endif %}
+                <a href="{{ path('panel_principal', {}) }}"><i class="material-icons left">dashboard</i>Dashboard</a></li>
+
+            {% if (indexSeleccionado==1) %}
+            <li  class="active">
+        {% else %}
+            <li>
+                {% endif %}
+                <a href="{{ path('panel_resumen', {}) }}">
+                    <i class="material-icons left">insert_drive_file</i>Resumen
+                </a>
+            </li>
+
+            {% if (indexSeleccionado==2) %}
+            <li  class="active">
+        {% else %}
+            <li>
+                {% endif %}
+                <a href="{{ path('panel_blog', {}) }}">
+                    <i class="material-icons left">list</i>Blog
+                    <div class="chip">
+                        {{ countNoticias }}
+                    </div>
+                </a>
+            </li>
+
+            {% if (indexSeleccionado==3) %}
+            <li  class="active">
+        {% else %}
+            <li>
+                {% endif %}
+                <a href="{{ path('panel_inmueble', {}) }}">Mis Propiedades
+                    <div class="chip">
+                        {{ countInmuebles }}
+                    </div>
+                </a>
+            </li>
+
+            {% if (indexSeleccionado==4) %}
+            <li  class="active">
+        {% else %}
+            <li>
+                {% endif %}
+                <a href="{{ path('panel_prospecto', {}) }}"><i class="material-icons left">person</i>Prospectos
+                    <div class="chip">
+                        {{ countProspectos }}
+                    </div>
+                </a>
+            </li>
+
+            {% if (indexSeleccionado==5) %}
+            <li  class="active">
+        {% else %}
+            <li>
+                {% endif %}
+                <a href="{{ path('panel_solicitud', {}) }}"><i class="material-icons left">bookmark</i>Solicitudes
+                    <div class="chip">
+                        {{ countSolicitudes }}
+                    </div>
+                </a>
+            </li>
+
+            {% if (indexSeleccionado==6) %}
+            <li  class="active">
+                {% else %}
+            <li>
+                {% endif %}
+                <a href="{{ path('panel_mensaje', {}) }}"><i class="material-icons left">email</i>Mensajes
+                    <div class="chip">
+                        {{ countMensajes }}
+                    </div>
+                </a>
+            </li>
+        </ul>
+
+    </div>
+</nav>

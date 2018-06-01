@@ -1,0 +1,114 @@
+{% extends 'baseabc.html.twig' %}
+
+{% block body %}
+
+<div class="container">
+    <br/>
+    <div class="row">
+        <nav>
+            <div class="nav-wrapper z-depth-1">
+                <div class="col s12  blue darken-1 ">
+                    <a href="#" class="breadcrumb">Solicitudes</a>
+                    <a href="#" class="breadcrumb">Alertas de Solicitudes ({{ titulo }})</a>
+                </div>
+            </div>
+        </nav>
+    </div>
+    <div class="row">
+        <div class="col s6 m6 l6 ">
+            <div class="row">
+                <label for="inpBuscar">Buscar solicitud:</label>
+                <input id="inpBuscar" />
+                <button id ="btnBuscar" onclick="buscar();" class="waves-effect waves-light btn blue darken-4 right">Ir</button>
+                <script>
+                    function buscar()
+                    {
+                        inpBuscar = document.getElementById('inpBuscar');
+
+                        if (inpBuscar.value == '')
+                        {
+                            return;
+                        }
+
+                        window.location = '{{ path('solicitud_buscarform2', {}) }}?tipoBusqueda=3&buscar=' + inpBuscar.value;
+                    }
+                    $(document).ready(function(){
+                        $('#inpBuscar').keypress(function(e){
+                            if(e.keyCode==13)
+                                $('#btnBuscar').click();
+                        });
+                    });
+                </script>
+
+            </div>
+        </div>
+        <div class="col s6 m6 l6 ">
+            <a href="{{ path("solicitud_buscarform2", {}) }}?tipoBusqueda=2" class="right">Mayores a 15 días</a>
+        </div>
+    </div>
+    <div class="row">
+        {% for solicitud in solicitudes %}
+
+            <div class="col s4 m4 l4 ">
+                <div class="card large">
+                    <div class="card-image">
+                        {% image '@FrameworkBundle/Resources/public/images/solicitud.png' %}
+                        <img src="{{ asset_url }}" alt="" class="activator">
+                        {% endimage %}
+                    </div>
+                    <div class="card-content">
+                        <p>
+                            Publica: {{ solicitud.idUsuario.nombre }} (ProperDeal) - {{ solicitud.fecha | date('d/m/Y') }}<br>
+                            {{ solicitud.idTipoInmueble.nombre }} en {{ solicitud.idOperacionInmueble.nombre }}<br>
+                        </p>
+                    </div>
+                    <div class="card-action">
+                        Ubicación: {{ solicitud.ciudad }}, {{ solicitud.colonia }}<br>
+                        {% if (solicitud.precio != false) %}
+                            Desde: {{ solicitud.idMoneda.simbolo }} {{ solicitud.precio|number_format(2, '.', ',') }}<br>
+                        {% endif  %}
+                        {% if (solicitud.preciomax != false) %}
+                            Hasta: {{ solicitud.idMoneda.simbolo }} {{ solicitud.preciomax|number_format(2, '.', ',') }}<br>
+                        {% endif  %}
+
+                        {% if (solicitud.metrosterreno != false) %}
+                            Desde: {{ solicitud.metrosterreno|number_format(2, '.', ',') }} m2
+                        {% endif  %}
+
+                        {% if (solicitud.metrosterrenomax != false) %}
+                            Hasta: {{ solicitud.metrosterrenomax|number_format(2, '.', ',') }} m2
+                        {% endif  %}
+                        <br><br>
+                        <a href="{{ path ('solicitud_show', {'id': solicitud.idSolicitud}) }}">VER</a>
+                    </div>
+                </div>
+            </div>
+
+        {% endfor %}
+    </div>
+</div>
+
+<style>
+    body{
+        background-color: white;
+        height: 100vh;
+    }
+
+    #solicitud_caracteristicas label
+    {
+        margin-right: 20px;
+    }
+
+    .activelabel label {
+        font-size: 0.8rem;
+        -webkit-transform: translateY(-140%);
+        transform: translateY(-140%);
+    }
+</style>
+
+<script>
+
+
+</script>
+
+{% endblock %}

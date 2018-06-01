@@ -1,0 +1,58 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+
+    <div class="container" style="">
+            <div class="z-depth-1 form" style="align-content: center; margin-left: 10%; margin-right: 10%">
+
+                <div class="formcontainer">
+                    <div>
+                        <br/>
+                        <h5>Inicia sesión</h5>
+                        <br/>
+                        <br/>
+                    </div>
+                    <div>
+                        <form action="{{ path('login') }}" method="post" >
+
+                            <div class="row">
+                                <div class="input-field col s12 m12 l12">
+                                    <input type="text" id="username" name="_username" required = "required"/>
+                                    <label for="username">E-mail</label>
+                                </div>
+                            </div>
+
+                            <div class="row">
+                                <div class="input-field col s12">
+                                    <input type="password" id="password" name="_password" required = "required"/>
+                                    <label for="password">Password</label>
+                                </div>
+                            </div>
+
+                            <input type="hidden" name="_target_path" value="/panel_principal" />
+
+                            <button type="submit" class="waves-effect waves-light btn blue darken-4 right">Entrar</button>
+                        </form>
+                    </div>
+
+                    {% if error %}
+                        <div>{{ error.messageKey|trans(error.messageData, 'security') }}</div>
+                    {% endif %}
+
+                </div>
+
+            </div>
+    </div>
+
+    <style>
+        body {
+            background: url({% image '@FrameworkBundle/Resources/public/images/inter3.jpg' %}
+        {{ asset_url }}
+    {% endimage %}
+            );
+            height:100vh;
+            background-size:cover;
+        }
+    </style>
+
+{% endblock %}

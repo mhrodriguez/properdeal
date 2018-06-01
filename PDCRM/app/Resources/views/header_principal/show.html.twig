@@ -1,0 +1,104 @@
+<nav class="white header z-depth-3" role="navigation">
+    <div class="nav-wrapper container">
+
+        <ul id="dropdownMicuenta" class="dropdown-content" style="align-content: center">
+            <li><a href="{{ path('panel_miperfil', {}) }}" style="font-size:13px;"> <i class="material-icons">perm_identity</i>Mi Perfíl</a></li>
+            <li class="divider"></li>
+            <li><a href="{{ path('logout', {}) }}" style="font-size:13px;"><i class="material-icons">power_settings_new</i>Salir</a></li>
+        </ul>
+        <ul id="dropdownMicuenta2" class="dropdown-content">
+            <li><a href="{{ path('panel_miperfil', {}) }}" style="font-size:13px;">Mi Perfil</a></li>
+            <li class="divider"></li>
+            <li><a href="{{ path('logout', {}) }}" style="font-size:13px;">Salir</a></li>
+        </ul>
+
+        <a href="#" data-activates="nav-mobile" class="button-collapse"><i class="material-icons">menu</i></a>
+
+        {% if is_granted('IS_AUTHENTICATED_FULLY') %}
+            <a href="{{ path('panel_principal', {}) }}" class="brand-logo">
+                {% image '@FrameworkBundle/Resources/public/images/logotipo.png' %}
+                <img src="{{ asset_url }}" class="header-logo" alt="Logo"/>
+                {% endimage %}
+            </a>
+        {% else %}
+            <a href="{{ path('homepage', {}) }}" class="brand-logo">
+                {% image '@FrameworkBundle/Resources/public/images/logotipo.png' %}
+                <img src="{{ asset_url }}" class="header-logo" alt="Logo"/>
+                {% endimage %}
+            </a>
+        {% endif %}
+
+            <ul class="right hide-on-med-and-down">
+
+                {% if is_granted('IS_AUTHENTICATED_FULLY') %}
+                    <li>
+                        {{ render(controller(
+                        'AppBundle:AccesoDirecto:show',
+                        { }
+                        )) }}
+                    </li>
+                    <li>
+                        <a class="dropdown-button" href="#!" data-activates="dropdownMicuenta">
+
+                            {% if webPathFoto != false %}
+                                <img src="{{ webPathFoto }}" alt="" class="circle responsive-img" style="width:40px;height:40px;">
+                            {% else %}
+                                {% image '@FrameworkBundle/Resources/public/images/ic_usuario.jpg' %}
+                                    <img src="{{ asset_url }}" alt="" class="circle responsive-img" style="width:40px;height:40px;">
+                                {% endimage %}
+                            {% endif %}
+
+                            <i class="material-icons right">arrow_drop_down</i>
+                        </a>
+                    </li>
+                {% endif %}
+
+            </ul>
+
+            <ul id="nav-mobile" class="side-nav">
+
+                {% if is_granted('IS_AUTHENTICATED_FULLY') %}
+                    {{ render(controller(
+                    'AppBundle:AccesoDirecto:showv',
+                    { }
+                    )) }}
+                    <li>
+                        <a class="dropdown-button" href="#!" data-activates="dropdownMicuenta2">
+                            {% if webPathFoto != false %}
+                                <img src="{{ webPathFoto }}" alt="" class="circle responsive-img" style="width:40px;height:40px;">
+                            {% else %}
+                                {% image '@FrameworkBundle/Resources/public/images/ic_usuario.jpg' %}
+                                <img src="{{ asset_url }}" alt="" class="circle responsive-img" style="width:40px;height:40px;">
+                                {% endimage %}
+                            {% endif %}
+                            Mi Perfil
+                            <i class="material-icons right">arrow_drop_down</i>
+                        </a>
+                    </li>
+                {% endif %}
+
+                <!--li><a href="#">Navbar Link</a></li-->
+            </ul>
+
+            <style>
+                .circle
+                {
+                    vertical-align:middle;
+                }
+
+            </style>
+
+            <script>
+                    $('.dropdown-button').dropdown({
+                                inDuration: 300,
+                                outDuration: 225,
+                                constrain_width: false, // Does not change width of dropdown to that of the activator
+                                hover: true, // Activate on hover
+                                gutter: 0, // Spacing from edge
+                                belowOrigin: false, // Displays dropdown below the button
+                                alignment: 'left' // Displays dropdown with edge aligned to the left of button
+                            }
+                    );
+            </script>
+    </div>
+</nav>

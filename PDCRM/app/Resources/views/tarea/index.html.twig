@@ -1,0 +1,76 @@
+{% extends 'baseabc.html.twig' %}
+
+{% block body %}
+<div id="wrapper">
+    <div id="container">
+        <!-- Page Layout here -->
+        <br/>
+        <div class="row">
+            <nav>
+                <div class="nav-wrapper z-depth-1">
+                    <div class="col s12  blue darken-1 ">
+                        <a href="#!" class="breadcrumb">Tareas</a>
+                    </div>
+                </div>
+            </nav>
+        </div>
+
+        <div class="row">
+            <table class="striped">
+                <thead>
+                <tr>
+                    <th>Asesor</th>
+                    <th>Fecha</th>
+                    <th>Acción</th>
+                    <th>Prospecto</th>
+                    <th>Propiedad</th>
+                    <th>Comentarios</th>
+                </tr>
+                </thead>
+
+                <tbody>
+                {% for tarea in tareas %}
+                <tr>
+                    <td>
+                        {{ tarea.getIdUsuario().nombre }}
+                    </td>
+                    <td>
+                        {{ tarea.fecha | date("d/m/Y H:i:s") }}
+                    </td>
+                    <td>
+                        {{ tarea.getIdAccion().nombre }}
+                    </td>
+                    <td>
+                        {{ tarea.getIdProspecto().nombre }} {{ tarea.getIdProspecto().apellidos }}
+                    </td>
+                    <td>
+                        {{ tarea.propiedad }}
+                    </td>
+                    <td>
+                        {{ tarea.comentarios }}
+                    </td>
+                </tr>
+                {% endfor %}
+                </tbody>
+            </table>
+        </div>
+
+    </div>
+</div>
+{% endblock %}
+
+{% block stylesheets %}
+
+<style>
+    body {
+        background: white;
+        height: 100vh;
+    }
+    img
+    {
+        width: 32px;
+        height: 32px;
+    }
+</style>
+
+{% endblock %}

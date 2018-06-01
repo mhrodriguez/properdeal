@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8" />
+    <title>{% block title %}Proper Deal{% endblock %}</title>
+
+    {% block stylesheets %}
+    {% endblock %}
+
+    <link rel="icon" type="image/x-icon" href="{{ asset('favicon.ico') }}" />
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+
+    <style>
+        .progress {
+            position: absolute;
+            margin-top: 0px;
+            height: 3px;
+        }
+    </style>
+
+    {% block javascriptsheaders %}
+
+    {% endblock %}
+
+    {% block javascripts %}
+
+        <script src="https://code.jquery.com/jquery-2.1.1.min.js"></script>
+
+        <script>
+            {% for flash_message in app.session.flashbag.get('notice') %}
+            alert('{{ flash_message }}');
+            {% endfor %}
+        </script>
+
+    {% endblock %}
+
+</head>
+<body onload="document.getElementById('divProgress').style.display='none';">
+<div id="divProgress" class="progress" >
+    <div class="indeterminate"></div>
+</div>
+
+{% block body %}{% endblock %}
+
+</body>
+
+</html>

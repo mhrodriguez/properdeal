@@ -1,0 +1,78 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+
+    <div class="container">
+        <div class="row">
+            <div class="col l8 m8 s12 z-depth-1 form">
+                <div class="formcontainer">
+                    <div>
+                        <h5>Bienvenido</h5>
+                        <p>Regístrate para accesar al portal inmobiliario.</p>
+                    </div>
+                    <div>
+                        {{ form_start(form) }}
+
+                        <div class="row">
+                            <div class="input-field col s12">
+                                {{ form_widget(form.nombre) }}
+                                {{ form_label(form.nombre) }}
+                                {{ form_errors(form.nombre) }}
+                            </div>
+                        </div>
+
+                        <div class="row">
+                            <div class="input-field col s6">
+                                {{ form_widget(form.email) }}
+                                {{ form_label(form.email) }}
+                                {{ form_errors(form.email) }}
+                            </div>
+                            <div class="input-field col s6">
+                                {{ form_widget(form.telefono) }}
+                                {{ form_label(form.telefono) }}
+                                {{ form_errors(form.telefono) }}
+                            </div>
+                        </div>
+
+                        <div class="row">
+                            <div class="input-field col s6">
+                                {{ form_widget(form.password.first) }}
+                                {{ form_label(form.password.first) }}
+                                {{ form_errors(form.password.first) }}
+                            </div>
+                            <div class="input-field col s6">
+                                {{ form_widget(form.password.second) }}
+                                {{ form_label(form.password.second) }}
+                                {{ form_errors(form.password.second) }}
+                            </div>
+                        </div>
+
+                        <div class="g-recaptcha" data-sitekey="6Lf1AyITAAAAAM-14bcKis3sYTwx76fM1x57QY2s"></div>
+
+                        <input type="submit" value="Crear cuenta" class="waves-effect waves-light btn blue-grey darken-4 right"/>
+
+                        {{ form_end(form) }}
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+
+    <style>
+        body {
+            background: url({% image '@FrameworkBundle/Resources/public/images/2.jpg' %}
+                {{ asset_url }}
+            {% endimage %}
+            );
+            height:100vh;
+            background-size:cover;
+        }
+    </style>
+
+    {% block javascriptsheaders %}
+        <script src='https://www.google.com/recaptcha/api.js'></script>
+    {% endblock %}
+
+
+{% endblock %}

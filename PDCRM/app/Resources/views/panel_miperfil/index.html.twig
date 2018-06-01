@@ -1,0 +1,34 @@
+{% extends 'baseprincipal.html.twig' %}
+
+{% block body %}
+    <div id="wrapper">
+
+        <div id="container">
+
+            <div style="margin-top: 0px">
+                {{ render(controller(
+                'AppBundle:BarraHerramientas:show',
+                { 'indexSeleccionado': -1, 'numProspectos' : 0 }
+                )) }}
+            </div>
+
+            <!-- Page Layout here -->
+            <div class="row z-depth-2" >
+                <div class="col s12 m12 l12"> <!-- Note that "m8 l9" was added -->
+                    <iframe id="iframePrincipal" src="{{ path('usuario_edit', {}) }}" style="width:100%; height:80vh; margin-top:8px; padding-top:-8px" frameBorder="0">
+                    </iframe>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}
+
+{% block stylesheets %}
+
+    <style>
+        body {
+            background: white;
+        }
+    </style>
+
+{% endblock %}

@@ -1,0 +1,76 @@
+{% extends 'baseabc.html.twig' %}
+
+{% block body %}
+
+<div id="container">
+
+    <div class="row">
+        <nav>
+            <div class="nav-wrapper z-depth-1">
+                <div class="col s12  blue darken-1 ">
+                    <a href="#" class="breadcrumb">Comisiones</a>
+                </div>
+            </div>
+        </nav>
+    </div>
+
+    <div class="row">
+        <a href="{{ path('comision_new', {}) }}" class="waves-effect waves-light btn blue darken-1 right"><i class="material-icons left">add</i>Nueva comisión</a>
+    </div>
+
+    <div class="row" >
+        <div class="col s12 m12 l12">
+
+            <table>
+                <thead>
+                <tr>
+                    <th>Datos</th>
+                    <th>Comision</th>
+                    <th>Operaciones</th>
+                </tr>
+                </thead>
+                <tbody>
+
+                {% for comision in comisiones %}
+                <tr>
+                    <td>
+                        <b>Fecha: </b>{{comision.fecha | date('d/m/Y')}}<br>
+                        <b>Asesor: </b>{{ comision.asesor.nombre }}<br>
+                        <b>Comparte: </b>{{ comision.comparte }}<br>
+                        <b>Cliente: </b>{{ comision.cliente }}
+                    </td>
+                    <td>
+                        <b>Operación: </b>{{comision.operacioninmueble.nombre}}<br>
+                        <b>Monto: $ </b>{{comision.monto|number_format(2, '.', ',')}}<br>
+
+                        {% set montocomision = comision.monto*(comision.comision/100) %}
+                        <b>Comisión: </b>{{ comision.comision }} % - $ {{ montocomision|number_format(2, '.', ',') }} <br>
+
+                        {% set montocomisionoficina = montocomision*(comision.comisionoficina/100) %}
+                        <b>Comisión Oficina: </b>{{ comision.comisionoficina }} % - $ {{ montocomisionoficina|number_format(2, '.', ',') }}<br>
+
+                        {% set montocomisionasesor = montocomisionoficina*(comision.comisionasesor/100) %}
+                        <b>Comisión Asesor: </b>{{ comision.comisionasesor }} % - $ {{ montocomisionasesor|number_format(2, '.', ',') }}
+                    </td>
+                    <td>
+                        <a href="{{ path ('comision_edit', {'id': comision.id}) }}"><i class="material-icons left">mode_edit</i></a>
+                    </td>
+                </tr>
+                {% endfor %}
+
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+</div>
+
+<style>
+    body {
+        height:100vh;
+        background-color: white;
+    }
+</style>
+
+{% endblock %}
+

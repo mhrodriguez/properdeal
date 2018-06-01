@@ -1,0 +1,215 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+
+    <style>
+        .tablacorners {
+            border-radius: 15px 50px 30px;
+            border: 1px solid #999999;
+            padding: 20px;
+        }
+    </style>
+
+</head>
+<body>
+
+<table>
+    <tbody>
+
+    <!-- header -->
+    <tr>
+        <td>
+            <div>
+                <h2>{{ asesor.nombre }}</h2>
+                <p><b>Móvil: </b>{{ asesor.celular }}<br>
+                    <b>E-mail: </b><a href="mailto:{{ asesor.email }}?Subject=Contacto" target="_top">{{ asesor.email }}</a>
+                </p>
+            </div>
+        </td>
+        <td style="text-align: right">
+            {% image '@FrameworkBundle/Resources/public/images/logotipo.png' %}
+            <a href="http://www.properdeal.mx">
+                <img src="http://104.236.50.14{{ asset_url }}" class="header-logo" alt="Logo"/>
+            </a>
+            {% endimage %}
+        </td>
+    </tr>
+
+    <tr>
+        <td>
+            <h3>{{ titulo }}</h3>
+            <p>{{ mensaje }}</p>
+        </td>
+    </tr>
+
+    {% for inmueble in inmuebles %}
+        <tr>
+            <td style="width:50%; vertical-align: top;">
+
+                <a href="http://www.properdeal.com.mx/PD/web/app.php/buscarinmueble/showfs/{{ inmueble.idInmueble }}?ida={{ ida }}">
+                    <h2>{{ inmueble.nombreid }}, {{ inmueble.idMunicipio.nombre }}, {{ inmueble.idEstado.nombre }}, {{ inmueble.cp }} </h2>
+                </a>
+                {% if inmueble.nombreedificio is not null  %}
+                    <h2>{{ inmueble.nombreedificio }}</h2>
+                {% endif %}
+
+                {% if inmueble.idOperacionInmueble.idOperacionInmueble == 2 %}
+                    <h2>
+                        {% if inmueble.precio > 0 %}
+                            Desde: {{ inmueble.idMoneda.simbolo }} {{ inmueble.precio|number_format(2, '.', ',') }}
+                        {% endif %}
+                        {% if inmueble.preciohasta > 0 %}
+                            &nbsp;&nbsp;Hasta: {{ inmueble.idMoneda.simbolo }} {{ inmueble.preciohasta|number_format(2, '.', ',') }}
+                        {% endif %}
+                    </h2>
+                {% else %}
+                    <h2>{{ inmueble.idMoneda.simbolo }} {{ inmueble.precio|number_format(2, '.', ',') }} </h2>
+                {% endif %}
+
+                <br>
+
+                <label><b>{{ inmueble.idTipoInmueble.nombre }} en {{ inmueble.idOperacionInmueble.nombre }}</b></label><br>
+                <label>ID: {{ inmueble.legacyid }}</label><br><br>
+
+                <label><b>Informacion de la Propiedad:</b></label>
+
+                <table>
+                    <tr>
+                        <td style="width:50%">
+                            <ul>
+                                {% if inmueble.recamaras is not null %}
+                                    <li>{{ inmueble.recamaras }} | Recámara(s)</li>
+                                {% endif %}
+
+                                {% if inmueble.plantas > 0 %}
+                                    <li>{{ inmueble.plantas }} | Plantas</li>
+                                {% endif %}
+
+                                {% if inmueble.banos is not null %}
+                                    <li>{{ inmueble.banos }} | Baño(s)</li>
+                                {% endif %}
+
+                                {% if inmueble.mediobanos is not null %}
+                                    {% if inmueble.mediobanos > 0 %}
+                                        <li>{{ inmueble.mediobanos }} | Medios Baño(s)</li>
+                                    {% endif %}
+                                {% endif %}
+
+                                {% if inmueble.espacioautos is not null %}
+                                    {% if inmueble.espacioautos > 0 %}
+                                        <li>{{ inmueble.espacioautos }} | Estacionamiento(s)</li>
+                                    {% endif %}
+                                {% endif %}
+
+                                <li></li>
+
+                                {% if inmueble.antiguedad is not null %}
+                                    <li>Antiguedad: {{ inmueble.antiguedad }}</li>
+                                {% endif %}
+                            </ul>
+                        </td>
+                        <td style="width:50%">
+                            <label></label>
+                            <ul>
+                                <li>
+                                    {% if inmueble.metrosconstruccion is not null %}
+                                        {% if inmueble.metrosconstruccion > 0 %}
+                                            {{ inmueble.metrosconstruccion }} | M2 de Construcción<br>
+                                        {% endif %}
+                                    {% endif %}
+                                </li>
+
+                                <li>
+                                    {% if inmueble.metrosterreno is not null %}
+                                        {% if inmueble.metrosterreno > 0 %}
+                                            {{ inmueble.metrosterreno }} | M2 de Terreno<br>
+                                        {% endif %}
+                                    {% endif %}
+                                </li>
+                            </ul>
+                        </td>
+                    </tr>
+                </table>
+
+                <label><b>Descripcion:</b></label>
+                <p>{{ inmueble.descripcion }}</p>
+
+                <label><b>Características</b></label>
+                <ul>
+                    {%  for caracteristica in inmueble.caracteristicas %}
+                        <li>{{ caracteristica.nombre }}</li>
+                    {% endfor %}
+                </ul>
+
+
+            </td>
+            <td style="width:50%">
+                {% set index=1 %}
+                <table>
+
+                    {% if (inmueble.imagenes|length>0) %}
+                        {% for imagen in inmueble.imagenes %}
+
+                            {% if index == 1 %}
+                                <tr>
+                            {% endif  %}
+
+                            <td style="width:50%;">
+                                <img src="http://104.236.50.14{{ imagen.getWebPath() }}" class="responsive-img" style="margin: 10px; width:280px; height: 180px"/>
+                            </td>
+
+                            {% if index == 2 %}
+                                </tr>
+                            {% endif  %}
+
+                            {% if index == 1 %}
+                                {% set index=2 %}
+                            {% else %}
+                                {% set index=1 %}
+                            {% endif  %}
+
+                        {% endfor %}
+
+                    {% endif %}
+                </table>
+            </td>
+        </tr>
+
+        <tr><td colspan="2"></td></tr>
+
+    {% endfor %}
+
+    <!-- Footer -->
+    <tr>
+        <td>
+            <div style="background-color: lightgrey; width: 500px; padding-left: 2em;">
+                <br>
+                <label><b>{{ asesor.nombre }}</b></label><br>
+                <label>Teléfono: {{ asesor.telefono }}</label><br>
+                <label>Móvil: {{ asesor.celular }}</label><br>
+                <label><b>{{ asesor.email }}</b></label><br><br>
+            </div>
+        </td>
+    </tr>
+
+    </tbody>
+</table>
+
+
+<style>
+    #imgInmueble {
+        display: block;
+        max-width:512px;
+        max-height:480px;
+        width: auto;
+        height: auto;
+    }
+    ul {
+        list-style-type: none;
+    }
+</style>
+
+</body>
+</html>

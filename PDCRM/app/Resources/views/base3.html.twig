@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8" />
+    <title>{% block title %}Proper Deal{% endblock %}</title>
+
+    {% block stylesheets %}
+
+    {% endblock %}
+
+    {% block javascriptsheaders %}
+
+    {% endblock %}
+
+    {% stylesheets '@FrameworkBundle/Resources/public/materialize/css/*'
+    '@FrameworkBundle/Resources/public/css/*'
+    filter='cssrewrite' %}
+    <link rel="stylesheet" href="{{ asset_url }}" />
+    {% endstylesheets %}
+
+    {% javascripts '@FrameworkBundle/Resources/public/materialize/js/*' %}
+    <script src="{{ asset_url }}"></script>
+    {% endjavascripts %}
+
+    <style>
+        .progress {
+            position: absolute;
+            margin-top: 0px;
+            height: 3px;
+        }
+    </style>
+
+</head>
+<body onload="document.getElementById('divProgress').style.display='none';">
+<div id="divProgress" class="progress" >
+    <div class="indeterminate"></div>
+</div>
+
+{% block body %}
+
+{% endblock %}
+
+</body>
+
+</html>

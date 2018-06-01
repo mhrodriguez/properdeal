@@ -1,0 +1,17 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+
+    {% image '@FrameworkBundle/Resources/public/images/logotipo.png' %}
+    <img src="http://104.236.50.14{{ asset_url }}" class="header-logo" alt="Logo"/>
+    {% endimage %}
+
+    <h4>¡Bienvenido {{nombre}}!</h4>
+    <p>ProperDeal te da la más cordial bienvenida. Ya puedes tener acceso al portal usando la cuanta que haz creado.</p>
+    <p>Saludos cordiales.</p>
+</body>
+</html>

@@ -1,0 +1,59 @@
+{% extends 'baseabc.html.twig' %}
+
+{% block body %}
+    <div id="wrapper">
+        <div id="container">
+            <!-- Page Layout here -->
+            <p>LISTADO DE ACTIVIDADES</p>
+
+            <div class="row">
+                <table class="striped">
+                    <thead>
+                    <tr>
+                        <th>Prop</th>
+                        <th>Fecha</th>
+                        <th>Accion</th>
+                        <th>Prospecto</th>
+                    </tr>
+                    </thead>
+
+                    <tbody>
+                    {% for tarea in tareas %}
+                        <tr>
+                            <td>
+                                {{ tarea.propiedad }}
+                            </td>
+                            <td>
+                                {{ tarea.fecha | date("d/F (H:i)") }}
+                            </td>
+                            <td>
+                                {{ tarea.getIdAccion().nombre }}
+                            </td>
+                            <td>
+                                {{ tarea.getIdProspecto().nombre }} {{ tarea.getIdProspecto().apellidos }}
+                            </td>
+                        </tr>
+                    {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+
+        </div>
+    </div>
+{% endblock %}
+
+{% block stylesheets %}
+
+    <style>
+        body {
+            background: white;
+            height: 100vh;
+        }
+        img
+        {
+            width: 32px;
+            height: 32px;
+        }
+    </style>
+
+{% endblock %}

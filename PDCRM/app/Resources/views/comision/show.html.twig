@@ -1,0 +1,68 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+    <h1>Comision</h1>
+
+    <table>
+        <tbody>
+            <tr>
+                <th>Id</th>
+                <td>{{ comision.id }}</td>
+            </tr>
+            <tr>
+                <th>Fecha</th>
+                <td>{% if comision.fecha %}{{ comision.fecha|date('Y-m-d H:i:s') }}{% endif %}</td>
+            </tr>
+            <tr>
+                <th>Fechacreacion</th>
+                <td>{% if comision.fechaCreacion %}{{ comision.fechaCreacion|date('Y-m-d H:i:s') }}{% endif %}</td>
+            </tr>
+            <tr>
+                <th>Comparte</th>
+                <td>{{ comision.comparte }}</td>
+            </tr>
+            <tr>
+                <th>Cliente</th>
+                <td>{{ comision.cliente }}</td>
+            </tr>
+            <tr>
+                <th>Monto</th>
+                <td>{{ comision.monto }}</td>
+            </tr>
+            <tr>
+                <th>Propiedadexterna</th>
+                <td>{{ comision.propiedadexterna }}</td>
+            </tr>
+            <tr>
+                <th>Comision</th>
+                <td>{{ comision.comision }}</td>
+            </tr>
+            <tr>
+                <th>Comisionoficina</th>
+                <td>{{ comision.comisionoficina }}</td>
+            </tr>
+            <tr>
+                <th>Comisionasesor</th>
+                <td>{{ comision.comisionasesor }}</td>
+            </tr>
+            <tr>
+                <th>Activo</th>
+                <td>{% if comision.activo %}Yes{% else %}No{% endif %}</td>
+            </tr>
+        </tbody>
+    </table>
+
+    <ul>
+        <li>
+            <a href="{{ path('comision_index') }}">Back to the list</a>
+        </li>
+        <li>
+            <a href="{{ path('comision_edit', { 'id': comision.id }) }}">Edit</a>
+        </li>
+        <li>
+            {{ form_start(delete_form) }}
+                <input type="submit" value="Delete">
+            {{ form_end(delete_form) }}
+        </li>
+    </ul>
+{% endblock %}

@@ -1,0 +1,54 @@
+# To get started with security, check out the documentation:
+# http://symfony.com/doc/current/book/security.html
+security:
+
+    encoders:
+        AppBundle\Entity\Usuario:
+            algorithm: bcrypt
+
+    # http://symfony.com/doc/current/book/security.html#where-do-users-come-from-user-providers
+    providers:
+        pd_db_provider:
+            entity:
+                class: AppBundle:Usuario
+                property: email
+                # if you're using multiple entity managers
+                # manager_name: customer
+
+    firewalls:
+        # disables authentication for assets and the profiler, adapt it according to your needs
+        dev:
+            pattern: ^/(_(profiler|wdt)|css|images|js)/
+            security: false
+
+        main:
+            anonymous: ~
+            form_login:
+                  login_path: login
+                  check_path: login
+            logout:
+                path:   /logout
+                target: /
+
+    access_control:
+        # require ROLE_ADMIN for /admin*
+        - { path: /panel_principal, roles: ['ROLE_AGENTE_INMOBILIARIO', 'ROLE_ASESOR', 'ROLE_SUPERADMIN'] }
+        - { path: /usuario/new, roles: ['ROLE_SUPERADMIN'] }
+        - { path: /asesor, roles: ['ROLE_AGENTE_INMOBILIARIO', 'ROLE_SUPERADMIN'] }
+        - { path: /panel_prospecto, roles: ['ROLE_AGENTE_INMOBILIARIO', 'ROLE_ASESOR', 'ROLE_SUPERADMIN'] }
+        - { path: /prospecto, roles: ['ROLE_AGENTE_INMOBILIARIO', 'ROLE_ASESOR', 'ROLE_SUPERADMIN'] }
+        - { path: /panel_inmueble, roles: ['ROLE_AGENTE_INMOBILIARIO', 'ROLE_ASESOR', 'ROLE_SUPERADMIN'] }
+        - { path: /inmueble, roles: ['ROLE_AGENTE_INMOBILIARIO', 'ROLE_ASESOR', 'ROLE_SUPERADMIN'] }
+        - { path: /contacto, roles: ['ROLE_AGENTE_INMOBILIARIO', 'ROLE_ASESOR', 'ROLE_SUPERADMIN'] }
+        - { path: /listacontacto, roles: ['ROLE_AGENTE_INMOBILIARIO', 'ROLE_ASESOR', 'ROLE_SUPERADMIN'] }
+        - { path: /colaborador, roles: ['ROLE_AGENTE_INMOBILIARIO', 'ROLE_ASESOR', 'ROLE_SUPERADMIN'] }
+        - { path: /inmuebleimagen, roles: ['ROLE_AGENTE_INMOBILIARIO', 'ROLE_ASESOR', 'ROLE_SUPERADMIN'] }
+        - { path: /consultarinmueble, roles: ['ROLE_AGENTE_INMOBILIARIO', 'ROLE_ASESOR', 'ROLE_SUPERADMIN'] }
+        - { path: /panel_blog, roles: ['ROLE_AGENTE_INMOBILIARIO', 'ROLE_ASESOR', 'ROLE_SUPERADMIN'] }
+        - { path: /noticia, roles: ['ROLE_AGENTE_INMOBILIARIO', 'ROLE_ASESOR', 'ROLE_SUPERADMIN'] }
+        - { path: /panel_resumen, roles: ['ROLE_AGENTE_INMOBILIARIO', 'ROLE_ASESOR', 'ROLE_SUPERADMIN'] }
+        - { path: /resumen, roles: ['ROLE_AGENTE_INMOBILIARIO', 'ROLE_ASESOR', 'ROLE_SUPERADMIN'] }
+        - { path: /panel_mensaje, roles: ['ROLE_AGENTE_INMOBILIARIO', 'ROLE_ASESOR', 'ROLE_SUPERADMIN'] }
+        - { path: /mensaje, roles: ['ROLE_AGENTE_INMOBILIARIO', 'ROLE_ASESOR', 'ROLE_SUPERADMIN'] }
+        - { path: /panel_miperfil, roles: ['ROLE_AGENTE_INMOBILIARIO', 'ROLE_ASESOR', 'ROLE_SUPERADMIN'] }
+        - { path: /ids, roles: ['ROLE_AGENTE_INMOBILIARIO', 'ROLE_ASESOR', 'ROLE_SUPERADMIN'] }

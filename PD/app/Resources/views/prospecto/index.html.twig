@@ -1,0 +1,56 @@
+{% extends 'baseabc.html.twig' %}
+
+{% block body %}
+    <div id="wrapper">
+        <div id="container">
+            <!-- Page Layout here -->
+            <br/>
+            <div class="row">
+                <nav>
+                    <div class="nav-wrapper z-depth-1">
+                        <div class="col s12  blue darken-1 ">
+                            <a href="#!" class="breadcrumb">Prospectos</a>
+                        </div>
+                    </div>
+                </nav>
+            </div>
+            <div class="row">
+                <a href="{{ path('prospecto_new', {}) }}" class="waves-effect waves-light btn blue darken-1 right"><i class="material-icons left">add</i>Nuevo Prospecto</a>
+            </div>
+
+            <div class="row">
+                <table class="striped">
+                    <thead>
+                    <tr>
+                        <th data-field="id">Prospecto</th>
+                    </tr>
+                    </thead>
+
+                    <tbody>
+                    {% for prospecto in prospectos %}
+                        <tr>
+                            <td>
+                                {{ prospecto.nombre }}<br/>
+                                Tipo: {{ prospecto.idTipoProspecto.nombre }}<br/><br/>
+                                Oportunidad: $ {{ prospecto.presupuesto|number_format(2, '.', ',') }}
+                            </td>
+                        </tr>
+                    {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+
+        </div>
+    </div>
+{% endblock %}
+
+{% block stylesheets %}
+
+    <style>
+        body {
+            background: white;
+            height: 100vh;
+        }
+    </style>
+
+{% endblock %}

@@ -1,0 +1,16 @@
+# This file is auto-generated during the composer install
+parameters:
+    database_host: 127.0.0.1
+    database_port: 3306
+    database_name: PD
+    database_user: pdapp
+    database_password: pdapp780721
+
+    mailer_transport: smtp
+    mailer_host: mail.properdeal.mx
+    mailer_user: null
+    mailer_password: null
+
+    secret: 2437e27d78e37b9a8ac070438479324d25fc4ec7
+
+    domain_root_name: http://104.236.50.14/

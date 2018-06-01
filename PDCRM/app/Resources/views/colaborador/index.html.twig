@@ -1,0 +1,168 @@
+{% extends 'baseabc.html.twig' %}
+
+{% block body %}
+    <div id="wrapper">
+        <div id="container">
+            <!-- Page Layout here -->
+            <br/>
+            <div class="row">
+                <nav>
+                    <div class="nav-wrapper z-depth-1">
+                        <div class="col s12  blue darken-1 ">
+                            <a href="#!" class="breadcrumb">Colaboradores</a>
+                        </div>
+                    </div>
+                </nav>
+            </div>
+
+            <div class="row">
+
+                <div class="col s12">
+                        <ul class="tabs">
+                            <li class="tab col s4"><a class="active blue-text" href="#tabAgregarColaborador">Agregar Colaborador</a></li>
+                            <li class="tab col s4"><a class="blue-text" href="#tabHandshakes">HandShakes ({{ handshakes|length }})</a></li>
+                            <li class="tab col s4"><a class="blue-text" href="#tabSeguidores">Te siguen ({{ seguidores|length }})</a></li>
+                        </ul>
+                    </div>
+                    <div id="tabAgregarColaborador" class="col s12">
+                        <table class="striped">
+                            <thead>
+                            <tr>
+                                <th data-field="id">Colaborador</th>
+                                <th>Actividad</th>
+                                <th>HandShake</th>
+                            </tr>
+                            </thead>
+
+                            <tbody>
+                            {% for colaborador in posiblescolaboradores %}
+                                <tr>
+                                    <td>
+                                        Oficina: {{ colaborador.empresa }}<br/>{{ colaborador.nombre }}<br/>Alta: {{ colaborador.fechaCreacion|date('d-m-Y') }}
+                                    </td>
+                                    <td>
+                                        <a href="{{ path('inmueble_portafolioasesor', {'idasesor':colaborador.id}) }}"><i class="material-icons left">business_center</i></a>
+                                    </td>
+                                    <td>
+                                        <a href="#" onclick="onHandshake({{ colaborador.id }});">
+                                            {% image '@FrameworkBundle/Resources/public/images/handshake.png' %}
+                                            <img src="{{ asset_url }}" alt="Seguir"/>
+                                            {% endimage %}
+                                        </a>
+                                    </td>
+                                </tr>
+                            {% endfor %}
+                            </tbody>
+                        </table>
+                    </div>
+                    <div id="tabHandshakes" class="col s12">
+                        <table class="striped">
+                        <thead>
+                        <tr>
+                            <th data-field="id">Handshake</th>
+                            <th>Actividad</th>
+                        </tr>
+                        </thead>
+
+                        <tbody>
+                        {% for handshake in handshakes %}
+                            <tr>
+                                <td>
+                                    Oficina: {{ handshake.empresa }}<br/>{{ handshake.nombre }}<br/>Alta: {{ handshake.fechaCreacion|date('d-m-Y') }}
+                                </td>
+                                <td>
+                                    <a href="{{ path('inmueble_portafolioasesor', {'idasesor':handshake.id}) }}"><i class="material-icons left">business_center</i></a>
+                                </td>
+                            </tr>
+                        {% endfor %}
+                        </tbody>
+                        </table>
+                    </div>
+                    <div id="tabSeguidores" class="col s12">
+
+                        <table class="striped">
+                            <thead>
+                            <tr>
+                                <th data-field="id">Seguidor</th>
+                                <th>Actividad</th>
+                            </tr>
+                            </thead>
+
+                            <tbody>
+                            {% for seguidor in seguidores %}
+                                <tr>
+                                    <td>
+                                        Oficina: {{ seguidor.empresa }}<br/>{{ seguidor.nombre }}<br/>Alta: {{ seguidor.fechaCreacion|date('d-m-Y') }}
+                                    </td>
+                                    <td>
+                                        <a href="{{ path('inmueble_portafolioasesor', {'idasesor':seguidor.id}) }}"><i class="material-icons left">business_center</i></a>
+                                    </td>
+                                </tr>
+                            {% endfor %}
+                            </tbody>
+                        </table>
+
+                    </div>
+                </div>
+
+                <div id="mdlConfirmacion" class="modal">
+                    <div class="modal-content">
+                        <h5>Handshake</h5>
+                        <p>¿Está seguro que desea agregar este Colaborador?</p>
+                    </div>
+                    <div class="modal-footer">
+                        <a href="#" class="waves-effect waves-gray gray btn-flat" onclick="$('#mdlConfirmacion').closeModal(); return false;">No</a>
+                        <a href="#" class="waves-effect waves-gray blue btn-flat" onclick="$('#mdlConfirmacion').closeModal(); requestHandshake(); return false;" id="md1_YesBtn">Si</a>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+{% endblock %}
+
+{% block stylesheets %}
+
+    <style>
+        body {
+            background: white;
+            height: 100vh;
+        }
+
+        .tabs .indicator {
+            background-color: blue !important;
+        }
+    </style>
+
+    <script>
+        var idUsuarioColaborador=-1;
+        function onHandshake(idColaborador)
+        {
+            idUsuarioColaborador = idColaborador;
+
+            $('#mdlConfirmacion').openModal();
+        }
+
+        function requestHandshake()
+        {
+            var url = 'http://' + window.location.hostname  + '{{ path('colaborador_handshake', {}) }}?idUsuarioColaborador=' + idUsuarioColaborador;
+
+            $.ajax({
+                url: url,
+                dataType: "json",
+                success: function(data) {
+
+                    if (data.resultado == true)
+                    {
+                        alert('Colaborador agregado correctamente.');
+                    }
+                    else
+                    {
+                        alert('ERROR: El colaborador no pudo ser agregado.');
+                    }
+                }
+            });
+        }
+    </script>
+
+{% endblock %}

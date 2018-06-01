@@ -1,0 +1,80 @@
+{% extends 'baseabc.html.twig' %}
+
+{% block body %}
+    <div id="wrapper">
+        <div id="container">
+            <!-- Page Layout here -->
+            <br/>
+
+            <div class="row">
+                <table>
+                    <tbody>
+                    {% for inmueble in inmuebles %}
+                        <tr>
+                            <td rowspan="1" style="width:250px">
+                                {% if (inmueble.Imagenes|length>0) %}
+                                    <a href="#"><img class="imginmueble" src="{{ inmueble.Imagenes[0].getWebPath() }}"></a>
+                                {% endif %}
+                            </td>
+                            <td>
+                                <h5>ID: {{ inmueble.legacyid }}</h5>
+                                <h5>{{ inmueble.idMunicipio.nombre }}, {{ inmueble.idEstado.nombre }}, {{ inmueble.calle }}</h5>
+                                <p>{{ inmueble.idOperacionInmueble.nombre }}</p>
+                                <ul>
+                                    <li>{{ inmueble.recamaras }} Recámaras</li>
+
+                                    {% if inmueble.metrosconstruccion is not null %}
+                                        {{ inmueble.metrosconstruccion }} Metros de Construcción<br>
+                                    {% endif %}
+
+                                    {% if inmueble.metrosterreno is not null %}
+                                        {{ inmueble.metrosterreno }} Metros de Terreno<br>
+                                    {% endif %}
+
+                                    <li>{{ inmueble.banos }} Baño(s)</li>
+
+                                    {% if inmueble.mediobanos is not null %}
+                                        {{ inmueble.mediobanos }} Medios Baño(s)<br>
+                                    {% endif %}
+
+                                    {% if inmueble.plantas > 0 %}
+                                        <li>{{ inmueble.plantas }} Plantas</li>
+                                    {% endif %}
+                                </ul>
+                            </td>
+                            <td>
+                                <h5>{{ inmueble.idMoneda.simbolo }} {{ inmueble.precio|number_format(2, '.', ',') }}</h5>
+                                <a href="{{ path('buscarinmueble_show', {'id': inmueble.idInmueble}) }}"  class="waves-effect waves-light btn right blue-grey darken-4">
+                                    Ver Detalles
+                                    <i class="material-icons left">search</i>
+                                </a>
+                            </td>
+                        </tr>
+                    {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+
+        </div>
+    </div>
+{% endblock %}
+
+{% block stylesheets %}
+
+    <style>
+        body {
+            background: white;
+            height: 100vh;
+        }
+        p
+        {
+            font-size: small;
+        }
+        .imginmueble
+        {
+            width: 200px;
+            height: 160px;
+        }
+    </style>
+
+{% endblock %}

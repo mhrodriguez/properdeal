@@ -1,0 +1,158 @@
+{% extends 'baseabc.html.twig' %}
+
+{% block body %}
+
+    <div class="container">
+        <br><br>
+        <div class="row">
+            <nav>
+                <div class="nav-wrapper z-depth-1">
+                    <div class="col s12  blue darken-1 ">
+                        <a href="#!" class="breadcrumb">Mi Perfil</a>
+                    </div>
+                </div>
+            </nav>
+        </div>
+
+        <br>
+
+
+        {{ form_start(form) }}
+        <div class="row">
+            <div class="col s12 m12 l12">
+                <div class="formcontainer">
+                    <div>
+
+                        <div class="row">
+                            <div class="input-field col s12">
+                                {{ form_widget(form.nombre) }}
+                                {{ form_label(form.nombre) }}
+                                {{ form_errors(form.nombre) }}
+                            </div>
+                        </div>
+
+                        <div class="row">
+                            <div class="input-field col s12">
+                                {{ form_widget(form.empresa) }}
+                                {{ form_label(form.empresa) }}
+                                {{ form_errors(form.empresa) }}
+                            </div>
+                        </div>
+
+                        <div class="row">
+                            <div class="input-field col s12">
+                                {{ form_widget(form.email) }}
+                                {{ form_label(form.email) }}
+                                {{ form_errors(form.email) }}
+                            </div>
+                        </div>
+
+                        <div class="row">
+                            <div class="input-field col s12">
+                                {{ form_widget(form.pwdemail) }}
+                                {{ form_label(form.pwdemail) }}
+                                {{ form_errors(form.pwdemail) }}
+                            </div>
+                        </div>
+
+                        <div class="row">
+                            <div class="input-field col s12">
+                                {{ form_widget(form.telefono) }}
+                                {{ form_label(form.telefono) }}
+                                {{ form_errors(form.telefono) }}
+                            </div>
+                        </div>
+
+                        <div class="row">
+                            <div class="input-field col s12">
+                                {{ form_widget(form.telefono2) }}
+                                {{ form_label(form.telefono2) }}
+                                {{ form_errors(form.telefono2) }}
+                            </div>
+                        </div>
+
+                        <div class="row">
+                            <div class="input-field col s12">
+                                {{ form_widget(form.celular) }}
+                                {{ form_label(form.celular) }}
+                                {{ form_errors(form.celular) }}
+                            </div>
+                        </div>
+
+                        <div class="row">
+                            <div class="input-field col s6">
+                                {% image '@FrameworkBundle/Resources/public/images/ic_usuario.jpg' %}
+                                <img id="imgFotografia" src="{{ asset_url }}" alt="" class="responsive-img" style="width:50%;margin-left: 25%">
+                                {% endimage %}
+                                <br><br>
+                                <div class="input-field col s12">
+                                    {{ form_widget(form.fileFoto) }}
+                                    {{ form_errors(form.fileFoto) }}
+                                </div>
+                            </div>
+                            <div class="input-field col s6">
+                                {% image '@FrameworkBundle/Resources/public/images/ic_logogenerico.jpg' %}
+                                <img id="imgLogo" src="{{ asset_url }}" alt="" class="responsive-img" style="width:80%;margin-left:10%">
+                                {% endimage %}
+                                <br><br>
+                                <div class="input-field col s12">
+                                    {{ form_widget(form.fileLogo) }}
+                                    {{ form_errors(form.fileLogo) }}
+                                </div>
+                            </div>
+                        </div>
+
+                        <input type="submit" value="Guardar" class="waves-effect waves-light btn blue darken-4 right"/>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+        {{ form_end(form) }}
+
+        <div class="collection">
+            <a href="{{ path('facebook_login', {}) }}" target="_blank" class="collection-item"><i class="material-icons right">keyboard_arrow_right</i>Login Facebook</a>
+            <a href="{{ path('user_changepassword', {'idusuario':usuario.id}) }}" class="collection-item"><i class="material-icons right">keyboard_arrow_right</i>Cambiar password</a>
+            <a href="{{ path('seo_edit', {'id' : idseo}) }}" class="collection-item"><i class="material-icons right">keyboard_arrow_right</i>SEO</a>
+        </div>
+
+    </div>
+
+    <style>
+        body{
+            background-color: white;
+            height: 300vh;
+        }
+        p
+        {
+            font-size: small;
+        }
+    </style>
+
+    <script>
+        {% if webPathFoto != false %}
+            document.getElementById('imgFotografia').src = '{{ webPathFoto }}';
+        {% endif %}
+
+        {% if webPathLogo != false %}
+        document.getElementById('imgLogo').src = '{{ webPathLogo }}';
+        {% endif %}
+
+        document.getElementById('usuario_fileFoto').required=false;
+        document.getElementById('usuario_fileLogo').required=false;
+
+        document.getElementById('usuario_pwdemail').type='password';
+    </script>
+
+    <ul>
+        <li>
+        </li>
+        <li>
+            {# form_start(delete_form) }}
+                <input type="submit" value="Delete">
+            {{ form_end(delete_form) #}
+        </li>
+    </ul>
+{% endblock %}
+
+

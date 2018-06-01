@@ -1,0 +1,51 @@
+{% extends 'baseabc.html.twig' %}
+
+{% block body %}
+
+    <div class="container">
+        <br/>
+
+        <div class="row">
+            <div class="formcontainer">
+                <div>
+                    {{ form_start(form) }}
+
+                    <div class="row">
+                    </div>
+                    <div class="row">
+                        <div class="input-field col s12">
+                            {{ form_widget(form.titulo) }}
+                            {{ form_label(form.titulo) }}
+                            {{ form_errors(form.titulo) }}
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <div class="input-field col s12">
+                            {{ form_widget(form.texto) }}
+                            {{ form_label(form.texto) }}
+                            {{ form_errors(form.texto) }}
+                        </div>
+                    </div>
+
+                    <input type="submit" value="Enviar" class="waves-effect btn blue-grey darken-4 right"/>
+
+                    <a href="#" onclick="parent.mensajeCancelar();" class="waves-effect waves-light btn blue-grey darken-4 right">Cancelar</a>
+
+                    {{ form_end(form) }}
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <style>
+        body{
+            background-color: white;
+        }
+    </style>
+
+    <script>
+
+    </script>
+
+{% endblock %}

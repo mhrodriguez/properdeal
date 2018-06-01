@@ -1,0 +1,75 @@
+{% extends 'base2.html.twig' %}
+
+{% block body %}
+    <div id="container">
+        <br>
+        <h4 class="grey-text text-darken-3">Servicios</h4>
+
+        <div class="row">
+            <div class="col s6 m6 l6">
+                {% image '@FrameworkBundle/Resources/public/images/img_servicios.jpg' %}
+                <img src="{{ asset_url }}" alt=""/>
+                {% endimage %}
+            </div>
+
+            <div class="col s6 m6 l6 ">
+                <p>
+                    <b>Proper Deal</b>, es una empresa que se enfoca a darle atención integral a todas las necesidades del mercado inmobiliario. Brindamos consultoría en todos los ramos de la comercialización de los bienes raíces con el objetivo de incrementar la rentabilidad de sus proyectos, optimizar los tiempos de venta, y minimizar los riesgos comerciales.
+                </p>
+
+                <h5 class="amber-text text-darken-4">Consultoría de Proyectos y Ventas</h5>
+                <p>
+                    <b>Proper Deal</b> ofrece un paquete de consultoría junto con los servicios de planeación y venta necesarios para llevar tu proyecto al mercado. Creamos un plan de ventas y marketing hecho a la medida para cada necesidad del desarrollador según el mercado al que va dirigido, asegurando una óptima ejecución y aplicación de las técnicas.
+                </p>
+
+                <h5 class="amber-text text-darken-4">Ventas Comerciales y Arrendamiento</h5>
+                <p>
+                    La comercialización y arrendamiento de propiedades requiere un nivel de relaciones y experiencia muy específico. <b>Proper Deal</b> usa su conocimiento para juntar desarrolladores y operadores exitosos logrando crear plazas comerciales y experiencias únicas.
+                </p>
+
+                <h5 class="amber-text text-darken-4">Corretaje General</h5>
+                <p>
+                    Nuestro equipo de profesionales te apoya durante todo el proceso de ventas desde la evaluación del inmueble a la firma de la escritura. Constantemente analizamos los factores en el mercado y entendemos el conjunto de actividades necesarias para promover y vender tu inmueble.
+                </p>
+
+                <h5 class="amber-text text-darken-4">Administración de Inmuebles</h5>
+                <p>
+                    <b>Proper Deal</b> apoya a inversionistas a administrar sus propiedades con el objeto de maximizar su valor y rendimiento.
+                </p>
+
+            </div>
+        </div>
+
+        <div class="row"/>
+    </div>
+
+{% endblock %}
+
+{% block stylesheets %}
+    <style>
+        div.row
+        {
+            margin-left: 20px;
+        }
+
+        p {
+            font-size: small;
+            line-height: 130% !important;
+        }
+
+        body{
+            background-color: white;
+        }
+
+        h5
+        {
+            font-weight: bold;
+        }
+
+        h4
+        {
+            margin-left: 20px !important;
+        }
+    </style>
+{% endblock %}
+

@@ -1,0 +1,42 @@
+<?php
+/**
+ * Created by PhpStorm.
+ * User: davatar
+ * Date: 8/17/16
+ * Time: 1:36 a.m.
+ */
+
+namespace AppBundle\Entity;
+
+use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Validator\Constraints as Assert;
+
+/**
+ * @ORM\Table(name="inmuebleactividad")
+ * @ORM\Entity(repositoryClass="AppBundle\Repository\InmuebleRepository")
+ */
+class InmuebleActividad
+{
+    /**
+     * @ORM\Column(name="id",type="integer")
+     * @ORM\Id
+     * @ORM\GeneratedValue(strategy="AUTO")
+     */
+    private $idInmuebleActividad;
+
+    /**
+     * @ORM\ManyToOne(targetEntity="Inmueble")
+     * @ORM\JoinColumn(name="id_inmueble", referencedColumnName="id", nullable=false)
+     */
+    private $id_inmueble;
+
+    /**
+     * @ORM\Column(type="integer")
+     */
+    private $actividadcodigo;
+
+    /**
+     * @ORM\Column(type="datetime")
+     */
+    private $fecha;
+}

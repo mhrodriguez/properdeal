@@ -1,0 +1,219 @@
+{% extends 'baseabc.html.twig' %}
+
+{% form_theme form with ['forms/custom_checkbox_widget.html.twig'] %}
+
+{% block body %}
+
+<div class="container">
+    <br/>
+    <br/>
+    <div class="row">
+        <div class="formcontainer">
+            <div>
+                {{ form_start(form) }}
+
+                <div class="row">
+                    <div class="input-field col s6">
+                        {{ form_widget(form.id_tipo_inmueble) }}
+                        {{ form_label(form.id_tipo_inmueble) }}
+                        {{ form_errors(form.id_tipo_inmueble) }}
+                    </div>
+                    <div class="input-field col s6">
+                        {{ form_widget(form.id_operacion_inmueble) }}
+                        {{ form_label(form.id_operacion_inmueble) }}
+                        {{ form_errors(form.id_operacion_inmueble) }}
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="input-field col s12">
+                        {{ form_widget(form.fechabusqueda) }}
+                        {{ form_label(form.fechabusqueda) }}
+                        {{ form_errors(form.fechabusqueda) }}
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="input-field col s12">
+                        {{ form_widget(form.id_estado) }}
+                        {{ form_label(form.id_estado) }}
+                        {{ form_errors(form.id_estado) }}
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="input-field col s6">
+                        {{ form_widget(form.ciudad) }}
+                        {{ form_label(form.ciudad) }}
+                        {{ form_errors(form.ciudad) }}
+                    </div>
+                    <div class="input-field col s6">
+                        {{ form_widget(form.colonia) }}
+                        {{ form_label(form.colonia) }}
+                        {{ form_errors(form.colonia) }}
+                    </div>
+                </div>
+
+                <!--div class="row">
+                    <div class="input-field col s12">
+                        {# form_label(form.caracteristicas) #}
+                        <br/><br/>
+                        {# form_widget(form.caracteristicas) #}
+                        {# form_errors(form.caracteristicas) #}
+                    </div>
+                </div-->
+
+                <br><br>
+                <div class="row">
+                    <div class="input-field col s4">
+                        {{ form_widget(form.id_moneda) }}
+                        {{ form_label(form.id_moneda) }}
+                        {{ form_errors(form.id_moneda) }}
+                    </div>
+                    <div class="input-field col s4">
+                        {{ form_widget(form.precio) }}
+                        {{ form_label(form.precio) }}
+                        {{ form_errors(form.precio) }}
+                    </div>
+                    <div class="input-field col s4">
+                        {{ form_widget(form.preciomax) }}
+                        {{ form_label(form.preciomax) }}
+                        {{ form_errors(form.preciomax) }}
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="input-field col s6">
+                        {{ form_widget(form.metrosterreno) }}
+                        {{ form_label(form.metrosterreno) }}
+                        {{ form_errors(form.metrosterreno) }}
+                    </div>
+                    <div class="input-field col s6">
+                        {{ form_widget(form.metrosterrenomax) }}
+                        {{ form_label(form.metrosterrenomax) }}
+                        {{ form_errors(form.metrosterrenomax) }}
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="input-field col s6">
+                        {{ form_widget(form.metrosconstruccion) }}
+                        {{ form_label(form.metrosconstruccion) }}
+                        {{ form_errors(form.metrosconstruccion) }}
+                    </div>
+                    <div class="input-field col s6">
+                        {{ form_widget(form.metrosconstruccionmax) }}
+                        {{ form_label(form.metrosconstruccionmax) }}
+                        {{ form_errors(form.metrosconstruccionmax) }}
+                    </div>
+                </div>
+
+                <input type="submit" class="waves-effect waves-light btn right blue darken-4" onclick="return fechaHoraConFormato();" value="Buscar">
+
+                </input>
+
+                {{ form_end(form) }}
+            </div>
+        </div>
+    </div>
+
+    <style>
+        body{
+            background-color: white;
+            height: 100vh;
+        }
+
+        div {
+            background: white;
+        }
+
+        #solicitud_caracteristicas label
+        {
+            margin-right: 20px;
+        }
+    </style>
+
+    <script>
+
+       // var selectorEstado = document.getElementById('solicitud_id_estado');
+       // selectorEstado.value = {# default_idestado #};
+
+        $(document).ready(function() {
+            $('select').material_select();
+        });
+
+        function onChangeEstado()
+        {
+            var url = 'http://' + window.location.hostname  + '{{ path('municipio_index', {}) }}?indexEstado=' + selectorEstado.value;
+
+            $.ajax({
+                url: url,
+                dataType: "json",
+                success: function(data) {
+                    var options, index, select, option;
+
+                    // Get the raw DOM object for the select box
+                    select = document.getElementById('solicitud_id_municipio');
+
+                    // Clear the old options
+                    select.options.length = 0;
+
+                    // Load the new options
+                    options = data; // Or whatever source information you're working with
+                    for (index = 0; index < options.length; ++index) {
+                        option = options[index];
+
+                        select.options.add(new Option(option.nombre, index));
+                    }
+
+                    $('select').material_select();
+
+                    onChangeMunicipio();
+                }
+            });
+        }
+
+        function onChangeMunicipio()
+        {
+            var selectorEstado = document.getElementById('solicitud_id_estado');
+            var selectorMunicipio = document.getElementById('solicitud_id_municipio');
+            var url = 'http://' + window.location.hostname  + '{{ path('colonia_index', {}) }}?indexMunicipio=' + selectorMunicipio.value + '&indexEstado=' + selectorEstado.value;
+
+            $.ajax({
+                url: url,
+                dataType: "json",
+                success: function(data) {
+                    var options, index, select, option;
+
+                    // Get the raw DOM object for the select box
+                    select = document.getElementById('solicitud_id_colonia');
+
+                    // Clear the old options
+                    select.options.length = 0;
+
+                    // Load the new options
+                    options = data; // Or whatever source information you're working with
+                    for (index = 0; index < options.length; ++index) {
+                        option = options[index];
+
+                        select.options.add(new Option(option.nombre, index));
+                    }
+                    $('select').material_select();
+                }
+            });
+        }
+
+        function onChangeColonia() {
+
+        }
+
+       document.getElementById('buscar_solicitud_precio').required=false;
+       document.getElementById('buscar_solicitud_preciomax').required=false;
+       document.getElementById('buscar_solicitud_metrosterreno').required=false;
+       document.getElementById('buscar_solicitud_metrosterrenomax').required=false;
+       document.getElementById('buscar_solicitud_metrosconstruccion').required=false;
+       document.getElementById('buscar_solicitud_metrosconstruccionmax').required=false;
+
+    </script>
+
+{% endblock %}

@@ -1,0 +1,102 @@
+{% extends 'base4.html.twig' %}
+
+{% block body %}
+    <sytle>
+        <!-- Include stylesheet -->
+        <link href="https://cdn.quilljs.com/1.0.0-rc.0/quill.snow.css" rel="stylesheet">
+    </sytle>
+    <div class="container">
+        <br/>
+
+        <div class="row">
+            <div class="formcontainer">
+                <div>
+                    {{ form_start(form) }}
+
+                    <div class="row">
+                        <div class="input-field col s12">
+                            {{ form_label(form.titulo) }}
+                            {{ form_widget(form.titulo) }}
+                            {{ form_errors(form.titulo) }}
+                        </div>
+                    </div>
+
+                    <div class="row" style="">
+                        <div class="input-field col s12">
+                            {{ form_widget(form.texto) }}
+                            {{ form_errors(form.texto) }}
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        Texto de Formato
+                        <div id="editor" class="editor">
+
+                        </div>
+                        <!-- Include the Quill library -->
+                        <script src="https://cdn.quilljs.com/1.0.0-rc.0/quill.js"></script>
+                        <!-- Initialize Quill editor -->
+                        <script type="text/javascript">
+                            var quill = new Quill('#editor', {
+                                theme: 'snow'
+                            });
+                        </script>
+                    </div>
+
+                    <input type="submit" value="Guardar" class="waves-effect waves-light btn blue darken-4 right"/>
+
+                    <a href="{{ path('formato_index', {}) }}" class="waves-effect waves-light btn blue darken-4 right">Cancelar</a>
+
+                    {{ form_end(form) }}
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <style>
+        body{
+            background-color: white;
+            height: 150vh;
+        }
+    </style>
+    <style>
+        body{
+            background-color: white;
+            height: 140vh;
+            margin: 30px;
+        }
+        p
+        {
+            font-size: medium;
+        }
+        h2 {
+            font-family: Arial, Helvetica, sans-serif;
+        }
+        a {
+            font-family: Arial, Helvetica, sans-serif;
+        }
+        label {
+            font-family: Arial, Helvetica, sans-serif;
+        }
+        input {
+            font-family: Arial, Helvetica, sans-serif;
+        }
+        .button {
+            background-color: cornflowerblue;
+            height: 32px;
+            border: none;
+            color: white;
+            padding: 5px 32px;
+            text-align: center;
+            text-decoration: none;
+            display: inline-block;
+            font-size: 16px;
+            margin: 4px 2px;
+            cursor: pointer;
+        }
+    </style>
+    <script>
+
+    </script>
+
+{% endblock %}

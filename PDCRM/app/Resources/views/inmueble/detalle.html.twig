@@ -1,0 +1,601 @@
+{% extends 'baseabc.html.twig' %}
+
+{% form_theme form with ['forms/custom_checkbox_widget.html.twig'] %}
+
+{% block body %}
+
+    <div id="main" class="container">
+        <br/>
+        <div class="row">
+            <nav>
+                <div class="nav-wrapper z-depth-1">
+                    <div class="col s12  blue darken-1 ">
+                        <a href="#" class="breadcrumb">Propiedades</a>
+                        <a href="#" class="breadcrumb">Detalles</a>
+                    </div>
+                </div>
+            </nav>
+        </div>
+        <br/>
+        <div class="row">
+            <div class="formcontainer">
+                <div>
+                    <div class="row">
+                        <div class="input-field col s6">
+                            {{ form_widget(form.oficina) }}
+                            {{ form_label(form.oficina) }}
+                            {{ form_errors(form.oficina) }}
+                        </div>
+                        <div class="input-field col s6">
+                            {{ form_widget(form.telefono) }}
+                            {{ form_label(form.telefono) }}
+                            {{ form_errors(form.telefono) }}
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <div class="input-field col s6">
+                            {{ form_widget(form.nombreid) }}
+                            {{ form_label(form.nombreid) }}
+                            {{ form_errors(form.nombreid) }}
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <div class="input-field col s6 activelabel">
+                            <div class="datepicker">
+                                Fecha de alta:
+                                <input type="text" id="inmueble_fechaalta" name="inmueble_fechaalta" required="required" value="{{ fechaAlta }}" />
+                                <a id="fechaError" style="visibility:hidden;color:black">Fecha inválida<br></a>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <div class="input-field col s12">
+                            {{ form_widget(form.id_usuario) }}
+                            {{ form_label(form.id_usuario) }}
+                            {{ form_errors(form.id_usuario) }}
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <div class="input-field col s6">
+                            {{ form_widget(form.id_tipo_inmueble) }}
+                            {{ form_label(form.id_tipo_inmueble) }}
+                            {{ form_errors(form.id_tipo_inmueble) }}
+                        </div>
+                        <div class="input-field col s6">
+                            {{ form_widget(form.id_operacion_inmueble) }}
+                            {{ form_label(form.id_operacion_inmueble) }}
+                            {{ form_errors(form.id_operacion_inmueble) }}
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <div class="input-field col s4">
+                            {{ form_widget(form.id_estado) }}
+                            {{ form_label(form.id_estado) }}
+                            {{ form_errors(form.id_estado) }}
+                        </div>
+
+                        <div class="input-field col s4">
+                            {{ form_widget(form.ciudad) }}
+                            {{ form_label(form.ciudad) }}
+                            {{ form_errors(form.ciudad) }}
+                        </div>
+
+                        <div class="input-field col s4">
+                            {{ form_widget(form.id_zona) }}
+                            {{ form_label(form.id_zona) }}
+                            {{ form_errors(form.id_zona) }}
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <div class="input-field col s8">
+                            {{ form_widget(form.calle) }}
+                            {{ form_label(form.calle) }}
+                            {{ form_errors(form.calle) }}
+                        </div>
+                        <div class="input-field col s2">
+                            {{ form_widget(form.numero) }}
+                            {{ form_label(form.numero) }}
+                            {{ form_errors(form.numero) }}
+                        </div>
+                        <div class="input-field col s2">
+                            {{ form_widget(form.numeroint) }}
+                            {{ form_label(form.numeroint) }}
+                            {{ form_errors(form.numeroint) }}
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <div class="input-field col s6">
+                            {{ form_widget(form.entrecalles_primera) }}
+                            {{ form_label(form.entrecalles_primera) }}
+                            {{ form_errors(form.entrecalles_primera) }}
+                        </div>
+                        <div class="input-field col s6">
+                            {{ form_widget(form.entrecalles_segunda) }}
+                            {{ form_label(form.entrecalles_segunda) }}
+                            {{ form_errors(form.entrecalles_segunda) }}
+                        </div>
+                    </div>
+
+                    <div class="row">
+
+                    </div>
+
+                    <div class="row">
+
+                        <div class="input-field col s6">
+                            {{ form_widget(form.colonia) }}
+                            {{ form_label(form.colonia) }}
+                            {{ form_errors(form.colonia) }}
+                        </div>
+                        <div class="input-field col s6">
+                            {{ form_widget(form.cp) }}
+                            {{ form_label(form.cp) }}
+                            {{ form_errors(form.cp) }}
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <div class="input-field col s6">
+                            {{ form_widget(form.nombreedificio) }}
+                            {{ form_label(form.nombreedificio) }}
+                            {{ form_errors(form.nombreedificio) }}
+                        </div>
+                        <div class="input-field col s6">
+                            {{ form_widget(form.nombreplaza) }}
+                            {{ form_label(form.nombreplaza) }}
+                            {{ form_errors(form.nombreplaza) }}
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <div class="input-field col s12">
+                            {{ form_widget(form.descripcion) }}
+                            {{ form_label(form.descripcion) }}
+                            {{ form_errors(form.descripcion) }}
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <button class="btn btn-primary" type="button" onclick="buscarDireccion();">Ubicar dirección en mapa</button>
+
+                        <a id="txtResetBusqueda" style="display:none;" >
+                            <i class="material-icons">warning</i>Ha cambiado la dirección, haga clic nuevamente en el botón para ubicar la dirección en el mapa.
+                        </a>
+
+                        {{ form_widget(form.publicarmapa) }}
+                        {{ form_label(form.publicarmapa) }}
+                        {{ form_errors(form.publicarmapa) }}
+
+                        <div id="map-canvas" style="height:400px" class="form-control"></div>
+                    </div>
+
+                    <div class="row">
+                        <div class="input-field col s12">
+                            {{ form_widget(form.latlng) }}
+                            {{ form_errors(form.latlng) }}
+                        </div>
+                    </div>
+
+
+                    <div class="row">
+                        <div class="input-field col s9">
+                            {{ form_widget(form.id_tipoterreno) }}
+                            {{ form_label(form.id_tipoterreno) }}
+                            {{ form_errors(form.id_tipoterreno) }}
+                        </div>
+
+                    </div>
+
+                    <div class="row">
+                        <div class="input-field col s4">
+                            {{ form_widget(form.metrosterreno) }}
+                            {{ form_label(form.metrosterreno) }}
+                            {{ form_errors(form.metrosterreno) }}
+                        </div>
+                        <div class="input-field col s4">
+                            {{ form_widget(form.metrosfrente) }}
+                            {{ form_label(form.metrosfrente) }}
+                            {{ form_errors(form.metrosfrente) }}
+                        </div>
+                        <div class="input-field col s4">
+                            {{ form_widget(form.metrosfondo) }}
+                            {{ form_label(form.metrosfondo) }}
+                            {{ form_errors(form.metrosfondo) }}
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <div class="input-field col s4">
+                            {{ form_widget(form.metrosconstruccion) }}
+                            {{ form_label(form.metrosconstruccion) }}
+                            {{ form_errors(form.metrosconstruccion) }}
+                        </div>
+                        <div class="input-field col s4">
+                            {{ form_widget(form.metrosjardin) }}
+                            {{ form_label(form.metrosjardin) }}
+                            {{ form_errors(form.metrosjardin) }}
+                        </div>
+                        <div class="input-field col s4">
+                            {{ form_widget(form.metrosterraza) }}
+                            {{ form_label(form.metrosterraza) }}
+                            {{ form_errors(form.metrosterraza) }}
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <div class="input-field col s3">
+                            {{ form_widget(form.recamaras) }}
+                            {{ form_label(form.recamaras) }}
+                            {{ form_errors(form.recamaras) }}
+                        </div>
+                        <div class="input-field col s3">
+                            {{ form_widget(form.banos) }}
+                            {{ form_label(form.banos) }}
+                            {{ form_errors(form.banos) }}
+                        </div>
+                        <div class="input-field col s3">
+                            {{ form_widget(form.mediobanos) }}
+                            {{ form_label(form.mediobanos) }}
+                            {{ form_errors(form.mediobanos) }}
+                        </div>
+                        <div class="input-field col s3">
+                            {{ form_widget(form.plantas) }}
+                            {{ form_label(form.plantas) }}
+                            {{ form_errors(form.plantas) }}
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <div class="input-field col s4">
+                            {{ form_widget(form.espacioautos) }}
+                            {{ form_label(form.espacioautos) }}
+                            {{ form_errors(form.espacioautos) }}
+                        </div>
+                        <div class="input-field col s4">
+                            {{ form_widget(form.espaciovisitas) }}
+                            {{ form_label(form.espaciovisitas) }}
+                            {{ form_errors(form.espaciovisitas) }}
+                        </div>
+                        <div class="input-field col s4">
+                            {{ form_widget(form.id_cuartoservicio) }}
+                            {{ form_label(form.id_cuartoservicio) }}
+                            {{ form_errors(form.id_cuartoservicio) }}
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <div class="input-field col s12">
+                            {{ form_widget(form.antiguedad) }}
+                            {{ form_label(form.antiguedad) }}
+                            {{ form_errors(form.antiguedad) }}
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <div class="input-field col s4 ">
+                            {{ form_widget(form.id_instalacionelectrica) }}
+                            {{ form_label(form.id_instalacionelectrica) }}
+                            {{ form_errors(form.id_instalacionelectrica) }}
+                        </div>
+                        <div class="input-field col s4">
+                            {{ form_widget(form.aireacondicionado) }}
+                            {{ form_label(form.aireacondicionado) }}
+                            {{ form_errors(form.aireacondicionado) }}
+                        </div>
+
+                        <div class="input-field col s4">
+                            {{ form_widget(form.id_tipoclima) }}
+                            {{ form_label(form.id_tipoclima) }}
+                            {{ form_errors(form.id_tipoclima) }}
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <div class="input-field col s12">
+                            {{ form_widget(form.restricciones) }}
+                            {{ form_label(form.restricciones) }}
+                            {{ form_errors(form.restricciones) }}
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <div class="input-field col s3">
+                            {{ form_widget(form.id_moneda) }}
+                            {{ form_label(form.id_moneda) }}
+                            {{ form_errors(form.id_moneda) }}
+                        </div>
+                        <div class="input-field col s3">
+                            {{ form_widget(form.precio) }}
+                            {{ form_label(form.precio) }}
+                            {{ form_errors(form.precio) }}
+                        </div>
+                        <div class="input-field col s2">
+                            <p id="lblOperacion"></p>
+                        </div>
+                        <div class="input-field col s4">
+                            {{ form_widget(form.cuotamantenimiento) }}
+                            {{ form_label(form.cuotamantenimiento) }}
+                            {{ form_errors(form.cuotamantenimiento) }}
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <div class="input-field col s3">
+                            {{ form_widget(form.comision) }}
+                            {{ form_label(form.comision) }}
+                            {{ form_errors(form.comision) }}
+                        </div>
+                        <div class="input-field col s3">
+                            <label id="lblComision">%</label>
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <div class="input-field col s9">
+                            {{ form_label(form.caracteristicas) }}
+                            <br/><br/>
+                            {{ form_widget(form.caracteristicas) }}
+                            {{ form_errors(form.caracteristicas) }}
+                        </div>
+                    </div>
+
+                    <div class="row"/>
+
+                    <div class="row">
+                        <div class="input-field col s3">
+                            {{ form_widget(form.destacado) }}
+                            {{ form_label(form.destacado) }}
+                            {{ form_errors(form.destacado) }}
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <div class="input-field col s3">
+                            {{ form_widget(form.cerrado) }}
+                            {{ form_label(form.cerrado) }}
+                            {{ form_errors(form.cerrado) }}
+                        </div>
+                    </div>
+
+                    <div class="row" style="display: none;">
+                        <div class="input-field col s3">
+                            {{ form_widget(form.activo) }}
+                            {{ form_label(form.activo) }}
+                            {{ form_errors(form.activo) }}
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <a href="{{ path('inmueble_index', {}) }}" class="btn blue darken-4 right" style="margin-right: 10px">< Regresar</a>
+
+    <style>
+        body{
+            background-color: white;
+            height: 170vh;
+        }
+
+        #inmueble_zonas label
+        {
+            margin-right: 20px;
+        }
+
+        #inmueble_caracteristicas label
+        {
+            margin-right: 20px;
+        }
+    </style>
+
+    <script type="text/javascript"
+            src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCmOj1JP2fKLOHkJSKhAdrIVOJlovubgkY">
+    </script>
+
+    {% javascripts '@FrameworkBundle/Resources/public/js/*'%}
+    <script src="{{ asset_url }}"></script>
+    {% endjavascripts %}
+
+    <script>
+
+        var labels = document.getElementsByTagName('LABEL');
+        for (var i = 0; i < labels.length; i++) {
+            if (labels[i].htmlFor != '') {
+                var elem = document.getElementById(labels[i].htmlFor);
+                if (elem)
+                    elem.label = labels[i];
+            }
+        }
+
+        for (i=0; i<{{ form.caracteristicas|length }}; i++)
+        {
+            var caracteristica = document.getElementById('inmueble_caracteristicas_' + i);
+
+            {% for caracteristicaDesc in caracteristicasDesc %}
+
+            if (caracteristica.label.innerHTML == '{{ caracteristicaDesc }}')
+            {
+                caracteristica.checked = true;
+            }
+
+            {% endfor %}
+        }
+    </script>
+
+    <script type="text/javascript">
+        var mapOptions = {
+            zoom: 14,
+            mapTypeId: google.maps.MapTypeId.TERRAIN
+        };
+        var direccionResultados = [];
+        var direccionActual;
+
+        setMapControl(document.getElementById('map-canvas'), mapOptions);
+
+        function buscarDireccion() {
+
+            var direccion = document.getElementById('inmueble_calle').value + ' ' +
+                    document.getElementById('inmueble_numero').value + ' ' +
+                    document.getElementById('inmueble_ciudad').value + ' ' +
+                    document.getElementById('inmueble_colonia').value + ' ' +
+                    document.getElementById('inmueble_cp').value + ' ' +
+                    document.getElementById('inmueble_id_estado').options[document.getElementById('inmueble_id_estado').selectedIndex].innerHTML;
+
+            var posiciones = geocodeDireccion(direccion, direccionCodificada);
+
+            return false;
+        }
+
+        function direccionCodificada(operacionExitosa, resultados, mensajeError) {
+            var panelDirecciones = document.getElementById('panelDirecciones');
+            var lvwDirecciones = document.getElementById('lvwDirecciones');
+
+            if (!operacionExitosa) {
+                alert(mensajeError);
+                return;
+            }
+            else {
+                // Remover resultados de la anterior busqueda
+                resetBusquedaMapa();
+            }
+
+            // Mostrar listado de direcciones
+            panelDirecciones.hidden = "";
+
+            direccionResultados = resultados;
+            for (var i = 0; i < resultados.length; i++) {
+                var nuevoElemento = document.createElement('a');
+                nuevoElemento.setAttribute('href', "#!");
+                nuevoElemento.setAttribute('id', "direccionitem" + i);
+                nuevoElemento.setAttribute('class', "collection-item");
+                nuevoElemento.setAttribute('data-geocode', i);
+                nuevoElemento.setAttribute('onclick', "direccion_onclick(document.getElementById('direccionitem" + i + "'));");
+                nuevoElemento.innerHTML = resultados[i].formatted_address;
+
+                lvwDirecciones.appendChild(nuevoElemento);
+            }
+
+            $('html, body').animate({scrollTop:200}, 'slow');
+
+            $('#modalDirecciones').openModal();
+        }
+
+        function resetBusquedaMapa() {
+
+            var lvwDirecciones = document.getElementById('lvwDirecciones');
+
+            while (lvwDirecciones.firstChild) {
+                lvwDirecciones.removeChild(lvwDirecciones.firstChild);
+            }
+
+            removerTodosMarcadoresDeMapa();
+
+            if (document.getElementById('inmueble_latlng').value != null && document.getElementById('inmueble_latlng').value != "")
+            {
+                document.getElementById('txtResetBusqueda').style.display = '';
+            }
+
+            document.getElementById('inmueble_latlng').value = null;
+        }
+
+        function direccion_onclick(control) {
+            $('#modalDirecciones').closeModal();
+
+            removerTodosMarcadoresDeMapa();
+
+            mostrarMarcadorEnMapa(direccionResultados[control.getAttribute('data-geocode')]);
+
+            direccionActual = direccionResultados[control.getAttribute('data-geocode')]
+
+            document.getElementById('inmueble_latlng').value = direccionActual.geometry.location.lat() + ',' +  direccionActual.geometry.location.lng();
+        }
+
+        function function_onchange() {
+            resetBusquedaMapa();
+        }
+
+        function onChangeOperacion() {
+            lblComision = document.getElementById('lblComision');
+
+            if (document.getElementById('inmueble_id_operacion_inmueble').options[document.getElementById('inmueble_id_operacion_inmueble').selectedIndex].innerHTML == 'Renta')
+            {
+                lblComision.innerHTML = 'Mensualidades';
+            }
+            else {
+                lblComision.innerHTML = '%';
+            }
+        }
+
+        /* Eventos */
+        document.getElementById('inmueble_calle').addEventListener('change', function_onchange, false);
+        document.getElementById('inmueble_numero').addEventListener('change', function_onchange, false);
+        document.getElementById('inmueble_colonia').addEventListener('change', function_onchange, false);
+        document.getElementById('inmueble_ciudad').addEventListener('change', function_onchange, false);
+        document.getElementById('inmueble_cp').addEventListener('change', function_onchange, false);
+
+        onChangeOperacion();
+    </script>
+
+    <script>
+
+        $('#inmueble_fechaalta').pickadate({
+            selectMonths: true, // Creates a dropdown to control month
+            format: 'yyyy-mm-dd',
+            monthsFull: [ 'Enero', 'Febrero', 'Marzo', 'Abril', 'Mayo', 'Junio', 'Julio', 'Agosto', 'Septiembre', 'Octubre', 'Noviembre', 'Diciembre' ],
+            monthsShort: [ 'Ene', 'Feb', 'Mar', 'Abr', 'May', 'Jun', 'Jul', 'Ago', 'Sep', 'Oct', 'Nov', 'Dic' ],
+            weekdaysFull: [ 'Domingo', 'Lunes', 'Martes', 'Miércoles', 'Jueves', 'Viernes', 'Sabado' ],
+            weekdaysShort: [ 'Dom', 'Lun', 'Mar', 'Mie', 'Jue', 'Vie', 'Sab' ],
+            weekdaysLetter: [ 'D', 'L', 'M', 'M', 'J', 'V', 'S' ],
+            today: 'Hoy',
+            clear: 'Limpiar',
+            close: 'Cerrar',
+            labelMonthNext: 'Siguiente mes',
+            labelMonthPrev: 'Mes anterior',
+            labelMonthSelect: 'Selecciona un mes',
+            labelYearSelect: 'Selecciona un año'
+        });
+
+        function fechaHoraConFormato()
+        {
+            if (document.getElementById('inmueble_fechaalta').value == "")
+            {
+                document.getElementById('fechaError').style.visibility="";
+                alert('La fecha de alta es inválida');
+                return false;
+            }
+
+            document.getElementById('inmueble_fechaalta').value  = document.getElementById('inmueble_fechaalta').value.replace(' 00:00:00', '');
+
+            document.getElementById('inmueble_fechaalta').value += ' 00:00:00';
+
+            return true;
+        }
+
+        var selectorEstado = document.getElementById('inmueble_id_estado');
+        selectorEstado.value = {{ default_idestado }};
+
+        $(document).ready(function() {
+            $('select').material_select();
+        });
+
+        document.getElementById('inmueble_id_estado').selectedIndex=0;
+
+        $('#main').find(':input').prop('disabled', true);
+
+        //$("input").attr("disabled", true);
+        /*
+         var form = document.getElementById("main");
+         var elements = form.elements;
+         for (var i = 0, len = elements.length; i < len; ++i) {
+         elements[i].disabled = "disabled";
+         }
+         */
+    </script>
+
+{% endblock %}

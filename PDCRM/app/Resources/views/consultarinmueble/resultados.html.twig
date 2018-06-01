@@ -1,0 +1,140 @@
+{% extends 'baseabc.html.twig' %}
+
+{% block body %}
+<div id="wrapper">
+    <div id="container">
+        <!-- Page Layout here -->
+        <br/>
+        {% if (inmuebles|length == 0) %}
+            <i class="medium material-icons" style="color:#ffd600">warning</i>
+            <p>No se encontraron propiedades con los criterios seleccionados.</p>
+        {% endif %}
+        <div class="row">
+            <p><a href="#" onclick="enviarInmuebles()"><i class="material-icons left">email</i>Enviar propiedades seleccionadas</a></p>
+        </div>
+        <div class="row">
+            <table class="striped">
+                <tbody>
+                {% set index = 0 %}
+                {% for inmueble in inmuebles %}
+                <tr>
+                    <td rowspan="1" style="width:250px">
+                        {% if (inmueble.Imagenes|length>0) %}
+                        <a href="#"><img class="imginmueble" src="{{ inmueble.Imagenes[0].getWebPath() }}"></a>
+                        {% endif %}
+                    </td>
+                    <td>
+                        <h5>ID: {{ inmueble.legacyid }} {{ inmueble.nombreid }}</h5>
+                        <h5>{{ inmueble.idTipoInmueble.nombre }} en {{ inmueble.idOperacionInmueble.nombre }}</h5>
+                        <p>{{ inmueble.idMunicipio.nombre }}, {{ inmueble.idEstado.nombre }}, {{ inmueble.calle }}</p>
+                        <ul>
+                            {% if inmueble.recamaras is not null %}
+                                {% if inmueble.recamaras > 0 %}
+                                    <li>{{ inmueble.recamaras }} Recámara(s)</li>
+                                {% endif %}
+                            {% endif %}
+
+                            {% if inmueble.metrosconstruccion is not null %}
+                                {% if inmueble.metrosconstruccion > 0 %}
+                                    {{ inmueble.metrosconstruccion }} m2 de Construcción<br>
+                                {% endif %}
+                            {% endif %}
+
+                            {% if inmueble.metrosterreno is not null %}
+                                {% if inmueble.metrosterreno > 0 %}
+                                    {{ inmueble.metrosterreno }} m2 de Terreno<br>
+                                {% endif %}
+                            {% endif %}
+
+                            {% if inmueble.banos > 0 %}
+                                <li>{{ inmueble.banos }} Baño(s)</li>
+                            {% endif %}
+
+                            {% if inmueble.mediobanos is not null %}
+                                {% if inmueble.mediobanos > 0 %}
+                                    {{ inmueble.mediobanos }} Medios Baño(s)<br>
+                                {% endif %}
+                            {% endif %}
+
+                            {% if inmueble.plantas is not null %}
+                                {% if inmueble.plantas > 0 %}
+                                    <li>{{ inmueble.plantas }} Plantas</li>
+                                {% endif %}
+                            {% endif %}
+                        </ul>
+                    </td>
+                    <td style="width:300px">
+                        <h5 class="right-align">{{ inmueble.idMoneda.simbolo }} {{ inmueble.precio|number_format(2, '.', ',') }}</h5>
+                        <a href="{{ path('inmueble_detalle', {'id': inmueble.idInmueble}) }}"  class="waves-effect waves-light btn right blue darken-4">
+                            Ver Detalles
+                            <i class="material-icons left">search</i>
+                        </a>
+
+                        <p class="right-align">
+                            <br/><br/>
+                            <input type="checkbox" id="chkEnviar{{ index }}" value="{{ inmueble.idInmueble }}" />
+                            <label for="chkEnviar{{ index }}">Enviar</label>
+                        </p>
+                    </td>
+                </tr>
+                {% set index=index+1 %}
+                {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+    <script>
+        function enviarInmuebles()
+        {
+            var inmueblesIds="";
+            var checkbox;
+
+            {% set index = 0 %}
+            {% for inmueble in inmuebles %}
+
+            checkbox = document.getElementById("chkEnviar{{ index }}");
+            if (checkbox.checked == true)
+            {
+                inmueblesIds=inmueblesIds+checkbox.value + ",";
+            }
+
+            {% set index = index + 1 %}
+            {% endfor %}
+
+            inmueblesIds = inmueblesIds.substring(0, inmueblesIds.length - 1);
+
+            if (inmueblesIds=="")
+            {
+                alert("No hay propiedades seleccionadas.");
+            }
+            else {
+                //window.location.href = "{{ path ('mensaje_enviarinmueble', {}) }}?idInmueble=" + inmueblesIds + "&tipoMensaje=1";
+                var url = window.location.href;
+                window.location.href = "{{ path ('ids_index', {}) }}?idInmueble=" + inmueblesIds + "&url=" + url.replace(/&/g, 'AMP');
+            }
+        }
+    </script>
+
+</div>
+
+{% endblock %}
+
+{% block stylesheets %}
+<style>
+    body {
+        background: white;
+        height: 100vh;
+    }
+    p
+    {
+        font-size: small;
+    }
+    .imginmueble
+    {
+        width: 200px;
+        height: 160px;
+    }
+</style>
+{% endblock %}
+

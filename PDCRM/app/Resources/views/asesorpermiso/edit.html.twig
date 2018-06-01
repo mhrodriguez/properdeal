@@ -1,0 +1,100 @@
+{% extends 'baseabc.html.twig' %}
+
+{% block body %}
+
+    <div class="container">
+        <br><br>
+        <div class="row">
+            <nav>
+                <div class="nav-wrapper z-depth-1">
+                    <div class="col s12  blue darken-1 ">
+                        <a href="#!" class="breadcrumb">Permisos</a>
+                    </div>
+                </div>
+            </nav>
+        </div>
+
+        <br>
+        {{ form_start(form) }}
+
+        <div class="row">
+            <div class="input-field col s12">
+                {{ form_widget(form.altapropiedad) }}
+                {{ form_label(form.altapropiedad) }}
+                {{ form_errors(form.altapropiedad) }}
+            </div>
+        </div>
+
+
+        <div class="row">
+            <div class="input-field col s12">
+                {{ form_widget(form.editarpropiedad) }}
+                {{ form_label(form.editarpropiedad) }}
+                {{ form_errors(form.editarpropiedad) }}
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="input-field col s12">
+                {{ form_widget(form.inactivarpropiedad) }}
+                {{ form_label(form.inactivarpropiedad) }}
+                {{ form_errors(form.inactivarpropiedad) }}
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="input-field col s12">
+                {{form_widget(form.destacarpropiedad) }}
+                {{ form_label(form.destacarpropiedad) }}
+                {{ form_errors(form.destacarpropiedad) }}
+            </div>
+        </div>
+
+        <!--div class="row">
+            <div class="input-field col s12">
+                {# form_widget(form.notificaraltapropiedad) #}
+                {# form_label(form.notificaraltapropiedad) #}
+                {# form_errors(form.notificaraltapropiedad) #}
+            </div>
+        </div-->
+
+        <!--div class="row">
+            <div class="input-field col s12">
+                {# form_widget(form.duplicarprospectos) #}
+                {# form_label(form.duplicarprospectos) #}
+                {# form_errors(form.duplicarprospectos) #}
+            </div>
+        </div-->
+
+        <!--div class="row">
+            <div class="input-field col s12">
+                {# form_widget(form.publicarsolocondatospropietario) #}
+                {# form_label(form.publicarsolocondatospropietario) #}
+                {# form_errors(form.publicarsolocondatospropietario) #}
+            </div>
+        </div-->
+
+        <input type="submit" value="Guardar" class="btn blue darken-4 right"/>
+
+        <a href="{{ path('asesorpermiso_index', {}) }}" class="btn blue darken-4 right" style="margin-right: 10px">Cancelar</a>
+
+        {{ form_end(form) }}
+    </div>
+
+    <style>
+        body
+        {
+            background-color: white;
+            height: 200vh;
+        }
+    </style>
+
+    <script>
+
+        document.getElementById('asesor_permiso_altapropiedad').required=false;
+        document.getElementById('asesor_permiso_editarpropiedad').required=false;
+        document.getElementById('asesor_permiso_inactivarpropiedad').required=false;
+        document.getElementById('asesor_permiso_destacarpropiedad').required=false;
+
+    </script>
+{% endblock %}

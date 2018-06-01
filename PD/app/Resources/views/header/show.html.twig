@@ -1,0 +1,191 @@
+<div class="black ">
+    <nav class="black header z-depth-1" role="navigation">
+        <div class="nav-wrapper container">
+
+        <ul id="dropdownMicuenta" class="dropdown-content" style="align-content: center">
+            <!--li><a href="#" style="font-size:13px;"> <i class="material-icons">perm_identity</i>Mi Perfíl</a></li>
+            <li class="divider"></li-->
+            <li><a href="{{ path('logout', {}) }}" style="font-size:13px;"><i class="material-icons">power_settings_new</i>Salir</a></li>
+        </ul>
+        <ul id="dropdownMicuenta2" class="dropdown-content">
+            <!--li><a href="#" style="font-size:13px;"><i class="material-icons">perm_identity</i>Mi Perfil</a></li>
+            <li class="divider"></li-->
+            <li><a href="{{ path('logout', {}) }}" style="font-size:13px;"><i class="material-icons">power_settings_new</i>Salir</a></li>
+        </ul>
+
+        <a href="#" data-activates="nav-mobile" class="button-collapse"><i class="material-icons">menu</i></a>
+
+        {% image '@FrameworkBundle/Resources/public/images/logotipo.png' %}
+        <a href="{{ path('homepage', {}) }}" class="brand-logo">
+            <img src="{{ asset_url }}" class="header-logo" alt="Logo"/>
+        </a>
+        {% endimage %}
+
+        <ul class="right hide-on-med-and-down">
+                <li><a href="{{ path('homepage', {}) }}" style="color:white"><i class="material-icons left" style="font-size:1.5rem">home</i>Inicio</a></li>
+                <li><a href="{{ path('quienessomos_index', {}) }}" style="color:white"><i class="material-icons left" style="font-size:1.5rem">assignment_ind</i>¿Quiénes somos?</a></li>
+                <li><a href="{{ path('servicios_index', {}) }}" style="color:white"><i class="material-icons left" style="font-size:1.5rem">lightbulb_outline</i>Servicios</a></li>
+                <li><a href="{{ path('asesor_index', {}) }}" style="color:white"><i class="material-icons left" style="font-size:1.5rem">supervisor_account</i>Asesores</a></li>
+                <li><a href="{{ path('contactanos_index', {}) }}" style="color:white"><i class="material-icons left" style="font-size:1.5rem">contact_mail</i>Contacto</a></li>
+
+                {# if is_granted('IS_AUTHENTICATED_FULLY') #}
+                    <!--li><a href="{{ path('mensaje_index', {}) }}" style="color:white"><i class="material-icons left" style="font-size:1.5rem">message</i>Mensajes</a></li>
+                    <li>
+                        <a class="dropdown-button" href="#!" data-activates="dropdownMicuenta">
+                            {# image '@FrameworkBundle/Resources/public/images/ic_usuario.jpg' #}
+                            {# endimage #}
+                            <i class="material-icons right">arrow_drop_down</i>
+                        </a>
+                    </li-->
+                {# else #}
+                    <!--li><a href="{{ path('login', {}) }}" style="color:white"><i class="material-icons left" style="font-size:1.5rem">vpn_key</i>Login</a></li>
+                    <li><a href="{{ path('usuario_new', {}) }}" style="color:white"><i class="material-icons left" style="font-size:1.5rem">add_box</i>Registrarse</a></li-->
+                {# endif #}
+
+            </ul>
+
+        <ul id="nav-mobile" class="side-nav black">
+            <li><a href="{{ path('homepage', {}) }}" style="color:white"><i class="material-icons left" style="font-size:1.5rem">home</i>Inicio</a></li>
+            <li><a href="{{ path('quienessomos_index', {}) }}" style="color:white"><i class="material-icons left" style="font-size:1.5rem">assignment_ind</i>¿Quiénes somos?</a></li>
+            <li><a href="{{ path('servicios_index', {}) }}" style="color:white"><i class="material-icons left" style="font-size:1.5rem">lightbulb_outline</i>Servicios</a></li>
+            <li><a href="{{ path('asesor_index', {}) }}" style="color:white"><i class="material-icons left" style="font-size:1.5rem">supervisor_account</i>Asesores</a></li>
+            <li><a href="{{ path('contactanos_index', {}) }}" style="color:white"><i class="material-icons left" style="font-size:1.5rem">contact_mail</i>Contacto</a></li>
+
+                {% if is_granted('IS_AUTHENTICATED_FULLY') %}
+                    <li><a href="{{ path('mensaje_index', {}) }}" style="color:white"><i class="material-icons left" style="font-size:1.5rem">message</i>Mensajes</a></li>
+                    <li>
+                        <a class="dropdown-button" href="#!" data-activates="dropdownMicuenta2">
+                            {% image '@FrameworkBundle/Resources/public/images/ic_usuario.jpg' %}
+                            <img src="{{ asset_url }}" alt="" class="circle responsive-img">
+                            {% endimage %}
+                            <i class="material-icons right">arrow_drop_down</i>
+                        </a>
+                    </li>
+                {% else %}
+                    <li><a href="{{ path('login', {}) }}" style="color:white"><i class="material-icons left" style="font-size:1.5rem">vpn_key</i>Login</a></li>
+                    <li><a href="{{ path('usuario_new', {}) }}" style="color:white"><i class="material-icons left" style="font-size:1.5rem">add_box</i>Registrarse</a></li>
+                {% endif %}
+        </ul>
+    </div>
+    </nav>
+
+    <div class="chip orange" style="float:right;margin-right: 70px; margin-top:-70px;">
+        <i class="material-icons right" style="font-size:20px;">phone</i>
+        <a style="color:white">(81) 8356-2248, 8356-6269</a>
+    </div>
+
+    <nav class="black" role="navigation" style="margin-top:-50px;">
+        <a href="#" data-activates="nav-mobile-propiedades" class="button-collapse"><i class="material-icons">menu</i></a>
+        <div class="nav-wrapper container hide-on-med-and-down">
+            {%  set urlbusqueda = "http://localhost/PD/web/app_dev.php/buscarinmueble/buscarpanel" %}
+            {%  set urlbusqueda = "http://104.236.50.14/PD/web/app.php/buscarinmueble/buscarpanel"  %}
+
+            {% set indexOperacionInmueble=0 %}
+            {% for operacionInmueble in operacionesInmueble %}
+                {# Omitir preventa #}
+                {% if (operacionInmueble.idOperacionInmueble != 3) %}
+                    <a class='dropdown-button btn black' href='#' data-activates='dropdownOperacion{{ operacionInmueble.idOperacionInmueble }}'>{{ operacionInmueble.nombre }}</a>
+                    <ul id='dropdownOperacion{{ operacionInmueble.idOperacionInmueble }}' class='dropdown-content'>
+                    {% set indexTipoInmueble=0 %}
+                    <li class="black"><a class="white-text" href="{{ urlbusqueda }}?buscar_inmueble%5Bid_tipo_inmueble%5D={{ indexTipoInmueble }}&buscar_inmueble%5Bid_categoria_inmueble%5D=-1&buscar_inmueble%5Bid_operacion_inmueble%5D={{ indexOperacionInmueble }}&buscar_inmueble%5Bid_estado%5D=-1&buscar_inmueble%5Bid_municipio%5D=-1&buscar_inmueble%5Bid_colonia%5D=-1&buscar_inmueble%5Bprecio%5D=&buscar_inmueble%5Bpreciomax%5D=&buscar_inmueble%5Bmetrosterreno%5D=&buscar_inmueble%5Bmetrosterrenomax%5D=&buscar_inmueble%5Brecamaras%5D=&buscar_inmueble%5Bplantas%5D=&">Todos</a></li>
+                    {% for tipoInmueble in tiposInmueble %}
+                        {% set indexTipoInmueble=indexTipoInmueble+1 %}
+                        <li class="black"><a class="white-text" href="{{ urlbusqueda }}?buscar_inmueble%5Bid_tipo_inmueble%5D={{ indexTipoInmueble }}&buscar_inmueble%5Bid_categoria_inmueble%5D=-1&buscar_inmueble%5Bid_operacion_inmueble%5D={{ indexOperacionInmueble }}&buscar_inmueble%5Bid_estado%5D=-1&buscar_inmueble%5Bid_municipio%5D=-1&buscar_inmueble%5Bid_colonia%5D=-1&buscar_inmueble%5Bprecio%5D=&buscar_inmueble%5Bpreciomax%5D=&buscar_inmueble%5Bmetrosterreno%5D=&buscar_inmueble%5Bmetrosterrenomax%5D=&buscar_inmueble%5Brecamaras%5D=&buscar_inmueble%5Bplantas%5D=&">{{ tipoInmueble.nombre }}</a></li>
+                    {% endfor %}
+                    </ul>
+                {% endif  %}
+                {% set indexOperacionInmueble=indexOperacionInmueble+1 %}
+            {% endfor %}
+
+            {% set indexCategoriaInmueble=0 %}
+            {% for categoriaInmueble in categoriasInmueble %}
+                {% if categoriaInmueble.idCategoriaInmueble < 5  %}
+                    <a class='dropdown-button btn black' href='#' data-activates='dropdownCategoria{{ categoriaInmueble.idCategoriaInmueble }}'>{{ categoriaInmueble.nombre }}</a>
+                    <ul id='dropdownCategoria{{ categoriaInmueble.idCategoriaInmueble }}' class='dropdown-content'>
+                    {% set indexOperacionInmueble=-1 %}
+                    <li class="black"><a class="white-text" href="{{ urlbusqueda }}?buscar_inmueble%5Bid_tipo_inmueble%5D=-1&buscar_inmueble%5Bid_categoria_inmueble%5D={{ indexCategoriaInmueble }}&buscar_inmueble%5Bid_operacion_inmueble%5D={{ indexOperacionInmueble }}&buscar_inmueble%5Bid_estado%5D=-1&buscar_inmueble%5Bid_municipio%5D=-1&buscar_inmueble%5Bid_colonia%5D=-1&buscar_inmueble%5Bprecio%5D=&buscar_inmueble%5Bpreciomax%5D=&buscar_inmueble%5Bmetrosterreno%5D=&buscar_inmueble%5Bmetrosterrenomax%5D=&buscar_inmueble%5Brecamaras%5D=&buscar_inmueble%5Bplantas%5D=&">Todos</a></li>
+                    {% for operacionInmueble in operacionesInmueble %}
+                        {% set indexOperacionInmueble=indexOperacionInmueble+1 %}
+                        {# Omitir preventa si la categoria no es Desarrollo #}
+                        {% if (operacionInmueble.idOperacionInmueble == 3) %}
+                            {%  if (categoriaInmueble.idCategoriaInmueble == 4) %}
+                                <li class="black"><a class="white-text" href="{{ urlbusqueda }}?buscar_inmueble%5Bid_tipo_inmueble%5D=-1&buscar_inmueble%5Bid_categoria_inmueble%5D={{ indexCategoriaInmueble }}&buscar_inmueble%5Bid_operacion_inmueble%5D={{ indexOperacionInmueble }}&buscar_inmueble%5Bid_estado%5D=-1&buscar_inmueble%5Bid_municipio%5D=-1&buscar_inmueble%5Bid_colonia%5D=-1&buscar_inmueble%5Bprecio%5D=&buscar_inmueble%5Bpreciomax%5D=&buscar_inmueble%5Bmetrosterreno%5D=&buscar_inmueble%5Bmetrosterrenomax%5D=&buscar_inmueble%5Brecamaras%5D=&buscar_inmueble%5Bplantas%5D=&">{{ operacionInmueble.nombre }}</a></li>
+                            {% endif %}
+                        {% else %}
+                            <li class="black"><a class="white-text" href="{{ urlbusqueda }}?buscar_inmueble%5Bid_tipo_inmueble%5D=-1&buscar_inmueble%5Bid_categoria_inmueble%5D={{ indexCategoriaInmueble }}&buscar_inmueble%5Bid_operacion_inmueble%5D={{ indexOperacionInmueble }}&buscar_inmueble%5Bid_estado%5D=-1&buscar_inmueble%5Bid_municipio%5D=-1&buscar_inmueble%5Bid_colonia%5D=-1&buscar_inmueble%5Bprecio%5D=&buscar_inmueble%5Bpreciomax%5D=&buscar_inmueble%5Bmetrosterreno%5D=&buscar_inmueble%5Bmetrosterrenomax%5D=&buscar_inmueble%5Brecamaras%5D=&buscar_inmueble%5Bplantas%5D=&">{{ operacionInmueble.nombre }}</a></li>
+                        {% endif %}
+
+                    {% endfor %}
+                    </ul>
+                {% endif %}
+                {% set indexCategoriaInmueble=indexCategoriaInmueble+1 %}
+            {% endfor %}
+        </div>
+
+        <ul id="nav-mobile-propiedades" class="side-nav black">
+            {% set indexOperacionInmueble=0 %}
+            {% for operacionInmueble in operacionesInmueble %}
+                {# Omitir preventa #}
+                {% if (operacionInmueble.idOperacionInmueble != 3) %}
+                    <a class='dropdown-button btn black white-text' href='#' data-activates='mobdropdownOperacion{{ operacionInmueble.idOperacionInmueble }}'>{{ operacionInmueble.nombre }}</a>
+                    <ul id='mobdropdownOperacion{{ operacionInmueble.idOperacionInmueble }}' class='dropdown-content'>
+                        {% set indexTipoInmueble=0 %}
+                        <li class="grey"><a class="white-text" href="{{ urlbusqueda }}?buscar_inmueble%5Bid_tipo_inmueble%5D={{ indexTipoInmueble }}&buscar_inmueble%5Bid_categoria_inmueble%5D=-1&buscar_inmueble%5Bid_operacion_inmueble%5D={{ indexOperacionInmueble }}&buscar_inmueble%5Bid_estado%5D=-1&buscar_inmueble%5Bid_municipio%5D=-1&buscar_inmueble%5Bid_colonia%5D=-1&buscar_inmueble%5Bprecio%5D=&buscar_inmueble%5Bpreciomax%5D=&buscar_inmueble%5Bmetrosterreno%5D=&buscar_inmueble%5Bmetrosterrenomax%5D=&buscar_inmueble%5Brecamaras%5D=&buscar_inmueble%5Bplantas%5D=&">Todos</a></li>
+                        {% for tipoInmueble in tiposInmueble %}
+                            {% set indexTipoInmueble=indexTipoInmueble+1 %}
+                            <li class="grey"><a class="white-text" href="{{ urlbusqueda }}?buscar_inmueble%5Bid_tipo_inmueble%5D={{ indexTipoInmueble }}&buscar_inmueble%5Bid_categoria_inmueble%5D=-1&buscar_inmueble%5Bid_operacion_inmueble%5D={{ indexOperacionInmueble }}&buscar_inmueble%5Bid_estado%5D=-1&buscar_inmueble%5Bid_municipio%5D=-1&buscar_inmueble%5Bid_colonia%5D=-1&buscar_inmueble%5Bprecio%5D=&buscar_inmueble%5Bpreciomax%5D=&buscar_inmueble%5Bmetrosterreno%5D=&buscar_inmueble%5Bmetrosterrenomax%5D=&buscar_inmueble%5Brecamaras%5D=&buscar_inmueble%5Bplantas%5D=&">{{ tipoInmueble.nombre }}</a></li>
+                        {% endfor %}
+                    </ul>
+                {% endif  %}
+                {% set indexOperacionInmueble=indexOperacionInmueble+1 %}
+            {% endfor %}
+
+            {% set indexCategoriaInmueble=0 %}
+            {% for categoriaInmueble in categoriasInmueble %}
+                {% if categoriaInmueble.idCategoriaInmueble < 5  %}
+                <a class='dropdown-button btn black white-text' href='#' data-activates='mobdropdownCategoria{{ categoriaInmueble.idCategoriaInmueble }}'>{{ categoriaInmueble.nombre }}</a>
+                <ul id='mobdropdownCategoria{{ categoriaInmueble.idCategoriaInmueble }}' class='dropdown-content'>
+                    {% set indexOperacionInmueble=-1 %}
+                    <li class="grey"><a class="white-text" href="{{ urlbusqueda }}?buscar_inmueble%5Bid_tipo_inmueble%5D=-1&buscar_inmueble%5Bid_categoria_inmueble%5D={{ indexCategoriaInmueble }}&buscar_inmueble%5Bid_operacion_inmueble%5D={{ indexOperacionInmueble }}&buscar_inmueble%5Bid_estado%5D=-1&buscar_inmueble%5Bid_municipio%5D=-1&buscar_inmueble%5Bid_colonia%5D=-1&buscar_inmueble%5Bprecio%5D=&buscar_inmueble%5Bpreciomax%5D=&buscar_inmueble%5Bmetrosterreno%5D=&buscar_inmueble%5Bmetrosterrenomax%5D=&buscar_inmueble%5Brecamaras%5D=&buscar_inmueble%5Bplantas%5D=&">Todos</a></li>
+                    {% for operacionInmueble in operacionesInmueble %}
+                        {% set indexOperacionInmueble=indexOperacionInmueble+1 %}
+
+                        {# Omitir preventa si la categoria no es Desarrollo #}
+                        {% if (operacionInmueble.idOperacionInmueble == 3) %}
+                            {%  if (categoriaInmueble.idCategoriaInmueble == 4) %}
+                                <li class="grey"><a class="white-text" href="{{ urlbusqueda }}?buscar_inmueble%5Bid_tipo_inmueble%5D=-1&buscar_inmueble%5Bid_categoria_inmueble%5D={{ indexCategoriaInmueble }}&buscar_inmueble%5Bid_operacion_inmueble%5D={{ indexOperacionInmueble }}&buscar_inmueble%5Bid_estado%5D=-1&buscar_inmueble%5Bid_municipio%5D=-1&buscar_inmueble%5Bid_colonia%5D=-1&buscar_inmueble%5Bprecio%5D=&buscar_inmueble%5Bpreciomax%5D=&buscar_inmueble%5Bmetrosterreno%5D=&buscar_inmueble%5Bmetrosterrenomax%5D=&buscar_inmueble%5Brecamaras%5D=&buscar_inmueble%5Bplantas%5D=&">{{ operacionInmueble.nombre }}</a></li>
+                            {% endif %}
+                        {% else %}
+                            <li class="grey"><a class="white-text" href="{{ urlbusqueda }}?buscar_inmueble%5Bid_tipo_inmueble%5D=-1&buscar_inmueble%5Bid_categoria_inmueble%5D={{ indexCategoriaInmueble }}&buscar_inmueble%5Bid_operacion_inmueble%5D={{ indexOperacionInmueble }}&buscar_inmueble%5Bid_estado%5D=-1&buscar_inmueble%5Bid_municipio%5D=-1&buscar_inmueble%5Bid_colonia%5D=-1&buscar_inmueble%5Bprecio%5D=&buscar_inmueble%5Bpreciomax%5D=&buscar_inmueble%5Bmetrosterreno%5D=&buscar_inmueble%5Bmetrosterrenomax%5D=&buscar_inmueble%5Brecamaras%5D=&buscar_inmueble%5Bplantas%5D=&">{{ operacionInmueble.nombre }}</a></li>
+                        {% endif %}
+                    {% endfor %}
+                </ul>
+                {% endif %}
+                {% set indexCategoriaInmueble=indexCategoriaInmueble+1 %}
+            {% endfor %}
+        </ul>
+    </nav>
+
+    <div style="height:50px">
+
+    </div>
+</div>
+
+<style>
+    .circle
+    {
+        vertical-align:middle;
+    }
+</style>
+
+<script>
+    $('.dropdown-button').dropdown({
+        inDuration: 300,
+        outDuration: 225,
+        constrain_width: false, // Does not change width of dropdown to that of the activator
+        hover: true, // Activate on hover
+        gutter: 0, // Spacing from edge
+        belowOrigin: false, // Displays dropdown below the button
+        alignment: 'left' // Displays dropdown with edge aligned to the left of button
+    });
+</script>

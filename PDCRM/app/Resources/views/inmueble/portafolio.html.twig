@@ -1,0 +1,119 @@
+{% extends 'baseabc.html.twig' %}
+
+
+{% block body %}
+    <div id="wrapper">
+        <div id="container">
+            <!-- Page Layout here -->
+            <br/>
+            <div class="row">
+                <nav>
+                    <div class="nav-wrapper z-depth-1">
+                        <div class="col s12  blue darken-1 ">
+                            <a href="#!" class="breadcrumb">Portafolio</a>
+                        </div>
+                    </div>
+                </nav>
+            </div>
+
+            <div class="row">
+                <div class="col s4 m4 l4">
+                    <a href="#" onclick="enviarInmuebles()" class="btn blue darken-1">Enviar propiedades seleccionadas al prospecto</a>
+                </div>
+            </div>
+
+            <div class="row">
+                {% set index = 0 %}
+                {% for inmueble in inmuebles %}
+                <div class="col s4">
+                    <div class="card large">
+                        <div class="card-image">
+                            {% if (inmueble.Imagenes|length>0) %}
+                                <img class="img-responsive" src="{{ inmueble.Imagenes[0].getWebPath() }}" style="height:20em;"/>
+                            {% endif %}
+                        </div>
+                        <div class="card-content">
+                            <p>
+                                ID: {{ inmueble.legacyid }} {{ inmueble.nombreid }}<br>
+                                {{ inmueble.idTipoInmueble.nombre }} en {{ inmueble.idOperacionInmueble.nombre }}<br>
+                                <a href="#!"><i class="material-icons left">location_on</i>{{ inmueble.calle }}, {{ inmueble.idEstado.nombre }}, {{ inmueble.idMunicipio.nombre }}</a><br>
+                                <a href="{{ path ('inmueble_show', {'id': inmueble.idInmueble}) }}">VER</a><br>
+                                <a href="{{ path ('prospecto_desasignarpropiedad', {'idProspecto': prospecto.idProspecto, 'idInmueble': inmueble.idInmueble}) }}" onclick="if (confirm('¿Está seguro que desea desasignar al prospecto de esta propiedad?')) return true; else return false;">DESASIGNAR PROSPECTO</a>
+                            </p>
+                        </div>
+                        <div class="card-action">
+                            <div class="row">
+                                <div class="col s8 m8 l8">
+                                    <input type="checkbox" id="chkEnviar{{ index }}" value="{{ inmueble.idInmueble }}" />
+                                    <label for="chkEnviar{{ index }}">Enviar</label>
+                                </div>
+                                <div class="col s4 m4 l4">
+                                    {% if (inmuebleenviado[index] == true) %}
+                                        <a href="#"><i class="material-icons center">send</i>Enviado</a>
+                                    {% endif %}
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                {% set index=index+1 %}
+                {% endfor %}
+            </div>
+
+            <div class="row">
+                <div class="col s4 m4 l4">
+                    <a href="#" onclick="enviarInmuebles()" class="btn blue darken-1">Enviar propiedades seleccionadas al prospecto</a>
+                </div>
+            </div>
+
+            <div class="row"></div>
+
+        </div>
+    </div>
+
+    <script>
+        function enviarInmuebles()
+        {
+            var inmueblesIds="";
+            var checkbox;
+
+            {% set index = 0 %}
+            {% for inmueble in inmuebles %}
+
+            checkbox = document.getElementById("chkEnviar{{ index }}");
+            if (checkbox.checked == true)
+            {
+                inmueblesIds=inmueblesIds+checkbox.value + ",";
+            }
+
+            {% set index = index + 1 %}
+            {% endfor %}
+
+            inmueblesIds = inmueblesIds.substring(0, inmueblesIds.length - 1);
+
+            if (inmueblesIds=="")
+            {
+                alert("No hay propiedades seleccionadas.");
+            }
+            else {
+
+                var url = "{{ path('mensaje_enviarinmuebleaprospectos', {}) }}?idProspectos=" + {{ prospecto.idProspecto }} +"&ida={{ ida }}&email=&idInmuebles=" + inmueblesIds + "&mensaje=" + "" + "&titulo=" + "Propiedad recomendada";
+                url = url + "&redurl={{ path('inmueble_portafolioprospecto', {'idprospecto':prospecto.idProspecto}) }}";
+                //alert(url);
+                window.location = url;
+            }
+        }
+    </script>
+    
+{% endblock %}
+
+{% block stylesheets %}
+
+    <style>
+        body {
+            background: white;
+            height: 100vh;
+        }
+    </style>
+
+{% endblock %}

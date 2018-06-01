@@ -1,0 +1,71 @@
+{% extends 'baseabc.html.twig' %}
+
+{% block body %}
+    <div id="wrapper">
+        <div id="container">
+            <!-- Page Layout here -->
+            <br/>
+            <div class="row">
+                <nav>
+                    <div class="nav-wrapper z-depth-1">
+                        <div class="col s12  blue darken-1 ">
+                            <a href="#!" class="breadcrumb">Resumen de Envios</a>
+                        </div>
+                    </div>
+                </nav>
+            </div>
+
+            <div class="row">
+                <table>
+                    <thead>
+                        <th>
+                            De:
+                        </th>
+                        <th>
+                            Para:
+                        </th>
+                        <th>
+                            Fecha:
+                        </th>
+                        <th>
+                            Propiedades:
+                        </th>
+                    </thead>
+                    <tbody>
+                        {% for mensaje in mensajes %}
+                        <tr>
+                            <td>
+                                {{ mensaje.idUsuario.nombre }}
+                            </td>
+                            <td>
+                                {{ mensaje.destinoemail }}
+                            </td>
+                            <td>
+                                {{ mensaje.fechaCreacion|date("d/m/Y H:i:s")  }}
+                            </td>
+                            <td>
+                                {% for inmueble in mensaje.inmuebles %}
+                                    ID: {{ inmueble.legacyid }}<br>
+                                {% endfor %}
+                            </td>
+                        </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+{% endblock %}
+
+{% block stylesheets %}
+    <style>
+        body {
+            background: white;
+            height: 200vh;
+        }
+    </style>
+
+{% endblock %}
+
+{% block javascripts %}
+{% endblock %}

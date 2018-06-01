@@ -1,0 +1,63 @@
+{% extends 'baseabc.html.twig' %}
+
+{% block body %}
+    <div id="wrapper">
+        <div id="container">
+            <!-- Page Layout here -->
+            <br/>
+            <div class="row">
+                <nav>
+                    <div class="nav-wrapper z-depth-1">
+                        <div class="col s12  blue darken-1 ">
+                            <a href="#!" class="breadcrumb">Lista de Contactos</a>
+                        </div>
+                    </div>
+                </nav>
+            </div>
+            <div class="row">
+                <a href="{{ path('listacontacto_new', {}) }}" class="waves-effect waves-light btn blue darken-1 right"><i class="material-icons left">add</i>Nueva Lista de Contacto</a>
+            </div>
+
+            <div class="row">
+                <table class="striped">
+                    <thead>
+                    <tr>
+                        <th>Lista de Contactos</th>
+                        <th>Operaciones</th>
+                    </tr>
+                    </thead>
+
+                    <tbody>
+                    {% for lista in listaContactos %}
+                        <tr>
+                            <td>
+                                {{ lista.nombre }}
+                            </td>
+                            <td>
+                                <a href="{{ path ('mensaje_new', {}) }}?tipoMensaje=1&idContacto={{ lista.idListaContacto }}"><i class="material-icons left">email</i></a>
+                            </td>
+                        </tr>
+                    {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+
+        </div>
+    </div>
+{% endblock %}
+
+{% block stylesheets %}
+
+    <style>
+        body {
+            background: white;
+            height: 100vh;
+        }
+        img
+        {
+            width: 32px;
+            height: 32px;
+        }
+    </style>
+
+{% endblock %}

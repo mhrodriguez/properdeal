@@ -1,0 +1,217 @@
+{% extends 'baseabc.html.twig' %}
+
+{% block body %}
+    <div style="background-color:white; margin: 3em;">
+        <div class="row">
+            <a href="#" id="imprimir" onclick="window.print();">Imprimir</a>
+        </div>
+
+        <div class="row z-depth-1">
+            <div class="col s7 m7 l7">
+                {% image '@FrameworkBundle/Resources/public/images/logotipo2.jpg' %}
+                <img src="{{ asset_url }}" alt="Logo" style="width:250px;margin: 10px;"/>
+                {% endimage %}
+            </div>
+            <div class="col s5 m5 l5">
+                <h5>{{ inmueble.IdUsuario.nombre }}</h5>
+                <label>Móvil: {{ inmueble.IdUsuario.celular }}</label><br>
+                <label>E-mail: {{ inmueble.IdUsuario.email }}</label><br><br>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col s6 m6 l6">
+                <h5>{{ inmueble.nombreid }}, {{ inmueble.idMunicipio.nombre }}, {{ inmueble.idEstado.nombre }}, {{ inmueble.cp }} </h5>
+                {% if inmueble.nombreedificio is not null  %}
+                    <h5>{{ inmueble.nombreedificio }}</h5>
+                {% endif %}
+
+                {% if inmueble.idOperacionInmueble.idOperacionInmueble == 2 %}
+                    <h5>
+                        {% if inmueble.precio > 0 %}
+                            {% if inmueble.preciohasta > 0 %}Desde:{% endif %}
+                            {{ inmueble.idMoneda.simbolo }} {{ inmueble.precio|number_format(2, '.', ',') }}
+                        {% endif %}
+                        {% if inmueble.preciohasta > 0 %}
+                            &nbsp;&nbsp;Hasta: {{ inmueble.idMoneda.simbolo }} {{ inmueble.preciohasta|number_format(2, '.', ',') }}
+                        {% endif %}
+                    </h5>
+                {% else %}
+                    <h5>{{ inmueble.idMoneda.simbolo }} {{ inmueble.precio|number_format(2, '.', ',') }} </h5>
+                {% endif %}
+
+                <br>
+
+                <label><b>{{ inmueble.idTipoInmueble.nombre }} en {{ inmueble.idOperacionInmueble.nombre }}</b></label><br>
+                <label>ID: {{ inmueble.legacyid }}</label><br><br>
+
+                <label><b>Información de la Propiedad:</b></label>
+                <br>
+                <div class="row">
+                <div class="col s6 m6 l6">
+
+                    <ul>
+                        {% if inmueble.recamaras is not null %}
+                            <li>{{ inmueble.recamaras }} | Recámara(s)</li>
+                        {% endif %}
+
+                        {% if inmueble.plantas > 0 %}
+                            <li>{{ inmueble.plantas }} | Plantas</li>
+                        {% endif %}
+
+                        {% if inmueble.banos is not null %}
+                            <li>{{ inmueble.banos }} | Baño(s)</li>
+                        {% endif %}
+
+                        {% if inmueble.mediobanos is not null %}
+                            {% if inmueble.mediobanos > 0 %}
+                                <li>{{ inmueble.mediobanos }} | Medios Baño(s)</li>
+                            {% endif %}
+                        {% endif %}
+
+                        {% if inmueble.espacioautos is not null %}
+                            {% if inmueble.espacioautos > 0 %}
+                                <li>{{ inmueble.espacioautos }} | Estacionamiento(s)</li>
+                            {% endif %}
+                        {% endif %}
+
+                        <li></li>
+
+                        {% if inmueble.antiguedad is not null %}
+                            <li>Antiguedad: {{ inmueble.antiguedad }}</li>
+                        {% endif %}
+                    </ul>
+                </div>
+                <div class="col s6 m6 l6">
+                    <label></label>
+                    <ul>
+
+                        {% if inmueble.metrosconstruccion is not null %}
+                            {% if inmueble.metrosconstruccion > 0 %}
+                            <li>{{ inmueble.metrosconstruccion }} | M2 de Construcción</li>
+                            {% endif %}
+                        {% endif %}
+
+                        {% if inmueble.metrosterreno is not null %}
+                            {% if inmueble.metrosterreno > 0 %}
+                            <li>{{ inmueble.metrosterreno }} | M2 de Terreno</li>
+                            {% endif %}
+                        {% endif %}
+
+                        {% if inmueble.metrosfrente is not null %}
+                            {% if inmueble.metrosfrente > 0 %}
+                                <li>{{ inmueble.metrosfrente }} | M de frente</li>
+                            {% endif %}
+                        {% endif %}
+
+                        {% if inmueble.metrosfondo is not null %}
+                            {% if inmueble.metrosfondo > 0 %}
+                                <li>{{ inmueble.metrosfondo }} | M de fondo</li>
+                            {% endif %}
+                        {% endif %}
+
+                    </ul>
+                </div>
+                </div>
+
+                <label><b>Descripción:</b></label>
+                <p>{{ inmueble.descripcion }}</p>
+
+                <label><b>Características:</b></label>
+                <div class="row">
+                    <ul>
+                    {%  for nombre in caracteristicasDesc %}
+                        <li>{{ nombre }}</li>
+                    {% endfor %}
+                    </ul>
+                </div>
+
+                <div class="row z-depth-1 grey lighten-4">
+                    <div class="col s12 m12 l12">
+                        <br>
+                        <label>{{ inmueble.IdUsuario.nombre }}</label><br>
+                        <label>Teléfono: {{ inmueble.IdUsuario.telefono }}</label><br>
+                        <label>Móvil: {{ inmueble.IdUsuario.celular }}</label><br>
+                        <label><b>{{ inmueble.IdUsuario.email }}</b></label><br><br>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col s6 m6 l6">
+                <div id="divImagen" class="row">
+                        {% if (inmueble.imagenes|length>0) %}
+                            {% for imagen in inmueble.imagenes %}
+                                <div class="col s6 m6 l6">
+                                    <img src="{{ imagen.getWebPath() }}" class="responsive-img" style="width:125px; height: 80px; margin: 10px;"/>
+                                </div>
+                            {% endfor %}
+                        {% endif %}
+                </div>
+            </div>
+        </div>
+
+        <script>
+
+        </script>
+
+        {% javascripts '@FrameworkBundle/Resources/public/js/*'%}
+        {% endjavascripts %}
+
+        <script type="text/javascript">
+
+        </script>
+
+        <script>
+
+            (function() {
+
+                var beforePrint = function() {
+                    document.getElementById('divSlider').style.display='none';
+                    $('.slider').slider({full_width: false, height: 0});
+                    document.getElementById('divImagen').style.display='';
+                };
+
+                var afterPrint = function() {
+                    document.getElementById('divSlider').style.display='';
+                    $('.slider').slider({full_width: false, height: 600});
+                    document.getElementById('divImagen').style.display='none';
+                };
+
+                if (window.matchMedia) {
+                    var mediaQueryList = window.matchMedia('print');
+                    mediaQueryList.addListener(function(mql) {
+                        if (mql.matches) {
+                            beforePrint();
+                        } else {
+                            afterPrint();
+                        }
+                    });
+                }
+
+                window.onbeforeprint = beforePrint;
+                window.onafterprint = afterPrint;
+
+            }());
+
+        </script>
+    </div>
+{% endblock %}
+
+{% block stylesheets %}
+
+    <style>
+        body {
+            background-color: white;
+        }
+        label
+        {
+            color: black !important;
+        }
+        p{
+            line-height: 100% !important;
+            text-align: justify;
+        }
+    </style>
+
+    <style type="text/css" media="@print">@page{size:landscape;}</style>
+{% endblock %}

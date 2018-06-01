@@ -1,0 +1,36 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+    <h1>ListaContacto</h1>
+
+    <table>
+        <tbody>
+            <tr>
+                <th>Idlistacontacto</th>
+                <td>{{ listaContacto.idListaContacto }}</td>
+            </tr>
+            <tr>
+                <th>Nombre</th>
+                <td>{{ listaContacto.nombre }}</td>
+            </tr>
+            <tr>
+                <th>Activo</th>
+                <td>{% if listaContacto.activo %}Yes{% else %}No{% endif %}</td>
+            </tr>
+        </tbody>
+    </table>
+
+    <ul>
+        <li>
+            <a href="{{ path('listacontacto_index') }}">Back to the list</a>
+        </li>
+        <li>
+            <a href="{{ path('listacontacto_edit', { 'id': listaContacto.idListaContacto }) }}">Edit</a>
+        </li>
+        <li>
+            {{ form_start(delete_form) }}
+                <input type="submit" value="Delete">
+            {{ form_end(delete_form) }}
+        </li>
+    </ul>
+{% endblock %}

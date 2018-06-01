@@ -1,0 +1,167 @@
+{% extends 'baseabc.html.twig' %}
+
+{% form_theme form with ['forms/custom_time_widget.html.twig'] %}
+
+{% block body %}
+
+    <div class="row white z-depth-2">
+        <div class="formcontainer">
+            <div>
+                <br/>
+                <h5>Bitácora</h5>
+                <br/><br/>
+                {{ form_start(form) }}
+
+                <div class="row">
+                    <div class="input-field col s12">
+                        {{ form_widget(form.id_usuario) }}
+                        {{ form_label(form.id_usuario) }}
+                        {{ form_errors(form.id_usuario) }}
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="input-field col s12 activelabel">
+                        {{ form_widget(form.fecha) }}
+                        {{ form_label(form.fecha) }}
+                        {{ form_errors(form.fecha) }}
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="input-field col s12">
+                        {{ form_widget(form.id_accion) }}
+                        {{ form_label(form.id_accion) }}
+                        {{ form_errors(form.id_accion) }}
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="input-field col s12">
+                        {{ form_widget(form.id_prospecto) }}
+                        {{ form_label(form.id_prospecto) }}
+                        {{ form_errors(form.id_prospecto) }}
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="input-field col s12">
+                        {{ form_widget(form.propiedad) }}
+                        {{ form_label(form.propiedad) }}
+                        {{ form_errors(form.propiedad) }}
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="input-field col s12">
+                        {{ form_widget(form.comentarios) }}
+                        {{ form_label(form.comentarios) }}
+                        {{ form_errors(form.comentarios) }}
+                    </div>
+                </div>
+
+                {{ form_row(form.indexSelectedAsesor) }}
+
+                <input type="submit" value="Guardar" class="waves-effect waves-light btn blue darken-4 center" onclick="return fechaHoraConFormato();"/>
+
+                {{ form_end(form) }}
+            </div>
+        </div>
+    </div>
+
+
+    <style>
+        body{
+            background-color: white;
+            height: 100vh;
+        }
+
+        #tarea_fecha_time_hour {
+            float: left;
+        }
+
+        #tarea_fecha_time_hour {
+            float: left;
+        }
+
+        #tarea_fecha_time {
+            float: left;
+        }
+
+        #tarea_fecha_time_hour
+        {
+            float:left;
+        }
+
+        #tarea_fecha_time_minute
+        {
+            float:left;
+        }
+
+        .activelabel label {
+            font-size: 0.8rem;
+            -webkit-transform: translateY(-140%);
+            transform: translateY(-140%);
+        }
+
+    </style>
+
+    <script>
+        $(document).ready(function() {
+            $('select').material_select();
+
+        });
+
+        $('#tarea_fecha_date').pickadate({
+            selectMonths: true, // Creates a dropdown to control month
+            selectYears: 15, // Creates a dropdown of 15 years to control year
+            format: 'yyyy-mm-dd'
+        });
+
+        function fechaHoraConFormato()
+        {
+            var fechaHora = document.getElementById('tarea_fecha_date').value += ' ' + pad(document.getElementById('tarea_fecha_time_hour').value) + ':' +
+                    pad(document.getElementById('tarea_fecha_time_minute').value) + ':00';
+
+            return fechaHora;
+        }
+
+        function pad(d) {
+            return (d < 10) ? '0' + d.toString() : d.toString();
+        }
+
+        function onChangeAsesor()
+        {
+            var selectorAsesor = document.getElementById('tarea_id_usuario');
+            var url = 'http://' + window.location.hostname + '{{ path('prospecto_index', {}) }}.json?indexAsesor=' + selectorAsesor.value;
+
+            $.ajax({
+                url: url,
+                dataType: "json",
+                success: function(data) {
+                    var options, index, select, option;
+
+                    // Get the raw DOM object for the select box
+                    select = document.getElementById('tarea_id_prospecto');
+
+                    // Clear the old options
+                    select.options.length = 0;
+
+                    // Load the new options
+                    options = data; // Or whatever source information you're working with
+                    for (index = 0; index < options.length; ++index) {
+                        option = options[index];
+
+                        select.options.add(new Option(option.nombre, index));
+                    }
+
+                    $('select').material_select();
+                }
+            });
+        }
+
+        document.getElementById('tarea_id_usuario').value = {{ form.vars.value.indexSelectedAsesor }};
+
+    </script>
+
+{% endblock %}

@@ -1,0 +1,88 @@
+{% extends 'minisitio/baseminisitio.html.twig' %}
+
+{% block body %}
+    <div id="wrapper">
+        <div id="container">
+            {% for flash_message in app.session.flashbag.get('notice') %}
+                <div class="flash-notice">
+                    {{ flash_message }}
+                </div>
+            {% endfor %}
+
+            <div class="row">
+                <div id="divPresentacion" class="parallax-container z-depth-1">
+                    <div class="section no-pad-bot">
+                        <div class="container" style="text-align: center">
+
+                            <div>
+                                <h3>{{ asesor.empresa }}</h3>
+                            </div>
+                            <div>
+                                {% image '@FrameworkBundle/Resources/public/images/ic_logogenerico.jpg' %}
+                                <img id="imgLogo" src="{{ asset_url }}" alt="" class="circle responsive-img" style="width:120px;height:120px">
+                                {% endimage %}
+                            </div>
+                            <div>
+                                <h4>{{ asesor.nombre }} </h4>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="parallax"><img src="{% image '@FrameworkBundle/Resources/public/images/img_minisitio.jpg' %}
+                        {{ asset_url }}
+                    {% endimage %}" alt="Unsplashed background img 1"></div>
+                </div>
+            </div>
+
+            <div class="row fb" style="margin-top: -20px">
+                <table>
+                    <tr>
+                        <td>
+                            <i class="material-icons left">phone</i>{{ asesor.telefono }}
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <i class="material-icons left">email</i>{{ asesor.email }}
+                        </td>
+                    </tr>
+                </table>
+            </div>
+
+            <div class="row fb" style="margin-top: -20px">
+                <div class="col s12 m12 l12">
+                    <iframe style="width:100%; height:105vh;" frameBorder="0" src="{{ path('buscarinmueble_buscarpanelnh', {}) }}?buscar_inmueble%5Bid_tipo_inmueble%5D=0&buscar_inmueble%5Bid_operacion_inmueble%5D=-1&buscar_inmueble%5Bid_estado%5D=-1&buscar_inmueble%5Bid_municipio%5D=-1&buscar_inmueble%5Bid_colonia%5D=-1&buscar_inmueble%5Bprecio%5D=&buscar_inmueble%5Bpreciomax%5D=&buscar_inmueble%5Bmetrosterreno%5D=&buscar_inmueble%5Bmetrosterrenomax%5D=&buscar_inmueble%5Brecamaras%5D=&buscar_inmueble%5Bplantas%5D=&"></iframe>
+                </div>
+            </div>
+
+        </div>
+    </div>
+    <script>
+        {% if webPathLogo != false %}
+        document.getElementById('imgLogo').src = '{{ webPathLogo }}';
+        {% endif %}
+    </script>
+{% endblock %}
+
+{% block stylesheets %}
+    <style>
+        h3 {
+            text-align: center;
+            text-shadow: 2px 2px #444444;
+        }
+        h4 {
+            text-align: center;
+            text-shadow: 2px 2px #444444;
+        }
+        h5 {
+            text-align: center;
+        }
+        #imgLogo {
+            background-color: #ffffff;
+        }
+        .fb{
+            background-color: #ffffff;
+        }
+    </style>
+{% endblock %}
+

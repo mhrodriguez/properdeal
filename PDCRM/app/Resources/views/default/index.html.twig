@@ -1,0 +1,46 @@
+{% extends 'base2.html.twig' %}
+
+{% block body %}
+    <div id="wrapper">
+        <div id="container">
+
+            <div id="divBusqueda">
+                {% if not is_granted('IS_AUTHENTICATED_FULLY') %}
+                <div style="margin-left:auto;margin-right:auto;width:500px;height:200px;">
+                    <a href="{{ path('login', {}) }}" class="waves-effect waves-light btn center" style="margin-left: 160px">ENTRAR AL SISTEMA</a>
+                </div>
+                {% endif %}
+            </div>
+
+        </div>
+    </div>
+    <script>
+    </script>
+
+{% endblock %}
+
+{% block stylesheets %}
+    <style>
+        #divBusqueda {
+            height: 81vh;
+            margin-top: 3px;
+            padding-top: 80px;
+        }
+
+        body {
+            background: url({% image '@FrameworkBundle/Resources/public/images/inter3.jpg' %}
+                    {{ asset_url }}
+                {% endimage %}
+            );
+            background-size:cover;
+        }
+
+        h3 {
+            text-align: center;
+        }
+        h5 {
+            text-align: center;
+        }
+    </style>
+{% endblock %}
+

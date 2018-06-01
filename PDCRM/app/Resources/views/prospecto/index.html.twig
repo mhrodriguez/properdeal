@@ -1,0 +1,342 @@
+{% extends 'baseabc.html.twig' %}
+
+{% block body %}
+    <div id="wrapper">
+        <div id="container">
+            <!-- Page Layout here -->
+            <br/>
+            <div class="row">
+                <nav>
+                    <div class="nav-wrapper z-depth-1">
+                        <div class="col s12  blue darken-1 ">
+                            <a href="#!" class="breadcrumb">Prospectos</a>
+                        </div>
+                    </div>
+                </nav>
+            </div>
+            <div class="row">
+                <div class="col s12 m12 l12">
+                    <div id="chart1">&nbsp;</div>
+                    <script>
+                        $(function() {
+                            {{ gchart_pie_chart(dataTable1, 'chart1', 650, 300, '') }}
+                        });
+                    </script>
+                </div>
+            </div>
+
+            <div class="row">
+
+            </div>
+
+            <div class="row">
+                <div class="col s6 m6 l6">
+                    <p>
+                        <a><i class="material-icons left">account_circle</i>Prospectos: {{ prospectos|length }}</a>
+                    </p>
+                    <p>
+                        <a><i class="material-icons left">turned_in</i>Solicitudes recientes: {{ countSolicitudes }}</a>
+                    </p>
+                    <p>
+                        <a><i class="material-icons left">trending_up</i>Promedio de ventas: $ {{ promedioVentas|number_format(2, '.', ',') }}</a>
+                    </p>
+                    <p>
+                        <a><i class="material-icons left">trending_up</i>Promedio de rentas: $ {{ promedioRentas|number_format(2, '.', ',') }}</a>
+                    </p>
+
+                </div>
+                <div class="col s6 m6 l6">
+                    <div class="row">
+                        <a href="{{ path('prospecto_new', {}) }}" class="waves-effect waves-light btn blue darken-1 right"><i class="material-icons left">add</i>Nuevo Prospecto</a>
+                    </div>
+
+                    <div class="row">
+                    {% if activo %}
+                    <a href="{{ path('prospecto_index', {}) }}.xlsx" class="waves-effect waves-light btn blue darken-1 right" style="width:208px">Generar Excel</a>
+                    {% else %}
+                        <a href="{{ path('prospecto_index', {}) }}.xlsx?activo=0" class="waves-effect waves-light btn blue darken-1 right" style="width:208px">Generar Excel</a>
+                    {% endif %}
+                    </div>
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col s6 m6 l6">
+                    <input id="txtProspectoBuscar" placeholder="Nombre" value="{{ buscar }}"/>
+                    <button type="button" onclick="buscar();" class="waves-effect waves-light btn blue darken-1 right">Buscar</button>
+                    <script>
+                        function buscar() {
+                            txtProspectoBuscar = document.getElementById('txtProspectoBuscar');
+                            url = '{{ path('prospecto_index', {}) }}?buscar=' + txtProspectoBuscar.value + '&activo={{ activo }}';
+                            window.location = url;
+                        }
+                    </script>
+                </div>
+                <div class="col s6 m6 l6">
+                    {% if activo %}
+                        <a href="{{ path('prospecto_index', {}) }}?activo=0" class="right">Ver Inactivos</a>
+                    {% else %}
+                        <a href="{{ path('prospecto_index', {}) }}" class="right">Ver Activos</a>
+                    {% endif %}
+                </div>
+            </div>
+
+            {% if numpaginas is defined %}
+                {% if numpaginas>0 %}
+                    <div class="row">
+                        <ul class="pagination">
+                            {% if paginaactual != 1 %}
+                                <li class="waves-effect"><a href="{{ path('prospecto_index', {}) }}?pagina={{ paginaactual-1 }}&buscar={{ buscar }}&activo={{ activo }}"><i class="material-icons">chevron_left</i></a></li>
+                            {% endif %}
+
+                            {% for p in 1..numpaginas %}
+                                {% if p == paginaactual %}
+                                    <li class="active blue darken-1"><a href="#!">{{ p }}</a></li>
+                                {% else %}
+                                    <li class="waves-effect"><a href="{{ path('prospecto_index', {}) }}?pagina={{ p }}&buscar={{ buscar }}&activo={{ activo }}">{{ p }}</a></li>
+                                {% endif %}
+                            {% endfor %}
+
+                            {% if paginaactual != numpaginas %}
+                                <li class="waves-effect"><a href="{{ path('prospecto_index', {}) }}?pagina={{ paginaactual+1 }}&buscar={{ buscar }}&activo={{ activo }}"><i class="material-icons">chevron_right</i></a></li>
+                            {% endif %}
+                        </ul>
+                    </div>
+                {% endif %}
+            {% endif %}
+
+            <div class="row">
+
+                <table class="striped">
+                    <thead>
+                    <tr>
+                        <th data-field="id">Prospecto</th>
+                        <th></th>
+                        <th>Operaciones</th>
+                    </tr>
+                    </thead>
+
+                    <tbody>
+                    {% set tamano = prospectos|length %}
+                    {% if tamano > 0 %}
+                    {% for index in 0..tamano-1 %}
+                        {% set prospecto = prospectos[index]  %}
+                            <tr>
+                                <td>
+                                    <h5>{{ prospecto.nombre }} {{ prospecto.apellidos }}</h5>
+
+                                    {% if prospecto.tipo_prospecto_nombre is not null  %}
+                                    Tipo: {{ prospecto.tipo_prospecto_nombre }}<br/>
+                                    {% endif %}
+
+                                    Oportunidad: $ {{ prospecto.presupuesto|number_format(2, '.', ',') }}<br/>
+
+                                    {% set inmuebles = prospectoinmuebles[index] %}
+
+                                    {% for inmueble in inmuebles %}
+
+                                    <div>
+                                        ID: {{ inmueble.legacyid }}<br>
+                                        {% if (inmueble.Imagenes|length>0) %}
+                                            <img class="imginmueble" src="{{ inmueble.Imagenes[0].getWebPath() }}" style="width:40px; height:30px"/>
+                                        {% endif %}
+                                    </div>
+
+                                    {% endfor %}
+
+                                </td>
+                                <td>
+                                    {% if prospecto.telefono is not null %}
+                                        <p><i class="material-icons left">phone</i>{{ prospecto.telefono }}</p>
+                                    {% endif %}
+                                    {% if prospecto.telefono_movil is not null  %}
+                                        <p><i class="material-icons left">phone</i>{{ prospecto.telefono_movil }}</p>
+                                    {% endif %}
+                                    {% if prospecto.email is not null  %}
+                                    <p><a href="#!"><i class="material-icons left">email</i>{{ prospecto.email }}</a></p>
+                                    {% endif %}
+                                    <p>Alta: {{ prospecto.fecha_creacion | date('d/m/Y') }}</p>
+                                </td>
+                                <td>
+                                    <div>
+                                    <a href="{{ path('prospecto_detalle', {'id':prospecto.id}) }}" class="tooltipped" data-tooltip="Detalle" data-position="top"><i class="material-icons left">visibility</i></a>
+
+                                    {% if prospecto.idsolicitud is null %}
+                                    <a href="#" onclick="var url; if (window.location.href.indexOf('#') > 0) { url = window.location.href.substring(0, window.location.href.indexOf('#')); } else { url = window.location.href; } window.location.href='{{ path('solicitud_new', {})  }}?idProspecto={{ prospecto.id }}&url=' + url.replace(/&/g, 'AMP');" class="tooltipped" data-tooltip="Solicitud" data-position="top"><i class="material-icons left">turned_in</i></a>
+                                    {% else %}
+                                    <a href="#" onclick="var url; if (window.location.href.indexOf('#') > 0) { url = window.location.href.substring(0, window.location.href.indexOf('#')); } else { url = window.location.href; } window.location.href='{{ path('solicitud_edit', {'id': prospecto.idsolicitud})  }}?url=' + url.replace(/&/g, 'AMP');" class="tooltipped" data-tooltip="Solicitud" data-position="top"><i class="material-icons left">turned_in</i></a>
+                                    {% endif %}
+
+                                    <a href="{{ path('prospecto_edit', {'id':prospecto.id}) }}" class="tooltipped" data-tooltip="Editar" data-position="top"><i class="material-icons left">edit</i></a>
+                                    <a href="{{ path('mensaje_new', {}) }}?tipoMensaje=5&idProspecto={{ prospecto.id }}" class="tooltipped" data-tooltip="Enviar mensaje" data-position="top">
+                                        <i class="material-icons left">question_answer</i>
+                                    </a>
+                                    <a href="{{ path('inmueble_portafolioprospecto', {'idprospecto':prospecto.id}) }}" class="tooltipped" data-tooltip="Ver Portafolio" data-position="top"><i class="material-icons left">business_center</i></a>
+                                    <a href="{{ path ('archivop_index', {}) }}?idProspecto={{ prospecto.id }}" class="tooltipped" data-tooltip="Subir archivos" data-position="top"><i class="material-icons left">description</i></a>
+
+                                    <a href="{{ path('tarea_prospecto', {}) }}?idProspecto={{ prospecto.id }}" class="tooltipped" data-tooltip="Actividad" data-position="top">
+                                        <i class="material-icons left">date_range</i>
+                                    </a>
+                                    <a class="tooltipped" data-tooltip="Borrar" data-position="top" href="{{ path('prospecto_borrar', {'id':prospecto.id}) }}" onclick="if (confirm('¿Está seguro que desea borrar este registro?')) { return true; } else { return false; }"><i class="material-icons left">delete</i></a>
+
+                                    <br><br>
+
+                                    {% if prospecto.activo == true %}
+                                        <p>Activo<i class="material-icons left">play_circle_outline</i></p>
+
+                                        <a href="{{ path('prospecto_switchactivo', {'id':prospecto.id}) }}">Desactivar</a>
+                                    {% else %}
+                                        <p>Inactivo<i class="material-icons left">not_interested</i></p>
+
+                                        <a href="{{ path('prospecto_switchactivo', {'id':prospecto.id}) }}">Activar</a>
+                                    {% endif %}
+
+                                    </div>
+                                    <script>
+                                        $(document).ready(function(){
+                                        $('.tooltipped').tooltip();
+                                        });
+                                    </script>
+                                </td>
+                            </tr>
+                        {% endfor %}
+                    {% endif %}
+                    </tbody>
+                </table>
+            </div>
+
+            {% if numpaginas is defined %}
+                {% if numpaginas>0 %}
+                    <div class="row">
+                        <ul class="pagination">
+
+                            {% if paginaactual != 1 %}
+                            <li class="waves-effect"><a href="{{ path('prospecto_index', {}) }}?pagina={{ paginaactual-1 }}&buscar={{ buscar }}&activo={{ activo }}"><i class="material-icons">chevron_left</i></a></li>
+                            {% endif %}
+
+                            {% for p in 1..numpaginas %}
+                                {% if p == paginaactual %}
+                                    <li class="active blue darken-1"><a href="#!">{{ p }}</a></li>
+                                {% else %}
+                                    <li class="waves-effect"><a href="{{ path('prospecto_index', {}) }}?pagina={{ p }}&buscar={{ buscar }}&activo={{ activo }}">{{ p }}</a></li>
+                                {% endif %}
+                            {% endfor %}
+
+                            {% if paginaactual != numpaginas %}
+                            <li class="waves-effect"><a href="{{ path('prospecto_index', {}) }}?pagina={{ paginaactual+1 }}&buscar={{ buscar }}&activo={{ activo }}"><i class="material-icons">chevron_right</i></a></li>
+                            {% endif %}
+                        </ul>
+                    </div>
+                {% endif %}
+            {% endif %}
+
+            <div class="row">
+                <div class="col s6 m6 l6">
+                    <table class="striped">
+                        <thead>
+                        <tr>
+                            <th data-field="id">
+                                <p><a><i class="material-icons left">insert_invitation</i>Prospectos sin actividad</a></p>
+                            </th>
+                            <th data-field="id">
+                               <p><a><i class="material-icons left">insert_invitation</i>Último Envío</a></p>
+                            </th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        {% for prospectoseg in prospectonoseguimiento %}
+                            <tr>
+                                <td>
+                                    <b>{{ prospectoseg.nombre }} {{ prospectoseg.apellidos }}</b><br>
+                                    Registrado por: {{ prospectoseg.nombre_encargado }}
+                                </td>
+                                <td>
+                                    {% if prospectoseg.fecha is not null %}
+                                    {{ prospectoseg.fecha|date("d/m/Y") }}
+                                    {% endif %}
+                                </td>
+                            </tr>
+                        {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
+                <div class="col s6 m6 l6">
+                    <table class="striped">
+                        <thead>
+                        <tr>
+                            <th data-field="id">
+                                <p><a><i class="material-icons left">insert_invitation</i>Pendientes de seguimiento</a></p>
+                            </th>
+                            <th data-field="id">
+                                <p><a><i class="material-icons left">insert_invitation</i>Última actividad</a></p>
+                            </th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        {% for prospectoseg in prospectoseguimiento %}
+                            <tr>
+                                <td>
+                                    <b>{{ prospectoseg.nombre }} {{ prospectoseg.apellidos }}</b></b><br>
+                                    Registrado por: {{ prospectoseg.nombre_encargado }}
+                                </td>
+                                <td>
+                                    {% if prospectoseg.fecha is not null %}
+                                    <div class="chip">
+                                    {{ prospectoseg.accion_nombre }}
+                                    </div>
+                                    <br><br>
+                                    &nbsp;&nbsp;&nbsp;{{ prospectoseg.fecha|date("d/m/Y") }}
+                                    {% endif %}
+                                </td>
+                            </tr>
+                        {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+
+        </div>
+    </div>
+
+    <script type="text/javascript" src="https://www.google.com/jsapi"></script>
+    <script type="text/javascript">
+        google.load("visualization", "1", {packages:["corechart", 'table', 'treemap', 'gauge']});
+        google.load('jquery', '1.6.0');
+    </script>
+
+{% endblock %}
+
+{% block stylesheets %}
+
+    <style>
+        body {
+            background: white;
+            height: 100vh;
+        }
+
+        .tooltip {
+            position: relative;
+            display: inline-block;
+            border-bottom: 1px dotted darkblue;
+        }
+
+        .tooltip .tooltiptext {
+            visibility: hidden;
+            width: 120px;
+            background-color: white;
+            color: cornflowerblue;
+            text-align: center;
+            border-radius: 6px;
+            padding: 5px 0;
+
+            /* Position the tooltip */
+            position: absolute;
+            z-index: 1;
+        }
+
+        .tooltip:hover .tooltiptext {
+            visibility: visible;
+        }
+    </style>
+
+{% endblock %}

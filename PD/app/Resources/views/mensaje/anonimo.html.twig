@@ -1,0 +1,64 @@
+{% extends 'baseabc.html.twig' %}
+
+{% block body %}
+<br/>
+<div class="container z-depth-1" style="background-color:white;">
+    <div class="formcontainer">
+        <br><br>
+        {{ form_start(form) }}
+        <div class="row">
+            <div class="input-field col s12">
+                {{ form_widget(form.nombre) }}
+                {{ form_label(form.nombre) }}
+                {{ form_errors(form.nombre) }}
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="input-field col s12">
+                {{ form_widget(form.telefono) }}
+                {{ form_label(form.telefono) }}
+                {{ form_errors(form.telefono) }}
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="input-field col s12">
+                {{ form_widget(form.email) }}
+                {{ form_label(form.email) }}
+                {{ form_errors(form.email) }}
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="input-field col s12">
+                {{ form_widget(form.comentarios) }}
+                {{ form_label(form.comentarios) }}
+                {{ form_errors(form.comentarios) }}
+            </div>
+        </div>
+
+        <!--div class="g-recaptcha" data-sitekey="6Lf1AyITAAAAAM-14bcKis3sYTwx76fM1x57QY2s"></div-->
+
+        <input type="submit" value="Enviar" class="waves-effect waves-light btn blue-grey darken-4 right"/>
+
+        {{ form_end(form) }}
+
+    </div>
+</div>
+
+<style>
+    body
+    {
+        background-color: white !important;
+        height: 140vh;
+    }
+</style>
+
+{% block javascriptsheaders %}
+<!--script src='https://www.google.com/recaptcha/api.js'></script-->
+{% endblock %}
+
+{% endblock %}
+
+

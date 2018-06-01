@@ -1,0 +1,70 @@
+{% extends 'baseabc.html.twig' %}
+
+{% block body %}
+
+<div class="container">
+    <br/>
+    <div class="row">
+        <nav>
+            <div class="nav-wrapper z-depth-1">
+                <div class="col s12  blue darken-1 ">
+                    <a href="#!" class="breadcrumb">Mensajes</a>
+                    <a href="#!" class="breadcrumb">Enviar Propiedad</a>
+                </div>
+            </div>
+        </nav>
+    </div>
+    <br/>
+    <div class="row">
+        <div class="formcontainer">
+            <div>
+                {{ form_start(form) }}
+
+                <div class="row">
+                    <div class="input-field col s12">
+                        {{ form_widget(form.id_listacontacto) }}
+                        {{ form_label(form.id_listacontacto) }}
+                        {{ form_errors(form.id_listacontacto) }}
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="input-field col s12">
+                        {{ form_widget(form.titulo) }}
+                        {{ form_label(form.titulo) }}
+                        {{ form_errors(form.titulo) }}
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="input-field col s12">
+                        {{ form_widget(form.texto) }}
+                        {{ form_label(form.texto) }}
+                        {{ form_errors(form.texto) }}
+                    </div>
+                </div>
+
+                <input type="submit" value="Enviar" class="waves-effect btn blue darken-4 right"/>
+
+                <a href="{{ path('inmueble_index', {}) }}" class="waves-effect btn blue darken-4 right">Cancelar</a>
+
+                {{ form_end(form) }}
+            </div>
+        </div>
+    </div>
+</div>
+
+<style>
+    body{
+        background-color: white;
+        height: 150vh;
+    }
+</style>
+
+<script>
+    $(document).ready(function() {
+        $('select').material_select();
+    });
+</script>
+
+{% endblock %}

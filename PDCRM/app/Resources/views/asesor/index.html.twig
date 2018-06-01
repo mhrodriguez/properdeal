@@ -1,0 +1,164 @@
+{% extends 'baseabc.html.twig' %}
+
+{% block body %}
+    <div id="wrapper">
+
+        <div id="container">
+            <br/>
+            <div class="row">
+                <nav>
+                    <div class="nav-wrapper z-depth-1">
+                        <div class="col s12  blue darken-1 ">
+                            {% if not borrados %}
+                                <a href="#!" class="breadcrumb">Asesores ({{ usuarios | length }})</a>
+                            {% else %}
+                                <a href="#!" class="breadcrumb">Asesores borrados ({{ usuarios | length }})</a>
+                            {% endif %}
+                        </div>
+                    </div>
+                </nav>
+            </div>
+
+
+            <div id="divControles" class="row">
+                <div class="col s6 l6 m6">
+                    <form method="GET">
+                        <div class="input-field">
+                            <input id="search" name="search" type="text" required>
+
+                            {% if borrados %}
+                                <input id="borrados" name="borrados" value="1" type="hidden">
+                            {% endif %}
+
+                            <label for="search">Buscar</label>
+                        </div>
+                    </form>
+
+                    {% if not borrados %}
+                        <a href="{{ path('asesor_index', {}) }}" class="waves-effect waves-light btn blue darken-1 left">Todos</a>
+                    {% else %}
+                        <a href="{{ path('asesor_index', {}) }}?borrados=1" class="waves-effect waves-light btn blue darken-1 left">Todos</a>
+                    {% endif %}
+
+                </div>
+
+                <div class="col s6">
+                    {% if not borrados %}
+                        <a href="{{ path('asesor_index', {}) }}?borrados=1" class="right">Ver asesores borrados</a>
+                        <br><br>
+                        <a href="{{ path('asesor_new', {}) }}" class="waves-effect waves-light btn blue darken-1 right"><i class="material-icons left">add</i>Nuevo Asesor</a>
+                    {% else %}
+                        <a href="{{ path('asesor_index', {}) }}" class="right">Ver asesores activos</a>
+                    {% endif %}
+
+                    <a href="#" class="btn blue darken-1 right" onclick="window.print();" style="margin-right: 10px;"><i class="material-icons right">print</i>Imprimir</a>
+                </div>
+
+            </div>
+
+            <div class="row">
+                <table class="striped">
+                    <thead>
+                    <tr>
+                        <th data-field="id"></th>
+                        <th data-field="name">Contactos</th>
+                        <th data-field="price">Registro</th>
+                        <th data-field="price">Opciones</th>
+                    </tr>
+                    </thead>
+
+                    <tbody>
+                    {% set index=0 %}
+                    {% for usuario in usuarios %}
+                    <tr>
+                        <td style="width:100px">
+                            {% if pathFotografias[index] is not null %}
+                                <img src="{{ pathFotografias[index] }}" alt="" class="circle" style="width:60px; height:60px;">
+                            {% else %}
+                                {% image '@FrameworkBundle/Resources/public/images/ic_usuario.jpg' %}
+                                <img src="{{ asset_url }}" alt="" class="circle responsive-img" style="width:60px; height:60px;">
+                                {% endimage %}
+                            {% endif %}
+
+                        </td>
+                        <td>
+                            <ul>
+                                <li>{{ usuario.nombre }}</li><br>
+                                <li><a href="#"><i class="material-icons left">email</i>{{ usuario.email }}</a></li><br>
+                                {% if (usuario.telefono) %}
+                                <li><a href="#"><i class="material-icons left">phone</i>{{ usuario.telefono }}</a></li><br>
+                                {% endif %}
+                                {% if (usuario.telefono2) %}
+                                <li><a href="#"><i class="material-icons left">phone</i>{{ usuario.telefono2 }}</a></li><br>
+                                {% endif %}
+                                {% if (usuario.celular) %}
+                                <li><a href="#"><i class="material-icons left">phonelink_ring</i>{{ usuario.celular }}</a></li><br>
+                                {% endif %}
+                                <li><b>ProperDeal</b></li>
+                            </ul>
+                        </td>
+                        <td>
+                            Desde: {{ usuario.fechaCreacion|date('d-m-Y') }}<br><bR>
+                            Propiedades: {{ arrayCountPropiedades[index] }}<br>
+                            Prospectos: {{ arrayCountProspectos[index]  }}<br>
+                        </td>
+                        <td>
+                            {% if (is_granted('ROLE_SUPERADMIN') == true) %}
+                                {% if usuario.activo %}
+                                <a href="{{ path('asesor_borrar', {'id':usuario.id}) }}" class="tooltipped" data-tooltip="Borrar" data-position="top" onclick="return confirm('¿Realmente desea borrar este asesor?');">
+                                    <i class="material-icons left">delete</i>
+                                </a>
+                                <a href="{{ path ('usuario_edit2', {'id': usuario.id}) }}" class="tooltipped" data-tooltip="Editar" data-position="top"><i class="material-icons left">mode_edit</i></a>
+                                <a href="{{ path ('asesor_enviarmensajebienvenida', {'id': usuario.id}) }}?idUsuario={{ usuario.id }}" class="tooltipped" data-tooltip="E-mail de bienvenida" data-position="top" onclick="return confirm('¿Está seguro que desea enviar un mail de bienvenida a este asesor?');"><i class="material-icons left">email</i></a>
+                                {% endif %}
+                            {% endif %}
+                        </td>
+                    </tr>
+                    {% set index=index+1 %}
+                    {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        (function() {
+
+            var beforePrint = function() {
+                document.getElementById('divControles').style.display='none';
+            };
+
+            var afterPrint = function() {
+                document.getElementById('divControles').style.display='';
+            };
+
+            if (window.matchMedia) {
+                var mediaQueryList = window.matchMedia('print');
+                mediaQueryList.addListener(function(mql) {
+                    if (mql.matches) {
+                        beforePrint();
+                    } else {
+                        afterPrint();
+                    }
+                });
+            }
+
+            window.onbeforeprint = beforePrint;
+            window.onafterprint = afterPrint;
+
+        }());
+    </script>
+
+{% endblock %}
+
+{% block stylesheets %}
+
+    <style>
+        body {
+            background: white;
+            height: 100vh;
+        }
+    </style>
+
+{% endblock %}

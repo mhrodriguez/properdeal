@@ -1,0 +1,97 @@
+{% extends 'base2.html.twig' %}
+
+{% block body %}
+    <div id="container">
+        <br>
+        <h4 class="grey-text text-darken-3"><strong>Contacto</strong></h4>
+
+        <div class="row">
+            <div class="col s6 m6 l6">
+                <p>Mándanos un mensaje y alguien de nuestro equipo se pondrá en contacto contigo. ¡Llámanos! Estamos disponibles de Lunes a Viernes de 9am a 6pm.<br><br>
+                    Av. José Vasconcelos 150 Ote.<br>
+                    Plaza O2 local M2A Col. Del Valle<br>
+                    San Pedro GG N.L.<br>
+                    66257 México<br>
+                    Tel. (81) 8356-2248, 8356-6269
+                </p>
+                <p class="blue-text">e-mail: info@properdeal.mx </p>
+
+                <div id="map-canvas" style="height:400px;" class="form-control z-depth-1"></div>
+            </div>
+
+            <div class="col s6 m6 l6 ">
+                <iframe id="iframeContacto" src="{{ path('contactanos_enviar', {}) }}" style="width:100%; height:100vh; margin-top:8px; padding-top:-8px" frameBorder="0">
+                </iframe>
+            </div>
+        </div>
+
+        <div class="row"/>
+    </div>
+
+    <script type="text/javascript"
+            src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCmOj1JP2fKLOHkJSKhAdrIVOJlovubgkY">
+    </script>
+
+    {% javascripts '@FrameworkBundle/Resources/public/js/*'%}
+    <script src="{{ asset_url }}"></script>
+    {% endjavascripts %}
+
+    <script type="text/javascript">
+     /*   var mapOptions = {
+            zoom: 4,
+        };
+
+        setMapControl(document.getElementById('map-canvas'), mapOptions);
+        mostrarMarcadorEnMapa2(25.653146, -100.377535, "Proper Deal");
+*/
+
+
+     var myLatLng = {lat: 25.651063, lng: -100.367789};
+
+        var map = new google.maps.Map(document.getElementById('map-canvas'), {
+            zoom: 14,
+            center: myLatLng
+        });
+
+        var marker = new google.maps.Marker({
+            position: myLatLng,
+            map: map,
+            title: 'Proper Deal'
+        });
+
+    </script>
+
+{% endblock %}
+
+{% block stylesheets %}
+    <style>
+        div.row
+        {
+            margin-left: 20px;
+        }
+
+        div.map-canvas
+        {
+            margin: 5px;
+        }
+
+        p {
+            font-size: large;
+        }
+
+        body{
+            background-color: white;
+        }
+
+        h5
+        {
+            font-weight: bold;
+        }
+
+        h4
+        {
+            margin-left: 20px !important;
+        }
+    </style>
+{% endblock %}
+

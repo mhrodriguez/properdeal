@@ -1,0 +1,232 @@
+<div class="container z-depth-1" style="background-color: white">
+    <div class="row" style="padding-left: 10px; padding-right: 10px;">
+        <nav>
+            <div class="nav-wrapper z-depth-1">
+                <div class="col s12  blue darken-1 ">
+                    <i class="material-icons left">search</i>
+                </div>
+            </div>
+        </nav>
+    </div>
+    <br/>
+    <div class="row">
+        <div class="formcontainer">
+            <div>
+                {{ form_start(form, {'method': 'GET', 'action': path('buscarinmueble_buscarpanel')}) }}
+
+                <div class="row">
+                    <div class="input-field col s2">
+                        {{ form_widget(form.id_tipo_inmueble) }}
+                        {{ form_label(form.id_tipo_inmueble) }}
+                        {{ form_errors(form.id_tipo_inmueble) }}
+                    </div>
+                    <div class="input-field col s2">
+                        {{ form_widget(form.id_operacion_inmueble) }}
+                        {{ form_label(form.id_operacion_inmueble) }}
+                        {{ form_errors(form.id_operacion_inmueble) }}
+                    </div>
+                    <div class="input-field col s2">
+                        {{ form_widget(form.id_estado) }}
+                        {{ form_label(form.id_estado) }}
+                        {{ form_errors(form.id_estado) }}
+                    </div>
+                    <div class="input-field col s3">
+                        {{ form_widget(form.ciudad) }}
+                        {{ form_label(form.ciudad) }}
+                        {{ form_errors(form.ciudad) }}
+                    </div>
+                    <div class="input-field col s3">
+                        {{ form_widget(form.colonia) }}
+                        {{ form_label(form.colonia) }}
+                        {{ form_errors(form.colonia) }}
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="input-field col s2">
+                        {{ form_widget(form.precio) }}
+                        {{ form_label(form.precio) }}
+                        {{ form_errors(form.precio) }}
+                    </div>
+                    <div class="input-field col s2">
+                        {{ form_widget(form.preciomax) }}
+                        {{ form_label(form.preciomax) }}
+                        {{ form_errors(form.preciomax) }}
+                    </div>
+                    <div class="input-field col s2">
+                        {{ form_widget(form.metrosterreno) }}
+                        {{ form_label(form.metrosterreno) }}
+                        {{ form_errors(form.metrosterreno) }}
+                    </div>
+                    <div class="input-field col s2">
+                        {{ form_widget(form.metrosterrenomax) }}
+                        {{ form_label(form.metrosterrenomax) }}
+                        {{ form_errors(form.metrosterrenomax) }}
+                    </div>
+                    <div class="input-field col s2">
+                        {{ form_widget(form.recamaras) }}
+                        {{ form_label(form.recamaras) }}
+                        {{ form_errors(form.recamaras) }}
+                    </div>
+                    <div class="input-field col s1">
+                        {{ form_widget(form.plantas) }}
+                        {{ form_label(form.plantas) }}
+                        {{ form_errors(form.plantas) }}
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="input-field col s3">
+                        {{ form_widget(form.metrosconstruccion) }}
+                        {{ form_label(form.metrosconstruccion) }}
+                        {{ form_errors(form.metrosconstruccion) }}
+                    </div>
+                    <div class="input-field col s3">
+                        {{ form_widget(form.metrosconstruccionmax) }}
+                        {{ form_label(form.metrosconstruccionmax) }}
+                        {{ form_errors(form.metrosconstruccionmax) }}
+                    </div>
+                    <div class="input-field col s3">
+                        {{ form_widget(form.preciometroterrenomin) }}
+                        {{ form_label(form.preciometroterrenomin) }}
+                        {{ form_errors(form.preciometroterrenomin) }}
+                    </div>
+                    <div class="input-field col s3">
+                        {{ form_widget(form.preciometroterrenomax) }}
+                        {{ form_label(form.preciometroterrenomax) }}
+                        {{ form_errors(form.preciometroterrenomax) }}
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="input-field col s3">
+                        {{ form_widget(form.preciometroconstruccionmin) }}
+                        {{ form_label(form.preciometroconstruccionmin) }}
+                        {{ form_errors(form.preciometroconstruccionmin) }}
+                    </div>
+                    <div class="input-field col s3">
+                        {{ form_widget(form.preciometroconstruccionmax) }}
+                        {{ form_label(form.preciometroconstruccionmax) }}
+                        {{ form_errors(form.preciometroconstruccionmax) }}
+                    </div>
+                    <div class="input-field col s2">
+                        {{ form_widget(form.amueblado) }}
+                        {{ form_label(form.amueblado) }}
+                        {{ form_errors(form.amueblado) }}
+                    </div>
+                    <div class="input-field col s2">
+                        {{ form_widget(form.alberca) }}
+                        {{ form_label(form.alberca) }}
+                        {{ form_errors(form.alberca) }}
+                    </div>
+                    <div class="input-field col s2">
+                        {{ form_widget(form.mostrarinactivas) }}
+                        {{ form_label(form.mostrarinactivas) }}
+                        {{ form_errors(form.mostrarinactivas) }}
+
+                    </div>
+                </div>
+
+
+                <button type="submit" class="waves-effect waves-light btn right blue darken-4">
+                    Buscar
+                    <i class="material-icons left">search</i>
+                </button>
+
+                {{ form_end(form) }}
+            </div>
+        </div>
+    </div>
+
+    <style>
+    </style>
+
+    <script>
+
+        $(document).ready(function() {
+            $('select').material_select();
+        });
+
+        var selectorOperacion = document.getElementById('buscar_inmueble_id_operacion_inmueble');
+        selectorOperacion.options.add(new Option("Todos", -1), 0);
+
+        var selectorEstado = document.getElementById('buscar_inmueble_id_estado');
+        selectorEstado.options.add(new Option("Todos", -1), 0);
+
+        var selectorMunicipio = document.getElementById('buscar_inmueble_id_municipio');
+        selectorMunicipio.options.add(new Option("Todos", -1), 0);
+
+        var selectorColonia = document.getElementById('buscar_inmueble_id_colonia');
+        selectorColonia.options.add(new Option("Todos", -1), 0);
+
+        function onChangeEstado()
+        {
+            var selectorEstado = document.getElementById('buscar_inmueble_id_estado');
+            var url = 'http://' + window.location.hostname  + '{{ path('municipio_index', {}) }}?indexEstado=' + selectorEstado.value;
+
+            $.ajax({
+                url: url,
+                dataType: "json",
+                success: function(data) {
+                    var options, index, select, option;
+
+                    // Get the raw DOM object for the select box
+                    select = document.getElementById('buscar_inmueble_id_municipio');
+
+                    // Clear the old options
+                    select.options.length = 0;
+
+                    select.options.add(new Option('Todos', -1));
+
+                    // Load the new options
+                    options = data; // Or whatever source information you're working with
+                    for (index = 0; index < options.length; ++index) {
+                        option = options[index];
+
+                        select.options.add(new Option(option.nombre, index));
+                    }
+
+                    $('select').material_select();
+
+                    onChangeMunicipio();
+                }
+            });
+        }
+
+        function onChangeMunicipio()
+        {
+            var selectorEstado = document.getElementById('buscar_inmueble_id_estado');
+            var selectorMunicipio = document.getElementById('buscar_inmueble_id_municipio');
+            var url = 'http://' + window.location.hostname  + '{{ path('colonia_index', {}) }}?indexMunicipio=' + selectorMunicipio.value + '&indexEstado=' + selectorEstado.value;
+
+            $.ajax({
+                url: url,
+                dataType: "json",
+                success: function(data) {
+                    var options, index, select, option;
+
+                    // Get the raw DOM object for the select box
+                    select = document.getElementById('buscar_inmueble_id_colonia');
+
+                    // Clear the old options
+                    select.options.length = 0;
+                    select.options.add(new Option('Todos', -1));
+
+                    // Load the new options
+                    options = data; // Or whatever source information you're working with
+                    for (index = 0; index < options.length; ++index) {
+                        option = options[index];
+
+                        select.options.add(new Option(option.nombre, index));
+                    }
+                    $('select').material_select();
+                }
+            });
+        }
+
+        function onChangeColonia() {
+
+        }
+
+    </script>
+</div>

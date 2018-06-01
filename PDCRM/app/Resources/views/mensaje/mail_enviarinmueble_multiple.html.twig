@@ -1,0 +1,300 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+
+    <style>
+        .tablacorners {
+            border-radius: 15px 50px 30px;
+            border: 1px solid #999999;
+            padding: 20px;
+        }
+    </style>
+
+</head>
+<body>
+
+<!-- header -->
+<div class="withborder" style="width: 95%;">
+    <table style="width: 100%;">
+        <tbody>
+        <tr>
+            <td style="width:50%;">
+                {% image '@FrameworkBundle/Resources/public/images/logotipo2.jpg' %}
+                <a href="http://www.properdeal.mx">
+                    <img src="http://104.236.50.14{{ asset_url }}" style="width:250px; margin: 10px;" class="header-logo" alt="Logo"/>
+                </a>
+                {% endimage %}
+            </td>
+            <td style="width:50%;text-align: right;padding-right:2em;">
+                <div>
+                    <label class="titulo">{{ asesor.nombre }}</label>
+                    <p class="texto1"><b>Móvil: </b>{{ asesor.celular }}<br>
+                        <b>E-mail: </b><a href="mailto:{{ asesor.email }}?Subject=Contacto" target="_top">{{ asesor.email }}</a>
+                    </p>
+                </div>
+            </td>
+        </tr>
+        </tbody>
+    </table>
+</div>
+
+<table style="width: 100%;">
+    <tbody>
+    <tr>
+        <td colspan="2">
+        </td>
+    </tr>
+    <!-- Mensaje -->
+    <tr style="width: 100%;">
+        <td colspan="2" style="border-bottom:2pt solid black;width:100%;">
+            <p class="titulo">Listado de Propiedades</p>
+        </td>
+    </tr>
+    <tr>
+        <td colspan="2" style="background-color:gainsboro; border: 1pt solid lightgrey;width:100%;">
+            <b>Comentario</b><br>
+            <p>{{ mensaje }}</p>
+        </td>
+    </tr>
+    <tr>
+        <td colspan="2">
+        </td>
+    </tr>
+
+    {% for inmueble in inmuebles %}
+    <tr style="width: 100%;">
+    <td style="width: 100%;">
+        <table class="tableborder" style="width: 100%;">
+        <tbody>
+        <tr style="background-color:#EEEEEE; border-top: 1pt solid #EEEEEE; width: 100%;">
+            <td style="width:70%; border-color: #EEEEEE;">
+                <a href="http://www.properdeal.com.mx/PD/web/app.php/buscarinmueble/showfs/{{ inmueble.idInmueble }}?ida={{ ida }}" style="text-decoration: none;">
+                    <p class="titulo">ID:{{ inmueble.legacyid }}, {{ inmueble.nombreid }}, {{ inmueble.idMunicipio.nombre }}, {{ inmueble.idEstado.nombre }}, {{ inmueble.cp }} </p>
+                </a>
+                {% if inmueble.nombreedificio is not null  %}
+                    <p class="titulo">{{ inmueble.nombreedificio }}</p>
+                {% endif %}
+            </td>
+            <td style="width:30%; text-align: right;">
+                {% if inmueble.idOperacionInmueble.idOperacionInmueble == 2 %}
+                    <p class="titulo">
+                        {% if inmueble.precio > 0 %}
+                            {% if inmueble.preciohasta > 0 %}Desde:{% endif %}
+                            {{ inmueble.idMoneda.simbolo }} {{ inmueble.precio|number_format(2, '.', ',') }}
+                        {% endif %}
+                        {% if inmueble.preciohasta > 0 %}
+                            &nbsp;&nbsp;Hasta: {{ inmueble.idMoneda.simbolo }} {{ inmueble.preciohasta|number_format(2, '.', ',') }}
+                        {% endif %}
+                    </p>
+                {% else %}
+                    <p class="titulo">{{ inmueble.idMoneda.simbolo }} {{ inmueble.precio|number_format(2, '.', ',') }} </p>
+                {% endif %}
+            </td>
+        </tr>
+        </tbody>
+    </table>
+        <table class="tableborder">
+        <tbody>
+        <tr>
+            <td colspan="2" style="width:40%; vertical-align: top;">
+            {% if (inmueble.imagenes|length>0) %}
+                <img src="http://104.236.50.14{{ inmueble.imagenes[0].getWebPath() }}" class="responsive-img" style="width:98%;"/>
+            {% endif %}
+            </td>
+
+            <td style="width:60%">
+                <label class="texto1" style="font-size: 16px;"><b>{{ inmueble.idTipoInmueble.nombre }} en {{ inmueble.idMunicipio.nombre }}</b></label><br>
+
+                <br>
+                <p class="texto1">{{ inmueble.descripcion }}</p>
+
+                <table style="width:100%">
+                    <tr>
+                        <td style="width:50%">
+                            <ul>
+                                {% if inmueble.recamaras is not null %}
+                                    <li>{{ inmueble.recamaras }} | Recámara(s)</li>
+                                {% endif %}
+
+                                {% if inmueble.plantas > 0 %}
+                                    <li>{{ inmueble.plantas }} | Plantas</li>
+                                {% endif %}
+
+                                {% if inmueble.banos is not null %}
+                                    <li>{{ inmueble.banos }} | Baño(s)</li>
+                                {% endif %}
+
+                                {% if inmueble.mediobanos is not null %}
+                                    {% if inmueble.mediobanos > 0 %}
+                                        <li>{{ inmueble.mediobanos }} | Medios Baño(s)</li>
+                                    {% endif %}
+                                {% endif %}
+
+                                {% if inmueble.espacioautos is not null %}
+                                    {% if inmueble.espacioautos > 0 %}
+                                        <li>{{ inmueble.espacioautos }} | Estacionamiento(s)</li>
+                                    {% endif %}
+                                {% endif %}
+
+                                {% if inmueble.antiguedad is not null %}
+                                    <li>Antiguedad: {{ inmueble.antiguedad }}</li>
+                                {% endif %}
+                            </ul>
+                        </td>
+                        <td style="width:50%">
+                            <label></label>
+                            <ul>
+
+                                {% if inmueble.metrosconstruccion is not null %}
+                                    {% if inmueble.metrosconstruccion > 0 %}
+                                        <li>{{ inmueble.metrosconstruccion }} | M2 de Construcción</li>
+                                    {% endif %}
+                                {% endif %}
+
+
+                                {% if inmueble.metrosterreno is not null %}
+                                    {% if inmueble.metrosterreno > 0 %}
+                                        <li>{{ inmueble.metrosterreno }} | M2 de Terreno</li>
+                                    {% endif %}
+                                {% endif %}
+
+                                {% if inmueble.metrosfrente is not null %}
+                                    {% if inmueble.metrosfrente > 0 %}
+                                        <li>{{ inmueble.metrosfrente }} | M de frente</li>
+                                    {% endif %}
+                                {% endif %}
+
+                                {% if inmueble.metrosfondo is not null %}
+                                    {% if inmueble.metrosfondo > 0 %}
+                                        <li>{{ inmueble.metrosfondo }} | M de fondo</li>
+                                    {% endif %}
+                                {% endif %}
+                            </ul>
+                        </td>
+                    </tr>
+                </table>
+            </td>
+        </tr>
+        <tr>
+            <td style="width:20%; text-align: center;background-color:#EEEEEE;">
+                <a href="http://www.properdeal.com.mx/PD/web/app.php/buscarinmueble/showfs/{{ inmueble.idInmueble }}?ida={{ ida }}" style="text-decoration: none;">
+                    <p class="titulo">&#10133; Detalles</p>
+                </a>
+            </td>
+            <td style="width:20%; text-align: center;background-color:#EEEEEE;" >
+                <a href="http://www.properdeal.com.mx/PD/web/app.php/buscarinmueble/showfs/{{ inmueble.idInmueble }}?ida={{ ida }}" style="text-decoration: none;">
+                    <p class="titulo">Más Fotos</p>
+                </a>
+            </td>
+            <td style="width:60%">
+                <p style="text-align: center;">
+                    {{ asesor.nombre }} <b>Tel:</b> {{ asesor.telefono }} <b>Cel:</b> {{ asesor.celular }}
+                    <br>
+                    <a href="mailto:{{ asesor.email }}"><b>{{ asesor.email }}</b></a>
+                </p>
+            </td>
+        </tr>
+        </tbody>
+    </table>
+    </td>
+    </tr>
+
+    <tr>
+        <td>
+            <div style="height: 10px;"></div>
+        </td>
+    </tr>
+    {% endfor %}
+
+    <!-- Footer -->
+    <tr>
+        <td colspan="2">
+            {% if (prospectos is defined) %}
+                <label class="texto1"><b>Enviado a:</b></label>
+                <ul>
+                    {%  for prospecto in prospectos %}
+                        <li class="texto1">
+                            {% if prospecto.nombre is not null %}
+                                {{ prospecto.nombre }} -
+                            {% endif %}
+                            email: {{ prospecto.email }}
+                        </li>
+                    {% endfor %}
+                </ul>
+            {% endif %}
+        </td>
+    </tr>
+
+    <tr>
+        <td style="width:60%;">
+            {% image '@FrameworkBundle/Resources/public/images/logotipo2.jpg' %}
+            <a href="http://www.properdeal.mx">
+                <img src="http://104.236.50.14{{ asset_url }}" style="width:250px;" class="header-logo" alt="Logo"/>
+            </a>
+            <br/>
+            <a href="http://www.properdeal.mx">http://www.properdeal.mx</a>
+            {% endimage %}
+        </td>
+        <td style="width:40%;">
+            <p style="text-align: center">
+            </p>
+        </td>
+    </tr>
+
+    </tbody>
+</table>
+
+
+<style>
+    #imgInmueble {
+        display: block;
+        max-width:512px;
+        max-height:480px;
+        width: auto;
+        height: auto;
+    }
+    ul {
+        margin:0;
+        padding:0;
+        list-style-type: none;
+    }
+    .withborder
+    {
+        border-style: outset;
+        padding-left: 2em;
+    }
+    .titulo
+    {
+        font-style: normal;
+        font-size: 18px;
+    }
+    p.titulo
+    {
+        line-height: 95%;
+        color: black;
+    }
+    .texto1
+    {
+        font-style: normal;
+        font-family: Arial, Helvetica, sans-serif;
+        font-size: 13px;
+    }
+    li
+    {
+        font-style: normal;
+        font-family: Arial, Helvetica, sans-serif;
+        font-size: 12px;
+    }
+    .tableborder {
+        border: 1px solid lightgrey;
+    }
+    .tableborder tbody td {
+        border: 1px solid lightgrey;
+    }
+
+</style>
+
+</body>
+</html>

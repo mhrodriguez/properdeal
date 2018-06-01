@@ -1,0 +1,314 @@
+{% extends 'baseabc.html.twig' %}
+
+{% form_theme form with ['forms/custom_checkbox_widget.html.twig'] %}
+
+{% block body %}
+
+<div class="container">
+    <br/>
+    <div class="row">
+        <nav>
+            <div class="nav-wrapper z-depth-1">
+                <div class="col s12  blue darken-1 ">
+                    <a href="#" class="breadcrumb">Solicitudes</a>
+                    <a href="#" class="breadcrumb">Nueva</a>
+                </div>
+            </div>
+        </nav>
+    </div>
+
+    <br/>
+
+    <div class="row">
+        <div class="formcontainer">
+            <div>
+                {{ form_start(form) }}
+
+                <div class="row">
+                    <div class="input-field col s12">
+                        {{ form_widget(form.id_usuario) }}
+                        {{ form_label(form.id_usuario) }}
+                        {{ form_errors(form.id_usuario) }}
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="input-field col s6">
+                        {{ form_widget(form.id_tipo_inmueble) }}
+                        {{ form_label(form.id_tipo_inmueble) }}
+                        {{ form_errors(form.id_tipo_inmueble) }}
+                    </div>
+                    <div class="input-field col s6">
+                        {{ form_widget(form.id_operacion_inmueble) }}
+                        {{ form_label(form.id_operacion_inmueble) }}
+                        {{ form_errors(form.id_operacion_inmueble) }}
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="input-field col s12">
+                        {{ form_widget(form.id_estado) }}
+                        {{ form_label(form.id_estado) }}
+                        {{ form_errors(form.id_estado) }}
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="input-field col s6">
+                        {{ form_widget(form.ciudad) }}
+                        {{ form_label(form.ciudad) }}
+                        {{ form_errors(form.ciudad) }}
+                    </div>
+                    <div class="input-field col s6">
+                        {{ form_widget(form.colonia) }}
+                        {{ form_label(form.colonia) }}
+                        {{ form_errors(form.colonia) }}
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="input-field col s12">
+                        {{ form_label(form.caracteristicas) }}
+                        <br/><br/>
+                        {{ form_widget(form.caracteristicas) }}
+                        {{ form_errors(form.caracteristicas) }}
+                    </div>
+                </div>
+                <br><br>
+                <div class="row">
+                    <div class="input-field col s4">
+                        {{ form_widget(form.id_moneda) }}
+                        {{ form_label(form.id_moneda) }}
+                        {{ form_errors(form.id_moneda) }}
+                    </div>
+                    <div class="input-field col s4">
+                        {{ form_widget(form.precio) }}
+                        {{ form_label(form.precio) }}
+                        {{ form_errors(form.precio) }}
+                    </div>
+                    <div class="input-field col s4">
+                        {{ form_widget(form.preciomax) }}
+                        {{ form_label(form.preciomax) }}
+                        {{ form_errors(form.preciomax) }}
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="input-field col s6">
+                        {{ form_widget(form.metrosterreno) }}
+                        {{ form_label(form.metrosterreno) }}
+                        {{ form_errors(form.metrosterreno) }}
+                    </div>
+                    <div class="input-field col s6">
+                        {{ form_widget(form.metrosterrenomax) }}
+                        {{ form_label(form.metrosterrenomax) }}
+                        {{ form_errors(form.metrosterrenomax) }}
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="input-field col s6">
+                        {{ form_widget(form.metrosconstruccion) }}
+                        {{ form_label(form.metrosconstruccion) }}
+                        {{ form_errors(form.metrosconstruccion) }}
+                    </div>
+                    <div class="input-field col s6">
+                        {{ form_widget(form.metrosconstruccionmax) }}
+                        {{ form_label(form.metrosconstruccionmax) }}
+                        {{ form_errors(form.metrosconstruccionmax) }}
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="input-field col s12">
+                        {{ form_widget(form.descripcion) }}
+                        {{ form_label(form.descripcion) }}
+                        {{ form_errors(form.descripcion) }}
+                    </div>
+                </div>
+
+                {% if url is defined %}
+                <input id="url" name="url" type="hidden" value="{{ url }}">
+                {% endif %}
+
+                <input type="submit" value="Guardar" class="btn blue darken-4 right" />
+                <a href="{{ path('solicitud_index', {}) }}" class="btn blue darken-4 right" style="margin-right: 10px">Cancelar<a/>
+
+                {{ form_end(form) }}
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="container z-depth-2" style="padding: 20px;">
+        <br/>
+        <div class="row">
+            <a href="#!" onclick="buscarInmuebles();" class="btn blue darken-4 left">Buscar</a>
+
+            <script>
+                function buscarInmuebles() {
+                    frmBuscarInmuebles = document.getElementById('frmBuscarInmuebles');
+
+                    // Obtener valores de los campos
+                    var indexInmuebleTipo = document.getElementById('solicitud_id_tipo_inmueble').value;
+                    var indexOperacionInmueble = document.getElementById('solicitud_id_operacion_inmueble').value;
+                    var indexEstado = document.getElementById('solicitud_id_estado').value;
+                    var municipio = document.getElementById('solicitud_ciudad').value;
+                    var colonia = document.getElementById('solicitud_colonia').value;
+                    var indexMoneda = document.getElementById('solicitud_id_moneda').value;
+                    var precio = document.getElementById('solicitud_precio').value;
+                    var preciomax = document.getElementById('solicitud_preciomax').value;
+                    var metrosterreno = document.getElementById('solicitud_metrosterreno').value;
+                    var metrosterrenomax = document.getElementById('solicitud_metrosterrenomax').value;
+                    var metrosconstruccion = document.getElementById('solicitud_metrosconstruccion').value;
+                    var metrosconstruccionmax = document.getElementById('solicitud_metrosconstruccionmax').value;
+                    var caracteristicas='';
+                    for (i=0; i<{{ form.caracteristicas|length }}; i++)
+                    {
+                        var caracteristica = document.getElementById('solicitud_caracteristicas_' + i);
+
+                        if (caracteristica.checked==true) {
+                            if (caracteristicas == '') {
+                                caracteristicas = caracteristica.value;
+                            }
+                            else {
+                                caracteristicas = caracteristicas + ',' + caracteristica.value;
+                            }
+                        }
+                    }
+
+                    var parametros = '?indexInmuebleTipo=' + indexInmuebleTipo +
+                            '&indexOperacionInmueble=' + indexOperacionInmueble +
+                            '&indexEstado=' + indexEstado +
+                            '&municipio=' + municipio +
+                            '&colonia=' + colonia +
+                            '&indexCaracteristicas=' + caracteristicas +
+                            '&indexMoneda=' + indexMoneda +
+                            '&precio=' + precio +
+                            '&preciomax=' + preciomax +
+                            '&metrosterreno=' + metrosterreno +
+                            '&metrosterrenomax=' + metrosterrenomax +
+                            '&metroscontruccion=' + metrosconstruccion +
+                            '&metrosconstruccionmax=' + metrosconstruccionmax;
+
+                    {% if idProspecto is not null %}
+                    parametros = parametros + '&idProspecto=' + {{ idProspecto }};
+                    {% endif %}
+
+                    frmBuscarInmuebles.src = "{{ path('solicitud_buscarinmuebles', {}) }}" + parametros;
+                }
+            </script>
+        </div>
+
+        <div class="row">
+            <iframe id="frmBuscarInmuebles" id style="width:100%; height:50vh;" frameBorder="0">
+            </iframe>
+        </div>
+</div>
+
+<style>
+        body{
+            background-color: white;
+            height: 100vh;
+        }
+
+        #solicitud_caracteristicas label
+        {
+            margin-right: 20px;
+        }
+
+        .activelabel label {
+            font-size: 0.8rem;
+            -webkit-transform: translateY(-140%);
+            transform: translateY(-140%);
+        }
+    </style>
+
+<script>
+
+
+        $(document).ready(function() {
+            $('select').material_select();
+        });
+
+        function onChangeEstado()
+        {
+            var url = 'http://' + window.location.hostname  + '{{ path('municipio_index', {}) }}?indexEstado=' + selectorEstado.value;
+
+            $.ajax({
+                url: url,
+                dataType: "json",
+                success: function(data) {
+                    var options, index, select, option;
+
+                    // Get the raw DOM object for the select box
+                    select = document.getElementById('solicitud_id_municipio');
+
+                    // Clear the old options
+                    select.options.length = 0;
+
+                    // Load the new options
+                    options = data; // Or whatever source information you're working with
+                    for (index = 0; index < options.length; ++index) {
+                        option = options[index];
+
+                        select.options.add(new Option(option.nombre, index));
+                    }
+
+                    $('select').material_select();
+
+                    onChangeMunicipio();
+                }
+            });
+        }
+
+        function onChangeMunicipio()
+        {
+            var selectorEstado = document.getElementById('solicitud_id_estado');
+            var selectorMunicipio = document.getElementById('solicitud_id_municipio');
+            var url = 'http://' + window.location.hostname  + '{{ path('colonia_index', {}) }}?indexMunicipio=' + selectorMunicipio.value + '&indexEstado=' + selectorEstado.value;
+
+            $.ajax({
+                url: url,
+                dataType: "json",
+                success: function(data) {
+                    var options, index, select, option;
+
+                    // Get the raw DOM object for the select box
+                    select = document.getElementById('solicitud_id_colonia');
+
+                    // Clear the old options
+                    select.options.length = 0;
+
+                    // Load the new options
+                    options = data; // Or whatever source information you're working with
+                    for (index = 0; index < options.length; ++index) {
+                        option = options[index];
+
+                        select.options.add(new Option(option.nombre, index));
+                    }
+                    $('select').material_select();
+                }
+            });
+        }
+
+        function onChangeColonia() {
+
+        }
+
+
+        document.getElementById('solicitud_ciudad').required=false;
+        document.getElementById('solicitud_colonia').required=false;
+
+        document.getElementById('solicitud_metrosterreno').required=false;
+        document.getElementById('solicitud_metrosterrenomax').required=false;
+        document.getElementById('solicitud_metrosconstruccion').required=false;
+        document.getElementById('solicitud_metrosconstruccionmax').required=false;
+
+        document.getElementById('solicitud_precio').required=false;
+        document.getElementById('solicitud_preciomax').required=false;
+
+        document.getElementById('solicitud_descripcion').required=false;
+    </script>
+
+ {% endblock %}

@@ -1,0 +1,72 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+    <h1>Prospecto</h1>
+
+    <table>
+        <tbody>
+            <tr>
+                <th>Idprospecto</th>
+                <td>{{ prospecto.idProspecto }}</td>
+            </tr>
+            <tr>
+                <th>Nombre</th>
+                <td>{{ prospecto.nombre }}</td>
+            </tr>
+            <tr>
+                <th>Apellidos</th>
+                <td>{{ prospecto.apellidos }}</td>
+            </tr>
+            <tr>
+                <th>Email</th>
+                <td>{{ prospecto.email }}</td>
+            </tr>
+            <tr>
+                <th>Direccion</th>
+                <td>{{ prospecto.direccion }}</td>
+            </tr>
+            <tr>
+                <th>Ciudad</th>
+                <td>{{ prospecto.ciudad }}</td>
+            </tr>
+            <tr>
+                <th>Telefono</th>
+                <td>{{ prospecto.telefono }}</td>
+            </tr>
+            <tr>
+                <th>Telefonomovil</th>
+                <td>{{ prospecto.telefonoMovil }}</td>
+            </tr>
+            <tr>
+                <th>Presupuesto</th>
+                <td>{{ prospecto.presupuesto }}</td>
+            </tr>
+            <tr>
+                <th>Observaciones</th>
+                <td>{{ prospecto.observaciones }}</td>
+            </tr>
+            <tr>
+                <th>Fechacreacion</th>
+                <td>{% if prospecto.fechaCreacion %}{{ prospecto.fechaCreacion|date('Y-m-d H:i:s') }}{% endif %}</td>
+            </tr>
+            <tr>
+                <th>Activo</th>
+                <td>{% if prospecto.activo %}Yes{% else %}No{% endif %}</td>
+            </tr>
+        </tbody>
+    </table>
+
+    <ul>
+        <li>
+            <a href="{{ path('prospecto_index') }}">Back to the list</a>
+        </li>
+        <li>
+            <a href="{{ path('prospecto_edit', { 'id': prospecto.idProspecto }) }}">Edit</a>
+        </li>
+        <li>
+            {{ form_start(delete_form) }}
+                <input type="submit" value="Delete">
+            {{ form_end(delete_form) }}
+        </li>
+    </ul>
+{% endblock %}

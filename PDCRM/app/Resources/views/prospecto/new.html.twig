@@ -1,0 +1,172 @@
+{% extends 'baseabc.html.twig' %}
+
+{% form_theme form with ['forms/custom_checkbox_widget.html.twig'] %}
+
+{% block body %}
+
+    <div class="container">
+        <br/>
+        <div class="row">
+            <nav>
+                <div class="nav-wrapper z-depth-1">
+                    <div class="col s12  blue darken-1 ">
+                        <a href="#!" class="breadcrumb">Prospectos</a>
+                        <a href="#!" class="breadcrumb">Nuevo</a>
+                    </div>
+                </div>
+            </nav>
+        </div>
+        <br/>
+        <div class="row">
+            <div class="formcontainer">
+                <div>
+                    {{ form_start(form) }}
+
+                    <div class="row">
+                        <div class="input-field col s12">
+                            {{ form_widget(form.id_usuario) }}
+                            {{ form_label(form.id_usuario) }}
+                            {{ form_errors(form.id_usuario) }}
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <div class="input-field col s4">
+                            {{ form_widget(form.nombre) }}
+                            {{ form_label(form.nombre) }}
+                            {{ form_errors(form.nombre) }}
+                        </div>
+                        <div class="input-field col s4">
+                            {{ form_widget(form.apellidos) }}
+                            {{ form_label(form.apellidos) }}
+                            {{ form_errors(form.apellidos) }}
+                        </div>
+                        <div class="input-field col s4">
+                            {{ form_widget(form.email) }}
+                            {{ form_label(form.email) }}
+                            {{ form_errors(form.email) }}
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <div class="input-field col s6">
+                            {{ form_widget(form.id_estado) }}
+                            {{ form_label(form.id_estado) }}
+                            {{ form_errors(form.id_estado) }}
+                        </div>
+                        <div class="input-field col s6">
+                            {{ form_widget(form.ciudad) }}
+                            {{ form_label(form.ciudad) }}
+                            {{ form_errors(form.ciudad) }}
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <div class="input-field col s12">
+                            {{ form_widget(form.direccion) }}
+                            {{ form_label(form.direccion) }}
+                            {{ form_errors(form.direccion) }}
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <div class="input-field col s6">
+                            {{ form_widget(form.telefono) }}
+                            {{ form_label(form.telefono) }}
+                            {{ form_errors(form.telefono) }}
+                        </div>
+                        <div class="input-field col s6">
+                            {{ form_widget(form.telefonoMovil) }}
+                            {{ form_label(form.telefonoMovil) }}
+                            {{ form_errors(form.telefonoMovil) }}
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <div class="input-field col s6">
+                            {{ form_widget(form.id_estatus_avance) }}
+                            {{ form_label(form.id_estatus_avance) }}
+                            {{ form_errors(form.id_estatus_avance) }}
+                        </div>
+                        <div class="input-field col s6">
+                            {{ form_widget(form.id_canal_captacion) }}
+                            {{ form_label(form.id_canal_captacion) }}
+                            {{ form_errors(form.id_canal_captacion) }}
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <div class="input-field col s6">
+                            {{ form_label(form.id_tipo_prospecto) }}
+                            <br/>
+                            <br/>
+                            {{ form_widget(form.id_tipo_prospecto) }}
+                            {{ form_errors(form.id_tipo_prospecto) }}
+                        </div>
+                        <div class="input-field col s6">
+                            {{ form_label(form.documentos) }}
+                            <br/>
+                            {{ form_widget(form.documentos) }}
+                            {{ form_errors(form.documentos) }}
+                        </div>
+                    </div>
+                    <br/>
+
+                    <div class="row">
+                        <div class="input-field col s12">
+                            {{ form_widget(form.presupuesto) }}
+                            {{ form_label(form.presupuesto) }}
+                            {{ form_errors(form.presupuesto) }}
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <div class="input-field col s12">
+                            {{ form_widget(form.observaciones) }}
+                            {{ form_label(form.observaciones) }}
+                            {{ form_errors(form.observaciones) }}
+                        </div>
+                    </div>
+
+                    <input type="hidden" id="txtSegundoPaso" name="txtSegundoPaso" value="false"/>
+
+                    <input type="submit" value="Siguiente Paso" class="btn blue darken-4 right"
+                    onclick="document.getElementById('txtSegundoPaso').value=true; return true;"/>
+                    <input type="submit" value="Guardar" class="btn blue darken-4 right" style="margin-right: 10px"/>
+
+                    {{ form_end(form) }}
+                    <a href="{{ path('prospecto_index', {}) }}" class="btn blue darken-4 left">Cancelar</a>
+
+                </div>
+        </div>
+    </div>
+    </div>
+
+    <style>
+        body{
+            background-color: white;
+            height: 200vh;
+        }
+    </style>
+
+    <script>
+    $(document).ready(function() {
+                $('select').material_select();
+        });
+
+    document.getElementById('prospecto_nombre').required=false;
+    document.getElementById('prospecto_apellidos').required=false;
+    document.getElementById('prospecto_direccion').required=false;
+    document.getElementById('prospecto_ciudad').required=false;
+    document.getElementById('prospecto_telefonoMovil').required=false;
+    document.getElementById('prospecto_presupuesto').required=false;
+    document.getElementById('prospecto_observaciones').required=false;
+    document.getElementById('prospecto_id_tipo_prospecto').required=false;
+
+    document.getElementById('prospecto_id_tipo_prospecto_0').required=false;
+    document.getElementById('prospecto_id_tipo_prospecto_1').required=false;
+    document.getElementById('prospecto_id_tipo_prospecto_2').required=false;
+
+    </script>
+
+{% endblock %}

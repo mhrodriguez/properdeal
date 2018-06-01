@@ -1,0 +1,58 @@
+{% extends 'baseabc.html.twig' %}
+
+{% block body %}
+
+    <div class="container">
+        <br/>
+        <div class="row">
+            <nav>
+                <div class="nav-wrapper z-depth-1">
+                    <div class="col s12  blue darken-1 ">
+                        <a href="#!" class="breadcrumb">Imagen de Propiedad</a>
+                        <a href="#!" class="breadcrumb">Nueva</a>
+                    </div>
+                </div>
+            </nav>
+        </div>
+        <br/>
+        <div class="row">
+            <div class="formcontainer">
+                <div>
+                    {{ form_start(form, {'action': path('inmuebleimagen_multinew')~'?idInmueble='~idInmueble,  'attr': {'onsubmit' : 'document.getElementById("progressGuardar").style.display=""; return true;'}  }) }}
+
+                    <div class="row">
+                        <div class="input-field col s12">
+                            {{ form_widget(form.files) }}
+                            {{ form_errors(form.files) }}
+                        </div>
+                    </div>
+
+                    {{ form_errors(form) }}
+
+                    <input type="submit" value="Guardar" class="btn blue darken-4 right" style="margin-left: 10px"/>
+                    <a href="{{ path('inmuebleimagen_index', {}) }}?idInmueble={{ idInmueble }}" class="btn blue darken-4 right">Cancelar</a>
+
+                    {{ form_end(form) }}
+                </div>
+            </div>
+
+            <div id="progressGuardar" style="display:none">
+                <label>Subiendo imagen(es), espere un momento por favor...</label>
+                <div id="divProgress2" class="progress" >
+                    <div class="indeterminate"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <style>
+        body{
+            background-color: white;
+            height: 200vh;
+        }
+    </style>
+
+    <script>
+    </script>
+
+{% endblock %}

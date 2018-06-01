@@ -1,0 +1,65 @@
+{% extends 'baseabc.html.twig' %}
+
+{% block body %}
+
+    <div class="container">
+        <br/>
+        <div class="row">
+            <nav>
+                <div class="nav-wrapper z-depth-1">
+                    <div class="col s12  blue darken-1 ">
+                        <a href="#" class="breadcrumb">Destacado</a>
+                        <a href="#" class="breadcrumb">Editar</a>
+                    </div>
+                </div>
+            </nav>
+        </div>
+
+        {{ form_start(form) }}
+
+        <div class="row">
+            <div class="input-field col s12">
+                {{ form_widget(form.nombre) }}
+                {{ form_label(form.nombre) }}
+                {{ form_errors(form.nombre) }}
+            </div>
+        </div>
+
+
+        <div class="row">
+            <div class="input-field col s12">
+                {{ form_widget(form.inmueble) }}
+                {{ form_label(form.inmueble) }}
+                {{ form_errors(form.inmueble) }}
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="input-field col s12">
+                {{ form_widget(form.descripcion) }}
+                {{ form_label(form.descripcion) }}
+                {{ form_errors(form.descripcion) }}
+            </div>
+        </div>
+
+        <input type="submit" value="Guardar" class="waves-effect waves-light btn blue darken-4 right"/>
+
+        <a href="{{ path('destacado_index', {}) }}" class="waves-effect waves-light btn blue darken-4 right">Cancelar</a>
+
+        {{ form_end(form) }}
+    </div>
+
+    <style>
+        body
+        {
+            background-color: white;
+            height: 100vh;
+        }
+    </style>
+
+    <script>
+        $(document).ready(function() {
+            $('select').material_select();
+        });
+    </script>
+{% endblock %}

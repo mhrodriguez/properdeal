@@ -1,0 +1,56 @@
+{% extends 'baseabc.html.twig' %}
+
+{% block body %}
+
+<div class="container">
+<br>
+
+{{ form_start(form) }}
+
+<div class="row">
+    <div class="input-field col s12">
+        {{ form_widget(form.file) }}
+        {{ form_errors(form.file) }}
+    </div>
+</div>
+
+<div class="row">
+    <div class="input-field col s12">
+        {{ form_widget(form.comentarios) }}
+        {{ form_label(form.comentarios) }}
+        {{ form_errors(form.comentarios) }}
+    </div>
+</div>
+
+<div class="row">
+    <div class="input-field col s12">
+        {{ form_widget(form.privado) }}
+        {{ form_label(form.privado) }}
+        {{ form_errors(form.privado) }}
+    </div>
+</div>
+
+<input type="submit" value="Guardar" class="waves-effect waves-light btn blue darken-3 right"/>
+<a href="#!" onclick="window.history.back();" class="waves-effect waves-light btn blue darken-3 right" style="margin-right: 10px;">Cancelar</a>
+
+{{ form_end(form) }}
+</div>
+
+    {% block stylesheets %}
+        <style>
+            body {
+                height:100vh;
+                background-color: white;
+            }
+        </style>
+    {% endblock %}
+
+    {% block javascripts %}
+        <script>
+            $(document).ready(function() {
+                $('select').material_select();
+            });
+        </script>
+    {% endblock %}
+
+{% endblock %}

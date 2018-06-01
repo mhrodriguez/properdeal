@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+
+{% image '@FrameworkBundle/Resources/public/images/logotipo.png' %}
+<img src="http://104.236.50.14{{ asset_url }}" class="header-logo" alt="Logo"/>
+{% endimage %}
+
+<h4>{{asesor.nombre}} ha compartido una propiedad asignada a usted.</h4>
+
+<div style="background-color: lightgrey; width: 500px; padding-left: 2em;">
+    <br>
+    <label><b>{{ asesor.nombre }}</b></label><br>
+    <label>Teléfono: {{ asesor.telefono }}</label><br>
+    <label>Móvil: {{ asesor.celular }}</label><br>
+    <label><b>{{ asesor.email }}</b></label><br><br>
+</div>
+
+<h4>Datos de la propiedad:</h4>
+
+<a href="http://104.236.50.14/PD/web/app.php/buscarinmueble/showfs/{{ inmueble.idInmueble }}">{{ inmueble.legacyid }}: {{ inmueble.nombreid }}</a>
+
+<h4>Se compartió a:</h4>
+
+<ul>
+{% for prospecto in prospectos %}
+    <li>{{ prospecto.email }}
+    {% if (prospecto.nombre is not null) %}
+        ({{ prospecto.email }})
+    {% endif %}
+    </li>
+{% endfor %}
+</ul>
+
+</body>
+</html>

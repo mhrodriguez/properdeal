@@ -1,0 +1,71 @@
+{% extends 'base2.html.twig' %}
+
+{% block body %}
+<div id="wrapper">
+    <div id="container">
+        <!-- Page Layout here -->
+        <br/>
+
+        <div class="row">
+            <div class="input-field col s9">
+                <iframe id="frmResultados" style="width:100%; height:145vh;" frameBorder="0"
+                src = "{{ path('buscarinmueble_resultados', {}) }}?buscar_inmueble%5Bid_tipo_inmueble%5D={{ parametros['id_tipo_inmueble'] }}&
+buscar_inmueble%5Bid_operacion_inmueble%5D={{ parametros['id_operacion_inmueble'] }}&
+buscar_inmueble%5Bid_categoria_inmueble%5D={{ parametros['id_categoria_inmueble'] }}&
+buscar_inmueble%5Bid_estado%5D={{ parametros['id_estado'] }}&
+buscar_inmueble%5Bid_moneda%5D={{ parametros['id_moneda'] }}&
+buscar_inmueble%5Bid_municipio%5D={{ parametros['id_municipio'] }}&
+buscar_inmueble%5Bcolonia%5D={{ parametros['colonia'] }}&
+buscar_inmueble%5Bprecio%5D={{ parametros['precio'] }}&
+buscar_inmueble%5Bpreciomax%5D={{ parametros['preciomax'] }}&
+buscar_inmueble%5Bmetrosterreno%5D={{ parametros['metrosterreno'] }}&
+buscar_inmueble%5Bmetrosterrenomax%5D={{ parametros['metrosterrenomax'] }}&
+
+buscar_inmueble%5Bmetrosconstruccion%5D={{ parametros['metrosconstruccion'] }}&
+buscar_inmueble%5Bmetrosconstruccionmax%5D={{ parametros['metrosconstruccionmax'] }}&
+
+{% if parametros['amueblado'] is defined %}
+buscar_inmueble%5Bamueblado%5D={{ parametros['amueblado'] }}&
+{% else %}
+buscar_inmueble%5Bamueblado%5D=0&
+{% endif %}
+
+{% if parametros['alberca'] is defined %}
+buscar_inmueble%5Balberca%5D={{ parametros['alberca'] }}&
+{% else %}
+buscar_inmueble%5Balberca%5D=0&
+{% endif %}
+
+buscar_inmueble%5Blegacyid%5D={{ parametros['legacyid'] }}&
+
+buscar_inmueble%5Brecamaras%5D={{ parametros['recamaras'] }}&
+buscar_inmueble%5Bplantas%5D={{ parametros['plantas'] }}">
+                </iframe>
+            </div>
+            <div class="col s3" style="background-color:#ECECEC; margin-top: -8px">
+                <iframe style="width:100%; height:145vh;" frameBorder="0" src="{{ path('buscarinmueble_buscarformvertical', {}) }}"></iframe>
+            </div>
+        </div>
+
+    </div>
+</div>
+
+<script>
+    function actualizarBusqueda(parametros)
+    {
+        var iframeResultados = document.getElementById('frmResultados');
+
+        iframeResultados.src = '{{ path('buscarinmueble_resultados', {}) }}?' + parametros;
+    }
+</script>
+{% endblock %}
+
+{% block stylesheets %}
+
+<style>
+    body {
+        background: white;
+    }
+</style>
+
+{% endblock %}

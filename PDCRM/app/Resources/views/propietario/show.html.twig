@@ -1,0 +1,76 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+    <h1>Propietario</h1>
+
+    <table>
+        <tbody>
+            <tr>
+                <th>Id</th>
+                <td>{{ propietario.id }}</td>
+            </tr>
+            <tr>
+                <th>Nombre</th>
+                <td>{{ propietario.nombre }}</td>
+            </tr>
+            <tr>
+                <th>Apellidos</th>
+                <td>{{ propietario.apellidos }}</td>
+            </tr>
+            <tr>
+                <th>Telefono</th>
+                <td>{{ propietario.telefono }}</td>
+            </tr>
+            <tr>
+                <th>Telefonomovil</th>
+                <td>{{ propietario.telefonomovil }}</td>
+            </tr>
+            <tr>
+                <th>Oficina</th>
+                <td>{{ propietario.oficina }}</td>
+            </tr>
+            <tr>
+                <th>Email</th>
+                <td>{{ propietario.email }}</td>
+            </tr>
+            <tr>
+                <th>Horariovisita</th>
+                <td>{{ propietario.horariovisita }}</td>
+            </tr>
+            <tr>
+                <th>Comision</th>
+                <td>{{ propietario.comision }}</td>
+            </tr>
+            <tr>
+                <th>Enviarmail</th>
+                <td>{% if propietario.enviarmail %}Yes{% else %}No{% endif %}</td>
+            </tr>
+            <tr>
+                <th>Mostrardatos</th>
+                <td>{% if propietario.mostrardatos %}Yes{% else %}No{% endif %}</td>
+            </tr>
+            <tr>
+                <th>Fecha</th>
+                <td>{% if propietario.fecha %}{{ propietario.fecha|date('Y-m-d H:i:s') }}{% endif %}</td>
+            </tr>
+            <tr>
+                <th>Activo</th>
+                <td>{% if propietario.activo %}Yes{% else %}No{% endif %}</td>
+            </tr>
+        </tbody>
+    </table>
+
+    <ul>
+        <li>
+            <a href="{{ path('propietario_index') }}">Back to the list</a>
+        </li>
+        <li>
+            <a href="{{ path('propietario_edit', { 'id': propietario.id }) }}">Edit</a>
+        </li>
+        <li>
+            {{ form_start(delete_form) }}
+                <input type="submit" value="Delete">
+            {{ form_end(delete_form) }}
+        </li>
+    </ul>
+{% endblock %}

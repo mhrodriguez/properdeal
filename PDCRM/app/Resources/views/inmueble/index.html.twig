@@ -1,0 +1,499 @@
+{% extends 'baseabc.html.twig' %}
+
+{% block body %}
+
+    <div id="wrapper">
+        <div id="container">
+            <!-- Page Layout here -->
+            <br/>
+            <div class="row">
+                <nav>
+                    <div class="nav-wrapper z-depth-1">
+                        <div class="col s12  blue darken-1 ">
+                            <a href="#!" class="breadcrumb">Propiedades</a>
+                            <a href="#!" class="breadcrumb">{{ titulo }}</a>
+                        </div>
+                    </div>
+                </nav>
+            </div>
+
+            <div class="row">
+
+                {% if asesorpermisos.altapropiedad == true %}
+                    <a href="{{ path('inmueble_new', {}) }}" class="waves-effect waves-light btn blue darken-1 right"><i class="material-icons left">add</i>Nueva Propiedad</a>
+                {% endif %}
+
+                <button onclick="imprimir();" target="_blank" class="waves-effect waves-light btn blue darken-1 right" style="margin-right: 10px">Imprimir</button>
+                <script>
+                    function imprimir() {
+                        txtID = document.getElementById('txtID');
+                        selZonas = document.getElementById('selZonas');
+                        selAsesores = document.getElementById('selAsesores');
+                        selTiposInmueble = document.getElementById('selTiposInmueble');
+                        selOperacionesInmueble = document.getElementById('selOperacionesInmueble');
+                        url = '{{ path(url_imprimir, {}) }}?idAsesor=' + selAsesores.options[selAsesores.selectedIndex].value +
+                                '&idTipoInmueble=' + selTiposInmueble.options[selTiposInmueble.selectedIndex].value +
+                                '&idZona=' + selZonas.options[selZonas.selectedIndex].value +
+                                '&id=' + txtID.value +
+                                '&idOperacionInmueble=' + selOperacionesInmueble.options[selOperacionesInmueble.selectedIndex].value;
+                        window.open(url);
+                    }
+                </script>
+            </div>
+
+            <div class="row">
+                {% if asesores is not null %}
+                <div class="input-field col s6">
+                    <select id="selAsesores">
+                    <option value="-1" disabled selected>Seleccione un asesor</option>
+                    {% for asesor in asesores %}
+                        {% if asesor.id == idAsesor %}
+                        <option value="{{ asesor.id }}" selected>{{ asesor.nombre }}</option>
+                        {% else %}
+                            <option value="{{ asesor.id }}">{{ asesor.nombre }}</option>
+                        {% endif %}
+                    {% endfor %}
+                    </select>
+
+                    <input id="txtID" placeholder="ID, Nombre identificación" value="{{ id }}"/>
+
+                    <select id="selZonas">
+                        {% for zona in zonas %}
+                            {% if zona.idZona == idZona %}
+
+                                {% if zona.idZona == 0 %}
+                                    <option value="{{ zona.idZona }}">Seleccione una zona</option>
+                                {% else %}
+                                    <option value="{{ zona.idZona }}" selected>{{ zona.nombre }}</option>
+                                {% endif %}
+                            {% else %}
+                                {% if zona.idZona == 0 %}
+                                    <option value="{{ zona.idZona }}">Seleccione una zona</option>
+                                {% else %}
+                                    <option value="{{ zona.idZona }}">{{ zona.nombre }}</option>
+                                {% endif %}
+                            {% endif %}
+                        {% endfor %}
+                    </select>
+
+                    <select id="selTiposInmueble">
+                        <option value="-1" disabled selected>Seleccione un tipo de inmueble</option>
+                        {% for tipoInmueble in tiposInmueble %}
+                            {% if tipoInmueble.idTipoInmueble == idTipoInmueble %}
+                                <option value="{{ tipoInmueble.idTipoInmueble }}" selected>{{ tipoInmueble.nombre }}</option>
+                            {% else %}
+                                <option value="{{ tipoInmueble.idTipoInmueble }}">{{ tipoInmueble.nombre }}</option>
+                            {% endif %}
+                        {% endfor %}
+                    </select>
+
+                    <select id="selOperacionesInmueble">
+                        <option value="-1" disabled selected>Seleccione una operación</option>
+                        {% for operacionInmueble in operacionesInmueble %}
+
+                            {% if operacionInmueble.idOperacionInmueble == idOperacionInmueble %}
+                                <option value="{{ operacionInmueble.idOperacionInmueble }}" selected>{{ operacionInmueble.nombre }}</option>
+                            {% else %}
+                                <option value="{{ operacionInmueble.idOperacionInmueble }}">{{ operacionInmueble.nombre }}</option>
+                            {% endif %}
+
+                        {% endfor %}
+                    </select>
+
+                    <button type="button" onclick="buscar();" class="waves-effect waves-light btn blue darken-1 right">Filtrar</button>
+                    <script>
+                        function buscar() {
+                            txtID = document.getElementById('txtID');
+                            selAsesores = document.getElementById('selAsesores');
+                            selZonas = document.getElementById('selZonas');
+                            selTiposInmueble = document.getElementById('selTiposInmueble');
+                            selOperacionesInmueble = document.getElementById('selOperacionesInmueble');
+                            url = '{{ path(url, {}) }}?idAsesor=' + selAsesores.options[selAsesores.selectedIndex].value +
+                                    '&idTipoInmueble=' + selTiposInmueble.options[selTiposInmueble.selectedIndex].value +
+                                    '&idZona=' + selZonas.options[selZonas.selectedIndex].value +
+                                    '&id=' + txtID.value +
+                                    '&idOperacionInmueble=' + selOperacionesInmueble.options[selOperacionesInmueble.selectedIndex].value;
+                            window.location = url;
+                        }
+                    </script>
+                </div>
+                <div class="input-field col s6">
+
+                    {% if titulo != 'Inactivas' %}
+                    <a href="{{ path('inmueble_indexinactivos', {}) }}" class="right">Ver propiedades inactivas</a><br>
+                    {% endif %}
+
+                    {% if titulo != 'Por vencer en 45 días' %}
+                    <a href="{{ path('inmueble_indexenrentavencimiento', {}) }}" class="right">Ver por vencer en 45 días</a><br>
+                    {% endif %}
+
+                    {% if titulo != 'En contrato de renta' %}
+                    <a href="{{ path('inmueble_indexenrenta', {}) }}" class="right">Ver propiedades en contrato de renta</a><br>
+                    {% endif %}
+
+                    {% if titulo != 'Activas' %}
+                    <a href="{{ path('inmueble_index', {}) }}" class="right">Ver propiedades activas</a>
+                    {% endif %}
+
+
+                    {% if titulo == 'Inactivas' %}
+                        {% set pathurl = 'inmueble_indexinactivos' %}
+                    {% endif %}
+
+                    {% if titulo == 'Por vencer en 45 días' %}
+                        {% set pathurl = 'inmueble_indexenrentavencimiento' %}
+                    {% endif %}
+
+                    {% if titulo == 'En contrato de renta' %}
+                        {% set pathurl = 'inmueble_indexenrenta' %}
+                    {% endif %}
+
+                    {% if titulo == 'Activas' %}
+                        {% set pathurl = 'inmueble_index' %}
+                    {% endif %}
+                </div>
+                {% endif %}
+            </div>
+
+            {% if numpaginas is defined %}
+                {% if numpaginas>0 %}
+                    <div class="row">
+                        <ul class="pagination">
+                            {% if paginaactual != 1 %}
+                                <li class="waves-effect"><a onclick="window.location ='{{ path(pathurl, {}) }}?pagina={{ paginaactual-1 }}' + parametrosBusqueda();"><i class="material-icons">chevron_left</i></a></li>
+                            {% endif %}
+
+                            {% for p in 1..numpaginas %}
+                                {% if p == paginaactual %}
+                                    <li class="active blue darken-1"><a href="#!">{{ p }}</a></li>
+                                {% else %}
+                                    <li class="waves-effect"><a onclick="window.location = '{{ path(pathurl, {}) }}?pagina={{ p }}' + parametrosBusqueda();">{{ p }}</a></li>
+                                {% endif %}
+                            {% endfor %}
+
+                            {% if paginaactual != numpaginas %}
+                                <li class="waves-effect"><a onclick="window.location = '{{ path(pathurl, {}) }}?pagina={{ paginaactual+1 }}' + parametrosBusqueda();"><i class="material-icons">chevron_right</i></a></li>
+                            {% endif %}
+
+                            <script>
+                                function parametrosBusqueda() {
+                                    txtID = document.getElementById('txtID');
+                                    selAsesores = document.getElementById('selAsesores');
+                                    selZonas = document.getElementById('selZonas');
+                                    selTiposInmueble = document.getElementById('selTiposInmueble');
+                                    selOperacionesInmueble = document.getElementById('selOperacionesInmueble');
+                                    url = '&idAsesor=' + selAsesores.options[selAsesores.selectedIndex].value +
+                                            '&idTipoInmueble=' + selTiposInmueble.options[selTiposInmueble.selectedIndex].value +
+                                            '&idZona=' + selZonas.options[selZonas.selectedIndex].value +
+                                            '&id=' + txtID.value +
+                                            '&idOperacionInmueble=' + selOperacionesInmueble.options[selOperacionesInmueble.selectedIndex].value;
+                                    //alert(url);
+                                    return url;
+                                }
+                            </script>
+                        </ul>
+                    </div>
+                {% endif %}
+            {% endif %}
+
+            <div class="row">
+                <table class="striped">
+                    <thead>
+                    <tr>
+                        <th data-field="id"><p>Propiedad</p></th>
+                        <th data-field="id"></th>
+                        <th><p>Operaciones</p></th>
+                    </tr>
+                    </thead>
+
+                    <tbody>
+                    {% set index=0 %}
+                    {% for inmueble in inmuebles %}
+                        <tr id="tr{{ inmueble.idInmueble }}">
+                            <td>
+                                {% if (inmueble.Imagenes|length>0) %}
+                                    <img class="imginmueble" src="{{ inmueble.Imagenes[0].getWebPath() }}">
+                                {% endif %}
+                                <p><i class="material-icons left">camera_alt</i>{{ inmueble.imagenes | length }}</p>
+                            </td>
+                            <td>
+                                <h5>ID: {{ inmueble.legacyid }} {{ inmueble.nombreid }} </h5>
+                                <h5>{{ inmueble.idTipoInmueble.nombre }} en {{ inmueble.idOperacionInmueble.nombre }}</h5>
+                                <ul>
+                                    <li><i class="material-icons left">location_on</i>{{ inmueble.idMunicipio.nombre }}, {{ inmueble.idEstado.nombre }}, {{ inmueble.calle }}</li>
+                                    <li>Zona: {{ inmueble.idZona.nombre }}</li>
+                                    <br>
+                                    <li>{{ inmueble.idMoneda.simbolo }} {{inmueble.precio|number_format(2, '.', ',')}}</li>
+                                    <br>
+
+                                    {% if inmueble.recamaras is not null %}
+                                    <li>{{ inmueble.recamaras }} Recámaras</li>
+                                    {% endif %}
+
+                                    {% if inmueble.banos is not null %}
+                                    <li>{{ inmueble.banos }} Baño(s)</li>
+                                    {% endif %}
+
+                                    {% if inmueble.mediobanos is not null %}
+                                        {{ inmueble.mediobanos }} Medios Baño(s)<br>
+                                    {% endif %}
+
+                                    {% if inmueble.metrosconstruccion is not null %}
+                                        {{ inmueble.metrosconstruccion }} Metros de Construcción<br>
+                                    {% endif %}
+
+                                    {% if inmueble.metrosterreno is not null %}
+                                        {{ inmueble.metrosterreno }} Metros de Terreno<br>
+                                    {% endif %}
+
+                                    {% if inmueble.comision is not null %}
+                                    <li>Comisión: {{ inmueble.comision | number_format(2, '.', ',') }}
+                                        {% if inmueble.idOperacionInmueble.idOperacionInmueble == 2 %}
+                                            Mensualidad(es)
+                                        {%  else %}
+                                            %
+                                        {%  endif %}
+                                    </li>
+                                    {% endif %}
+
+                                    {% if inmueble.plantas > 0 %}
+                                        <li>{{ inmueble.plantas }} Plantas</li>
+                                    {% endif %}
+
+                                    <br>
+                                    <li>Alta por: {{ inmueble.idUsuario.nombre }}</li>
+
+                                    <br>
+                                    {% if inmueble.fechaModificacion is not null %}
+                                    <li>Modificado el {{ inmueble.fechaModificacion | date('d/m/Y') }}</li>
+                                    <li>Por {{ inmueble.idUsuariomodifico.nombre }}</li>
+                                    {% endif %}
+
+                                    {% if inmueble.porcentajecompartir is not null %}
+                                    <li>Porcentaje a compartir: {{ inmueble.porcentajecompartir }} %</li>
+                                    {% endif %}
+
+                                    <li>
+                                        <p>Visitas: {{ visitas[index] }}</p>
+                                        {% set index = index + 1 %}
+                                    </li>
+                                </ul>
+                            </td>
+                            <td>
+                                <div>
+                                <a href="{{ path ('inmueble_detalle', {id: inmueble.idInmueble }) }}" class="tooltipped" data-tooltip="Detalle" data-position="top"><i class="material-icons left">visibility</i></a>
+                                <a href="{{ path ('inmueble_show', {'id': inmueble.idInmueble}) }}" target="_blank" class="tooltipped" data-tooltip="Vista de impresión" data-position="top"><i class="material-icons left">print</i></a>
+                                <a href="#" onclick="var url; if (window.location.href.indexOf('#') > 0) { url = window.location.href.substring(0, window.location.href.indexOf('#')); } else { url = window.location.href; }  window.location.href='{{ path('prospecto_asignarpropiedad', {}) }}?idInmueble={{ inmueble.idInmueble }}&url=' + url.replace(/&/g, 'AMP') + 'SHARPtr{{ inmueble.idInmueble }}';" class="tooltipped" data-tooltip="Agregar prospecto" data-position="top"><i class="material-icons left">person_add</i></a>
+
+                                {% if asesorpermisos.editarpropiedad == true %}
+                                    {% if (ida == inmueble.idUsuario.id)  or (is_granted('ROLE_SUPERADMIN') == true) %}
+                                        <a href="{{ path ('inmueble_edit', {'id': inmueble.idInmueble}) }}" class="tooltipped" data-tooltip="Editar" data-position="top"><i class="material-icons left">mode_edit</i></a>
+                                    {% endif %}
+                                {% endif %}
+
+                                {% if (ida == inmueble.idUsuario.id) or (is_granted('ROLE_SUPERADMIN') == true) %}
+                                    <a href="{{ path ('inmuebleimagen_index', {}) }}?idInmueble={{ inmueble.idInmueble }}" class="tooltipped" data-tooltip="Fotografias" data-position="top"><i class="material-icons left">photo_library</i></a>
+                                {% endif %}
+
+                                {% if (ida == inmueble.idUsuario.id) or (is_granted('ROLE_SUPERADMIN') == true) %}
+                                    <a href="{{ path ('archivo_index', {}) }}?idInmueble={{ inmueble.idInmueble }}" class="tooltipped" data-tooltip="Subir archivos" data-position="top"><i class="material-icons left">description</i></a>
+                                {% endif %}
+
+                                <a href="#" onclick="var url; if (window.location.href.indexOf('#') > 0) { url = window.location.href.substring(0, window.location.href.indexOf('#')); } else { url = window.location.href; } window.location.href='{{ path('ids_index', {})  }}?idInmueble={{ inmueble.idInmueble }}&prospectos=1&url=' + url.replace(/&/g, 'AMP') + 'SHARPtr{{ inmueble.idInmueble }}';" class="tooltipped" data-tooltip="Enviar propiedad" data-position="top"><i class="material-icons left">email</i></a>
+
+                                <!--a href="{{ path ('inmueble_keywords', {'id': inmueble.idInmueble}) }}"><i class="material-icons left">text_format</i></a-->
+                                </div>
+
+                                <div>
+                                {% if (ida == inmueble.idUsuario.id) or (is_granted('ROLE_SUPERADMIN') == true) %}
+                                    {% if (inmueble.idPropietario is not null)  %}
+                                        <a href="{{ path ('propietario_edit', {'id': inmueble.idPropietario.id}) }}" class="tooltipped" data-tooltip="Asignar propietario" data-position="top"><i class="material-icons left">account_box</i></a>
+                                    {% else %}
+                                        <a href="{{ path ('propietario_new', {}) }}?idInmueble={{ inmueble.idInmueble }}" class="tooltipped" data-tooltip="Asignar propietario" data-position="top"><i class="material-icons left">account_box</i></a>
+                                    {% endif %}
+                                {% endif %}
+
+                                {% if (ida == inmueble.idUsuario.id) or (is_granted('ROLE_SUPERADMIN') == true) %}
+                                    <a href="{{ path('inmueble_clonar', {'id':inmueble.idInmueble}) }}" class="tooltipped" data-tooltip="Clonar propiedad" data-position="top" onclick="return confirm('¿Realmente desea clonar esta propiedad?');">
+                                        <i class="material-icons left">done_all</i>
+                                    </a>
+                                {% endif %}
+
+                                <a href="{{ path('mensaje_new', {}) }}?tipoMensaje=3&idInmueble={{ inmueble.idInmueble }}&idAsesor={{ inmueble.idUsuario.id }}" class="tooltipped" data-tooltip="Contactar asesor" data-position="top">
+                                    <i class="material-icons left">question_answer</i>
+                                </a>
+                                <a href="https://api.qrserver.com/v1/create-qr-code/?size=150x150&data=http://104.236.50.14/PD/web/app.php/buscarinmueble/showfs/{{ inmueble.idInmueble }}" class="tooltipped" data-tooltip="Código QR" data-position="top" target="_blank">
+                                    <i class="material-icons left">settings_overscan</i>
+                                </a>
+                                <a href="#" onclick="var url; if (window.location.href.indexOf('#') > 0) { url = window.location.href.substring(0, window.location.href.indexOf('#')); } else { url = window.location.href; } window.location.href='{{ path('ids_index', {})  }}?idInmueble={{ inmueble.idInmueble }}&prospectos=0&url=' + url.replace(/&/g, 'AMP') + 'SHARPtr{{ inmueble.idInmueble }}';" class="tooltipped" data-tooltip="Enviar a un amigo" data-position="top">
+                                    <i class="material-icons left">send</i>
+                                </a>
+
+                                <a target="_blank" class="tooltipped" data-tooltip="Guardar como PDF" data-position="top" href="http://www.html2pdf.it/?url={{ rootname }}PD/web/app.php/buscarinmueble/{{ inmueble.idInmueble }}/pdf">
+                                    <i class="material-icons left">file_download</i>
+                                </a>
+
+                                {% if ida == inmueble.idUsuario.id %}
+                                    <a href="#!" onclick="window.location.href = '{{ path('usuario_edit', {}) }}';" class="tooltipped" data-tooltip="Logo de la empresa" data-position="top">
+                                        <i class="material-icons left">beenhere</i>
+                                    </a>
+                                {% endif %}
+
+                                <a href="{{ path('tarea_new2', {}) }}" class="tooltipped" data-tooltip="Agendar bitácora" data-position="top">
+                                    <i class="material-icons left">date_range</i>
+                                </a>
+
+                                {% if (ida == inmueble.idUsuario.id) or (is_granted('ROLE_SUPERADMIN') == true) %}
+                                    <!--a href="#!" onclick="publicar();" class="tooltipped" data-tooltip="Publicar mercado libre" data-position="top">
+                                        <i class="material-icons left">sync</i>
+                                    </a-->
+                                {% endif %}
+
+                                {% if (ida == inmueble.idUsuario.id) or (is_granted('ROLE_SUPERADMIN') == true) %}
+                                    <a href="{{ path('inmueble_delete', {'id':inmueble.idInmueble}) }}" class="tooltipped" data-tooltip="Borrar propiedad" data-position="top" onclick="return confirm('¿Realmente desea borrar esta propiedad?');">
+                                        <i class="material-icons left">delete</i>
+                                    </a>
+                                {% endif %}
+
+                                </div>
+                                <br>
+                                <div>
+                                <p>Alta: {{ inmueble.fechaCreacion | date('d/m/Y') }}</p>
+
+                                {% if inmueble.activo == true %}
+                                    <p>Activo<i class="material-icons left">play_circle_outline</i></p>
+
+                                    {% if asesorpermisos.inactivarpropiedad == true %}
+                                        <a href="{{ path('inmueble_switchactivo', {'id':inmueble.idInmueble}) }}">Desactivar</a>
+                                    {% endif %}
+                                {% else %}
+                                    <p>Inactivo<i class="material-icons left">not_interested</i></p>
+
+                                    {% if asesorpermisos.inactivarpropiedad == true %}
+                                        <a href="{{ path('inmueble_switchactivo', {'id':inmueble.idInmueble}) }}">Activar</a>
+                                    {% endif %}
+                                {% endif %}
+                                </div>
+
+                                <p>
+                                    <a href="#" onclick="abrirFacebookModal('http://104.236.50.14/PD/web/app.php/buscarinmueble/showfs/{{ inmueble.idInmueble }}');">
+                                        <img src="/PDCRM/web/images/img_facebook.jpg" alt="" class="responsive-img"/>
+                                    </a>
+                                </p>
+
+                            </td>
+                        </tr>
+                    {% endfor %}
+                    </tbody>
+                </table>
+
+                <!-- Modal Structure -->
+                <div id="modalFacebook" class="modal">
+                    <div class="modal-content">
+                        <iframe id="frmFacebook" style="width:100%; height:300px; margin-top:8px; padding-top:0px" frameBorder="0"></iframe>
+                    </div>
+                    <div class="modal-footer">
+                        <a href="#!" class="modal-action modal-close waves-effect waves-green btn-flat ">Cerrar</a>
+                    </div>
+                </div>
+                
+            </div>
+
+            {% if numpaginas is defined %}
+             {% if numpaginas>0 %}
+                <div class="row">
+                    <ul class="pagination">
+                        {% if paginaactual != 1 %}
+                            <li class="waves-effect"><a onclick="window.location ='{{ path(pathurl, {}) }}?pagina={{ paginaactual-1 }}' + parametrosBusqueda();"><i class="material-icons">chevron_left</i></a></li>
+                        {% endif %}
+
+                        {% for p in 1..numpaginas %}
+                            {% if p == paginaactual %}
+                                <li class="active blue darken-1"><a href="#!">{{ p }}</a></li>
+                            {% else %}
+                                <li class="waves-effect"><a onclick="window.location = '{{ path(pathurl, {}) }}?pagina={{ p }}' + parametrosBusqueda();">{{ p }}</a></li>
+                            {% endif %}
+                        {% endfor %}
+
+                        {% if paginaactual != numpaginas %}
+                            <li class="waves-effect"><a onclick="window.location = '{{ path(pathurl, {}) }}?pagina={{ paginaactual+1 }}' + parametrosBusqueda();"><i class="material-icons">chevron_right</i></a></li>
+                        {% endif %}
+                    </ul>
+                </div>
+             {% endif %}
+            {% endif %}
+
+        </div>
+    </div>
+    
+    <script>
+        function abrirFacebookModal(url)
+        {
+            frame = document.getElementById('frmFacebook');
+            
+            frame.src = '{{ path('facebook_publicar', {}) }}?url=' + url;
+            
+            $('#modalFacebook').openModal();
+        }
+
+        function abrirURL($url)
+        {
+            var iframe = document.getElementById('iframePrincipal');
+            iframe.style.display='';
+            iframe.src = $url;
+
+            $('html, body').animate({ scrollTop: 0 }, 'slow');
+        }
+
+        $(document).ready(function() {
+            $('select').material_select();
+        });
+
+
+
+    </script>
+{% endblock %}
+
+{% block stylesheets %}
+
+    <style>
+        body {
+            background: white;
+            height:100vh;
+        }
+        p
+        {
+            font-size: small;
+        }
+        .imginmueble
+        {
+            width: 160px;
+            height: 128px;
+        }
+
+        .tooltip {
+            position: relative;
+            display: inline-block;
+            border-bottom: 1px dotted darkblue;
+        }
+
+        .tooltip .tooltiptext {
+            visibility: hidden;
+            width: 120px;
+            background-color: white;
+            color: cornflowerblue;
+            text-align: center;
+            border-radius: 6px;
+            padding: 5px 0;
+
+            /* Position the tooltip */
+            position: absolute;
+            z-index: 1;
+        }
+
+        .tooltip:hover .tooltiptext {
+            visibility: visible;
+        }
+    </style>
+
+{% endblock %}

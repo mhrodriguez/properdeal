@@ -1,0 +1,67 @@
+{% extends 'baseabc.html.twig' %}
+
+{% block body %}
+    <div id="wrapper">
+        <div id="container">
+            <!-- Page Layout here -->
+            <br/>
+            <div class="row">
+                <nav>
+                    <div class="nav-wrapper z-depth-1">
+                        <div class="col s12  blue darken-1 ">
+                            <a href="#!" class="breadcrumb">Contactos</a>
+                        </div>
+                    </div>
+                </nav>
+            </div>
+            <div class="row">
+                <a href="{{ path('contacto_new', {}) }}" class="waves-effect waves-light btn blue darken-1 right"><i class="material-icons left">add</i>Nuevo Contacto</a>
+            </div>
+
+            <div class="row">
+                <table class="striped">
+                    <thead>
+                    <tr>
+                        <th>Nombre</th>
+                        <th>Operaciones</th>
+                    </tr>
+                    </thead>
+
+                    <tbody>
+                    {% for contacto in contactos %}
+                        <tr>
+                            <td>
+                                {{ contacto.nombre }} {{ contacto.apellidos }}
+                            </td>
+                            <td>
+                                {% image '@FrameworkBundle/Resources/public/images/ic_mensaje.png' %}
+                                <a href="{{ path ('mensaje_new', {}) }}?tipoMensaje=2&idContacto={{ contacto.idContacto }}">
+                                    <i class="material-icons left">email</i>
+                                </a>
+                                {% endimage %}
+                            </td>
+                        </tr>
+                    {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+
+        </div>
+    </div>
+{% endblock %}
+
+{% block stylesheets %}
+
+    <style>
+        body {
+            background: white;
+            height: 100vh;
+        }
+        img
+        {
+            width: 32px;
+            height: 32px;
+        }
+    </style>
+
+{% endblock %}

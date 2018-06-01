@@ -1,0 +1,51 @@
+{% extends 'baseprincipal.html.twig' %}
+
+{% block body %}
+    <div id="wrapper">
+
+        <div id="container">
+
+            <div style="margin-top: 0px">
+                {{ render(controller(
+                'AppBundle:BarraHerramientas:show',
+                { 'indexSeleccionado': 3, 'numProspectos' : 0 }
+                )) }}
+            </div>
+
+            <!-- Page Layout here -->
+            <div class="row z-depth-2" >
+
+                <div class="col s4 m3 l3 blue lighten-3" style="height:200vh">
+
+                    <br/>
+                    <div class="row">
+                        <a class="waves-effect waves-light btn blue darken-1"><i class="material-icons left">home</i>Alta de Propiedad</a>
+                    </div>
+                    <div class="row">
+                        <a class="waves-effect waves-light btn blue darken-1"><i class="material-icons left">person</i>Nuevo Prospecto&nbsp;</a>
+                    </div>
+
+                    <iframe id="iframeTarea" src="{{ path('tarea_new', {}) }}" style="width:100%; height:108vh; margin-top:8px; padding-top:-8px" frameBorder="0">
+                    </iframe>
+                </div>
+
+                <div class="col s8 m9 l9">
+                    <iframe id="iframePrincipal" src="{{ path('inmueble_index', {}) }}" style="width:100%; height:200vh; margin-top:8px; padding-top:-8px" frameBorder="0">
+                    </iframe>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}
+
+{% block stylesheets %}
+
+    <style>
+        body {
+            background: white;
+            height: 150vh;
+        }
+
+    </style>
+
+{% endblock %}

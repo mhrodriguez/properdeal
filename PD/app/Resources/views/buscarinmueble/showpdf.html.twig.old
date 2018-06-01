@@ -1,0 +1,158 @@
+{% extends 'baseabc.html.twig' %}
+
+{% block body %}
+
+    <div style="background-color: white">
+        <div class="row">
+            <div class="col s8 m8 l8">
+
+                <h4>{{ inmueble.idMunicipio.nombre }}, {{ inmueble.idEstado.nombre }}, {{ inmueble.calle }} </h4>
+                <h5>ID: {{ inmueble.legacyid }} {{ inmueble.nombreid  }}</h5>
+                <h5>{{ inmueble.idTipoInmueble.nombre }} en {{ inmueble.idOperacionInmueble.nombre }}</h5>
+
+                {% if inmueble.idOperacionInmueble.idOperacionInmueble == 2 %}
+                    <h5>Desde: {{ inmueble.idMoneda.simbolo }} {{ inmueble.precio|number_format(2, '.', ',') }} Hasta: {{ inmueble.idMoneda.simbolo }} {{ inmueble.preciohasta|number_format(2, '.', ',') }}</h5>
+                {% else %}
+                    <h5>Precio: {{ inmueble.idMoneda.simbolo }} {{ inmueble.precio|number_format(2, '.', ',') }} </h5>
+                {% endif %}
+
+                <table>
+                    <tr>
+                        <td>
+                            <ul>
+                                {% if inmueble.recamaras is not null %}
+                                <li>{{ inmueble.recamaras }} Recámara(s)</li>
+                                {% endif %}
+
+                                {% if inmueble.metrosconstruccion is not null %}
+                                    {% if inmueble.metrosconstruccion > 0 %}
+                                        {{ inmueble.metrosconstruccion }} Metros de Construcción<br>
+                                    {% endif %}
+                                {% endif %}
+
+                                {% if inmueble.metrosterreno is not null %}
+                                    {% if inmueble.metrosterreno > 0 %}
+                                        {{ inmueble.metrosterreno }} Metros de Terreno<br>
+                                    {% endif %}
+                                {% endif %}
+
+                                {% if inmueble.plantas > 0 %}
+                                    <li>{{ inmueble.plantas }} Plantas</li>
+                                {% endif %}
+
+                                {% if inmueble.banos is not null %}
+                                <li>{{ inmueble.banos }} Baño(s)</li>
+                                {% endif %}
+
+                                {% if inmueble.mediobanos is not null %}
+                                    {% if inmueble.mediobanos > 0 %}
+                                        {{ inmueble.mediobanos }} Medios Baño(s)<br>
+                                    {% endif %}
+                                {% endif %}
+
+                                {% if inmueble.espacioautos is not null %}
+                                    {% if inmueble.espacioautos > 0 %}
+                                        {{ inmueble.espacioautos }} Estacionamiento(s)<br>
+                                    {% endif %}
+                                {% endif %}
+                            </ul>
+                        </td>
+                        <td>
+                        </td>
+                    </tr>
+                </table>
+
+                <div>
+                {% if (inmueble.imagenes is not null and inmueble.imagenes|length>0) %}
+                    <img src="{{ inmueble.imagenes[0].getWebPath() }}"> <!-- random image -->
+                {% endif %}
+                </div>
+
+                <div>
+                {% if inmueble.nombreedificio is not null  %}
+                    <h5>{{ inmueble.nombreedificio }}</h5>
+                {% else %}
+                    <h5>Descripción</h5>
+                {% endif %}
+                <p style="font-size: medium">
+                    {{ inmueble.descripcion }}
+                </p>
+                </div>
+
+                <div>
+                <h5>Características</h5>
+
+                {%  for caracteristica in inmueble.caracteristicas %}
+                    <p style="font-size: medium">
+                        - {{ caracteristica.nombre }}<br>
+                    </p>
+                {% endfor %}
+                </div>
+
+                <div id="map-canvas" style="height:400px;" class="form-control z-depth-1"></div>
+            </div>
+
+            <div class="col s4 m4 l4">
+                <div class="card large">
+                    <div class="card-image">
+                        {% if (inmueble.idUsuario.getWebPathFoto() is null)  %}
+                            {% image '@FrameworkBundle/Resources/public/images/ic_usuario.jpg' %}
+                            <img src="{{ asset_url }}" alt="" class="activator">
+                            {% endimage %}
+                        {% else %}
+                            <img src="{{ inmueble.idUsuario.getWebPathFoto() }}" class="activator"/>
+                        {%  endif  %}
+                    </div>
+                    <div class="card-content">
+                        <p><b>{{ inmueble.idUsuario.nombre }}</b></p>
+                        <p>Teléfono: {{ inmueble.idUsuario.telefono }}</p>
+                        <p>E-mail: {{ inmueble.idUsuario.email }}</a></p>
+                    </div>
+                    <div class="card-action">
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <script>
+            $(document).ready(function(){
+                $('.slider').slider({full_width: true});
+            });
+        </script>
+
+        <script type="text/javascript"
+                src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCmOj1JP2fKLOHkJSKhAdrIVOJlovubgkY">
+        </script>
+
+        {% javascripts '@FrameworkBundle/Resources/public/js/*'%}
+        <script src="{{ asset_url }}"></script>
+        {% endjavascripts %}
+
+        <script type="text/javascript">
+            var mapOptions = {
+                zoom: 14,
+                mapTypeId: google.maps.MapTypeId.TERRAIN
+            };
+
+            setMapControl(document.getElementById('map-canvas'), mapOptions);
+
+            posiciones = geocodeDireccion("{{ inmueble.colonia }} {{ inmueble.idMunicipio.nombre }} {{ inmueble.getIdEstado().nombre }} {{ inmueble.cp }}", direccionObtenida);
+
+            function direccionObtenida(resultado, direcciones, mensajeError)
+            {
+                if (resultado)
+                {
+                    centrarEnMapa(direcciones[0]);
+                }
+            }
+        </script>
+
+        <style>
+            .circle
+            {
+                vertical-align:middle;
+            }
+        </style>
+    </div>
+
+{% endblock %}

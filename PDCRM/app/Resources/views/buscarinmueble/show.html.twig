@@ -1,0 +1,83 @@
+{% extends 'baseabc.html.twig' %}
+
+{% block body %}
+    <div style="background-color: white">
+        <br>
+        <h4>{{ inmueble.calle }}, {{ inmueble.idEstado.nombre }}, {{ inmueble.idMunicipio.nombre }}</h4>
+        <h5>ID: {{ inmueble.idInmueble }} Operación: {{ inmueble.idOperacionInmueble.nombre }}</h5>
+
+        <ul>
+            <li>CP: {{ inmueble.cp }}</li>
+            <li>{{ inmueble.recamaras }} Recámaras</li>
+            <li>{{ inmueble.metrosconstruccion }} Metros de Construcción</li>
+            <li>{{ inmueble.metrosterreno }} Metros de Terreno</li>
+            {% if inmueble.plantas > 0 %}
+                <li>{{ inmueble.plantas }} Plantas</li>
+            {% endif %}
+        </ul>
+
+        {% if (inmueble.imagenes|length>0) %}
+        <div class="slider">
+            <ul class="slides">
+
+                {% for imagen in inmueble.imagenes %}
+                    <li>
+                        <img src="{{ imagen.getWebPath() }}"> <!-- random image -->
+                        <div class="caption center-align">
+                            <!--h3>This is our big Tagline!</h3>
+                            <h5 class="light grey-text text-lighten-3">Here's our small slogan.</h5-->
+                        </div>
+                    </li>
+                {% endfor %}
+            </ul>
+        </div>
+        {% endif %}
+
+        <div id="map-canvas" style="height:400px;" class="form-control z-depth-1"></div>
+
+        <script>
+            $(document).ready(function(){
+                $('.slider').slider({full_width: true});
+            });
+        </script>
+
+        <script type="text/javascript"
+                src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCmOj1JP2fKLOHkJSKhAdrIVOJlovubgkY">
+        </script>
+
+        {% javascripts '@FrameworkBundle/Resources/public/js/*'%}
+        <script src="{{ asset_url }}"></script>
+        {% endjavascripts %}
+
+        <script type="text/javascript">
+            var mapOptions = {
+                zoom: 14,
+                mapTypeId: google.maps.MapTypeId.TERRAIN
+            };
+
+            setMapControl(document.getElementById('map-canvas'), mapOptions);
+
+            posiciones = geocodeDireccion("{{ inmueble.getIdColonia().nombre }} {{ inmueble.getIdMunicipio().nombre }} {{ inmueble.getIdEstado().nombre }} {{ inmueble.cp }}", direccionObtenida);
+
+            function direccionObtenida(resultado, direcciones, mensajeError)
+            {
+                if (resultado)
+                {
+                    centrarEnMapa(direcciones[0]);
+                }
+            }
+        </script>
+
+        <!--ul>
+            <li>
+            </li>
+            <li>
+            </li>
+            <li-->
+        {# form_start(delete_form) }}
+            <input type="submit" value="Delete">
+        {{ form_end(delete_form) #}
+        <!--/li-->
+        <!--/ul-->
+    </div>
+{% endblock %}

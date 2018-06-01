@@ -1,0 +1,55 @@
+{% extends 'baseabc.html.twig' %}
+
+{% block body %}
+    <div id="wrapper">
+        <div id="container">
+            <!-- Page Layout here -->
+            <br/>
+            <div class="row">
+                <nav>
+                    <div class="nav-wrapper z-depth-1">
+                        <div class="col s12  blue darken-1 ">
+                            <a href="#!" class="breadcrumb">Zonas</a>
+                        </div>
+                    </div>
+                </nav>
+            </div>
+            <div class="row">
+                <table class="striped">
+                    <thead>
+                    <tr>
+                        <th>ID</th>
+                        <th>Nombre</th>
+                    </tr>
+                    </thead>
+
+                    <tbody>
+                    {% for zona in zonas %}
+                        <tr>
+                            <td>
+                                {{ zona.idZona }}
+                            </td>
+                            <td>
+                                {{ zona.nombre }}
+                            </td>
+                        </tr>
+                    {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+{% endblock %}
+
+{% block stylesheets %}
+    <style>
+        body {
+            background: white;
+            height: 200vh;
+        }
+    </style>
+
+{% endblock %}
+
+{% block javascripts %}
+{% endblock %}

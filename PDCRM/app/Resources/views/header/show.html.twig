@@ -1,0 +1,59 @@
+<nav class="white header" role="navigation">
+    <div class="nav-wrapper container">
+
+        <ul id="dropdownMicuenta" class="dropdown-content">
+            <li><a href="#">Mi Perfíl</a></li>
+            <li class="divider"></li>
+            <li><a href="{{ path('logout', {}) }}">Salir</a></li>
+        </ul>
+        <ul id="dropdownMicuenta2" class="dropdown-content">
+            <li><a href="#">Mi Perfíl</a></li>
+            <li class="divider"></li>
+            <li><a href="{{ path('logout', {}) }}">Salir</a></li>
+        </ul>
+
+        <a href="#" data-activates="nav-mobile" class="button-collapse"><i class="material-icons">menu</i></a>
+
+        {% image '@FrameworkBundle/Resources/public/images/logotipo.png' %}
+            {% if is_granted('IS_AUTHENTICATED_FULLY') %}
+                <a href="{{ path('panel_principal', {}) }}" class="brand-logo">
+            {% else %}
+                <a href="{{ path('homepage', {}) }}" class="brand-logo">
+            {% endif %}
+            <img src="{{ asset_url }}" class="header-logo" alt="Logo"/>
+        </a>
+        {% endimage %}
+
+        {% if is_granted('IS_AUTHENTICATED_FULLY') %}
+        <ul class="right">
+            <a class="dropdown-button" href="#!" data-activates="dropdownMicuenta">
+                {% image '@FrameworkBundle/Resources/public/images/ic_usuario.jpg' %}
+                <img src="{{ asset_url }}" alt="" class="circle responsive-img" style="width:40px;height:40px;">
+                {% endimage %}
+                <i class="material-icons right">arrow_drop_down</i>
+            </a>
+
+        {% else %}
+        <ul class="right hide-on-med-and-down">
+            <li class="divider"></li>
+            <li><a href="{{ path('login', {}) }}">Login</a></li>
+
+        {% endif %}
+        </ul>
+
+        <ul id="nav-mobile" class="side-nav">
+            {% if not is_granted('IS_AUTHENTICATED_FULLY') %}
+                <li class="divider"></li>
+                <li><a href="{{ path('login', {}) }}">Login</a></li>
+            {% endif %}
+        </ul>
+
+        <style>
+            .circle
+            {
+                vertical-align:middle;
+            }
+        </style>
+
+    </div>
+</nav>

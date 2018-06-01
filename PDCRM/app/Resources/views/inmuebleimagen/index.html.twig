@@ -1,0 +1,142 @@
+{% extends 'baseabc.html.twig' %}
+
+{% block body %}
+    <div id="wrapper">
+        <div id="container">
+            <!-- Page Layout here -->
+            <br/>
+            <div class="row">
+                <nav>
+                    <div class="nav-wrapper z-depth-1">
+                        <div class="col s12  blue darken-1 ">
+                            <a href="#!" class="breadcrumb">Imágenes de Propiedad</a>
+                        </div>
+                    </div>
+                </nav>
+            </div>
+            <div class="row">
+                <a href="{{ path('inmuebleimagen_multinew', {}) }}?idInmueble={{ idInmueble }}" class="waves-effect waves-light btn blue darken-1 right"><i class="material-icons left">add</i>Nueva Imagen</a>
+            </div>
+
+            {% set ids = '' %}
+            {% for imagen in imagenes %}
+                {% set ids = ids ~ imagen.idImagen ~ ',' %}
+            {% endfor %}
+
+            <div class="row">
+                <div class="col s12 m12 l12">
+
+                <script>
+                    function obtenerOrdenes() {
+                        var ordenes = '&ordenes=';
+                        {% for imagen in imagenes %}
+                        ordenes = ordenes + document.getElementById('inp{{ imagen.idImagen }}').value + ',';
+                        {% endfor %}
+
+                        document.getElementById('frm').action = document.getElementById('frm').action + ordenes;
+                    }
+                </script>
+
+               <div id="progressGuardar" style="display:none">
+                        <label>Realizando operación, espere un momento por favor...</label>
+                        <div id="divProgress2" class="progress" >
+                            <div class="indeterminate"></div>
+                        </div>
+               </div>
+
+                <form id="frm" action="{{ path('inmuebleimagen_orden')~'?idInmueble='~idInmueble~'&ids='~ids }}" method="post" onsubmit="obtenerOrdenes();">
+
+                {% if imagenes|length>0 %}
+                <button type="submit" class="btn blue darken-4 left">Guardar orden</button>
+                {% endif %}
+
+                <table class="striped">
+                    <thead>
+                    <tr>
+                        <th>Orden actual</th>
+                        <th>Imagen</th>
+                        <th>Orden</th>
+                        <th>Descripción</th>
+                        <th>Operaciones</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+
+                        {% for imagen in imagenes %}
+                        <tr>
+                            <td>
+                                {{ imagen.orden }}
+                            </td>
+                            <td>
+                                <a>
+                                    <img src="{{ imagen.getWebPath() }}?dummy={{ random(1000) }}"/>
+                                </a>
+                            </td>
+                            <td>
+                                <input id="inp{{ imagen.idImagen }}" type="text" value="{{ imagen.orden }}" />
+
+                            </td>
+                            <td>
+                                {{ imagen.descripcion }}
+                            </td>
+                            <td>
+                                <a href="#" class="tooltipped" data-tooltip="Borrar" data-position="top"
+                                   onclick="if (confirm('¿Está seguro que desea borrar esta imagen?')) { window.location.href='{{ path('inmuebleimagen_delete', {'id': imagen.idImagen} ) }}?idInmueble={{ idInmueble }}'; }">
+                                    <i class="material-icons left">delete</i>
+                                </a>
+
+                                <a href="#" class="tooltipped" data-tooltip="Rotar a la Izquierda" data-position="top"
+                                   onclick="document.getElementById('progressGuardar').style.display=''; window.location.href='{{ path('inmuebleimagen_rotar', {'id': imagen.idImagen} ) }}?idInmueble={{ idInmueble }}&direccion=1';">
+                                    <i class="material-icons left">undo</i>
+                                </a>
+
+                                <a href="#" class="tooltipped" data-tooltip="Rotar a la Derecha" data-position="top"
+                                   onclick="document.getElementById('progressGuardar').style.display=''; window.location.href='{{ path('inmuebleimagen_rotar', {'id': imagen.idImagen} ) }}?idInmueble={{ idInmueble }}&direccion=2';">
+                                    <i class="material-icons left">redo</i>
+                                </a>
+                            </td>
+                        </tr>
+                        {% endfor %}
+
+                    </tbody>
+                </table>
+
+                {% if imagenes|length>0 %}
+                    <button type="submit" class="btn blue darken-4 left">Guardar orden</button>
+                {% endif %}
+
+                </form>
+                </div>
+
+            </div>
+        </div>
+    </div>
+{% endblock %}
+
+{% block stylesheets %}
+
+    <style>
+        body {
+            background: white;
+            height: 100vh;
+        }
+
+        p
+        {
+            font-size: small;
+        }
+
+        img
+        {
+            width:72px;
+            height:72px;
+        }
+
+        .imgoperacion
+        {
+            width:24px;
+            height:24px;
+        }
+    </style>
+
+{% endblock %}

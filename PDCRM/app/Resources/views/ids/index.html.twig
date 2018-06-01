@@ -1,0 +1,248 @@
+{% extends 'base4.html.twig' %}
+
+{% block body %}
+    <sytle>
+        <!-- Include stylesheet -->
+        <link href="https://cdn.quilljs.com/1.0.0-rc.0/quill.snow.css" rel="stylesheet">
+    </sytle>
+    <div class="container">
+
+        {% if enviosimplificado %}
+        <div id="divPanelPropiedades" style="display:none">
+        {% else %}
+        <div id="divPanelPropiedades">
+        {% endif %}
+
+            <div class="row">
+                <h2>Seleccione las propiedades</h2>
+            </div>
+
+            <div class="row">
+            <select id="selSeleccionar" style="width:100%" multiple>
+                {% if not enviosimplificado %}
+                {%  for inmueble in inmuebles  %}
+                    <option value="{{ inmueble.idInmueble }}">{{ inmueble.legacyid }} - {{ inmueble.nombreid }} {{ inmueble.idTipoInmueble.nombre }} en {{ inmueble.idOperacionInmueble.nombre }}
+                        {{ inmueble.idMoneda.simbolo }} {{inmueble.precio|number_format(2, '.', ',')}}
+                        {% if inmueble.preciohasta > 0 %}
+                        a {{ inmueble.idMoneda.simbolo }} {{inmueble.preciohasta|number_format(2, '.', ',')}}
+                        {% endif %}
+                        ({{ inmueble.idUsuario.nombre }} - {{ inmueble.fechaCreacion | date('d/m/Y') }})</option>
+                {% endfor %}
+                {% endif %}
+            </select>
+            </div>
+
+            <br>
+            <div class="row">
+                <button onclick="agregar();" class="button">Agregar</button>
+                <script>
+                    function agregar()
+                    {
+                        selEnviar = document.getElementById('selEnviar');
+
+                        // Obtener seleccionado
+                        selSeleccionar = document.getElementById('selSeleccionar');
+                        for (var i= 0, iLen=selSeleccionar.options.length; i<iLen; i++) {
+                            opt = selSeleccionar.options[i];
+
+                            if (opt.selected) {
+
+                                selEnviar.appendChild(opt);
+                            }
+                        }
+                    }
+                </script>
+                <button onclick="quitar();" class="button">Quitar</button>
+                <script>
+                    function quitar()
+                    {
+                        selSeleccionar = document.getElementById('selSeleccionar');
+                        // Obtener seleccionado
+                        selEnviar = document.getElementById('selEnviar');
+
+                        for (var i= 0, iLen=selEnviar.options.length; i<iLen; i++) {
+                            opt = selEnviar.options[i];
+
+                            if (opt.selected) {
+
+                                selSeleccionar.appendChild(opt);
+                            }
+                        }
+                    }
+                </script>
+            </div>
+
+            <br>
+            <div class="row">
+                <h2>Propiedades seleccionadas</h2>
+                <select id="selEnviar" style="width:100%" multiple>
+                    {% if enviosimplificado %}
+                        {%  for inmueble in inmuebles  %}
+                            <option value="{{ inmueble.idInmueble }}">{{ inmueble.legacyid }} - {{ inmueble.idTipoInmueble.nombre }} en {{ inmueble.idOperacionInmueble.nombre }} {{ inmueble.idMoneda.simbolo }} {{inmueble.precio|number_format(2, '.', ',')}} ({{ inmueble.idUsuario.nombre }} - {{ inmueble.fechaCreacion | date('d/m/Y') }})</option>
+                        {% endfor %}
+                    {% endif %}
+                </select>
+            </div>
+        </div>
+
+        <br>
+
+        <div class="row">
+        <h2>Mensaje</h2>
+
+        <label for="inpTitulo">Título</label><br>
+        <input id="inpTitulo" style="width:99.5%; height: 20px"/><br><br>
+
+        <div id="editor" class="editor">
+        </div>
+        <!-- Include the Quill library -->
+        <script src="https://cdn.quilljs.com/1.0.0-rc.0/quill.js"></script>
+        <!-- Initialize Quill editor -->
+        <script type="text/javascript">
+            var quill = new Quill('#editor', {
+                theme: 'snow'
+            });
+        </script>
+        </div>
+
+        <br>
+        <div class="row">
+            <label for="inpEmail">Enviar a e-mail:</label>
+            <input id="inpEmail" style="width:300px;"/>
+        </div>
+
+        {% if mostrarprospectos  %}
+        <div class="row">
+        {% else %}
+        <div class="row" style="display: none">
+        {% endif %}
+            <h2>Prospectos</h2>
+            <a href="#!" onclick="seleccionarTodos();">Seleccionar todos</a><br><br>
+            {%  for prospecto in prospectos %}
+                <input type="checkbox" id="chkProspecto{{ prospecto.idProspecto }}" value="{{ prospecto.idProspecto }}">{{ prospecto.nombre }} {{ prospecto.apellidos }} ({{ prospecto.email }}) </input>
+                <br>
+            {% endfor %}
+
+            <script>
+                function seleccionarTodos()
+                {
+                    {%  for prospecto in prospectos %}
+                    document.getElementById("chkProspecto{{ prospecto.idProspecto }}").checked=true;
+                    {% endfor %}
+                }
+            </script>
+        </div>
+
+        <br>
+        <div class="row" style="text-align:center;">
+            <button onclick="enviar();" class="button">Enviar</button>
+        </div>
+        <script>
+            function enviar() {
+                // Obtener email
+                var email = document.getElementById("inpEmail").value;
+                var titulo = document.getElementById("inpTitulo").value;
+
+                // Obtener prospectos
+                var idProspectos='';
+                {% for prospecto in prospectos %}
+                if (document.getElementById("chkProspecto{{ prospecto.idProspecto }}").checked == true) {
+                    idProspectos = idProspectos + "," + "{{ prospecto.idProspecto }}";
+                }
+                {% endfor %}
+
+                if (idProspectos == '' && (email == '')) {
+                    alert("Seleccione por lo menos un prospecto o escriba una dirección de mail de envío.");
+                    return;
+                }
+
+                if (titulo == '' || titulo == null) {
+                    alert("Escriba un título para el mensaje.");
+                    return;
+                }
+
+                if (idProspectos != null) {
+                    idProspectos = idProspectos.substring(1);
+                }
+
+                // Obtener inmuebles
+                var idInmuebles='';
+                selEnviar = document.getElementById('selEnviar');
+
+                for (var i= 0, iLen=selEnviar.options.length; i<iLen; i++) {
+                    opt = selEnviar.options[i];
+                    idInmuebles = idInmuebles + ',' + opt.value;
+                }
+                if (idInmuebles == '')
+                {
+                    alert("Seleccione por lo menos una propiedad.");
+                    return;
+                }
+                idInmuebles = idInmuebles.substring(1);
+
+                // obtener mensaje
+                mensaje = document.getElementById('editor').innerHTML;
+                var editor = new Quill('#editor');
+                mensaje = editor.getText();
+                //alert(mensaje);
+
+                var url = "{{ path('mensaje_enviarinmuebleaprospectos', {}) }}?idProspectos=" + idProspectos +"&ida={{ ida }}&email=" + email + "&idInmuebles=" + idInmuebles + "&mensaje=" + mensaje + "&titulo=" + titulo;
+
+                {% if url is defined %}
+                    url = url + "&redurl={{ url }}";
+                {% endif %}
+
+                //alert(url);
+                window.location =url;
+            }
+        </script>
+    </div>
+
+    <style>
+        body{
+            background-color: white;
+            height: 140vh;
+            margin: 30px;
+        }
+        p
+        {
+            font-size: medium;
+        }
+        select {
+            font-family: Arial, Helvetica, sans-serif;
+            font-size: small;
+            height: 200px;
+        }
+        select option {
+            background-color: white;
+        }
+        h2 {
+            font-family: Arial, Helvetica, sans-serif;
+        }
+        a {
+            font-family: Arial, Helvetica, sans-serif;
+        }
+        label {
+            font-family: Arial, Helvetica, sans-serif;
+        }
+        input {
+            font-family: Arial, Helvetica, sans-serif;
+        }
+        .button {
+            background-color: cornflowerblue;
+            height: 32px;
+            border: none;
+            color: white;
+            padding: 5px 32px;
+            text-align: center;
+            text-decoration: none;
+            display: inline-block;
+            font-size: 16px;
+            margin: 4px 2px;
+            cursor: pointer;
+        }
+    </style>
+
+{% endblock %}
+
+

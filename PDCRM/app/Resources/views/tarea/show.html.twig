@@ -1,0 +1,63 @@
+{% extends 'baseabc.html.twig' %}
+
+{% block body %}
+    <table>
+        <tbody>
+            <tr>
+                <th>Fecha</th>
+                <td>{% if tarea.fecha %}{{ tarea.fecha|date('Y-m-d H:i:s') }}{% endif %}</td>
+            </tr>
+
+            <tr>
+                <th>Actividad</th>
+                <td>{{ tarea.idAccion.nombre }}</td>
+                <th>Prospecto</th>
+                <td>{{ tarea.idProspecto.nombre }}</td>
+            </tr>
+
+            <tr>
+
+            </tr>
+
+            <tr>
+                <th>E-Mail</th>
+                <td>{{ tarea.idProspecto.email }}</td>
+            </tr>
+
+            <tr>
+                <th>Teléfono</th>
+                <td>{{ tarea.idProspecto.telefono }}</td>
+                <th>Teléfono móvil</th>
+                <td>{{ tarea.idProspecto.telefonoMovil }}</td>
+            </tr>
+
+            <tr>
+
+            </tr>
+
+            <tr>
+                <th>Propiedad</th>
+                <td>{{ tarea.propiedad }}</td>
+            </tr>
+
+            <tr>
+                <th>Comentarios</th>
+                <td>{{ tarea.comentarios }}</td>
+            </tr>
+
+        </tbody>
+    </table>
+
+    <!--ul>
+        <li>
+
+        </li>
+        <li>
+        </li>
+        <li-->
+            {# form_start(delete_form) #}
+                <!--input type="submit" value="Delete"-->
+            {# form_end(delete_form) #}
+        <!--/li>
+    </ul-->
+{% endblock %}

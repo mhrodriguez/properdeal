@@ -1,0 +1,39 @@
+{% extends 'baseabc.html.twig' %}
+
+{% block body %}
+
+<div class="container">
+    <br/>
+    {{ form_start(form) }}
+
+        <div class="row">
+            <div class="input-field col s12">
+                {{ form_widget(form.gerencia) }}
+                {{ form_label(form.gerencia) }}
+                {{ form_errors(form.gerencia) }}
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="input-field col s12">
+                {{ form_widget(form.gerente) }}
+                {{ form_label(form.gerente) }}
+                {{ form_errors(form.gerente) }}
+            </div>
+        </div>
+
+        <input type="submit" value="Guardar" class="waves-effect waves-light btn blue darken-4 right"/>
+
+        <a href="{{ path('gerencia_index', {}) }}" class="waves-effect waves-light btn blue darken-4 right">Cancelar</a>
+
+    {{ form_end(form) }}
+</div>
+
+<style>
+    body
+    {
+        background-color: white;
+        height: 100vh;
+    }
+</style>
+{% endblock %}

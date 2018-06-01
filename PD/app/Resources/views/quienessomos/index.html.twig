@@ -1,0 +1,66 @@
+{% extends 'base2.html.twig' %}
+
+{% block body %}
+    <div id="container">
+        <br>
+
+        <div class="row">
+            <div class="col s6 m6 l6">
+                <h4 class="grey-text text-darken-3">¿Quiénes somos?</h4>
+                {% image '@FrameworkBundle/Resources/public/images/img_quienessomos.jpg' %}
+                <img src="{{ asset_url }}" alt="" style="width:100%; height:100%"/>
+                {% endimage %}
+            </div>
+
+            <div class="col s6 m6 l6 ">
+                <h5 class="amber-text text-darken-4">Liderazgo</h5>
+                <p>
+                    <b>Proper Deal</b> es el primer equipo profesional en inversión inmobiliaria que busca ofrecer a los desarrolladores y al mercado, un servicio personalizado único en los procesos de comercialización de propiedades inmobiliarias.<br>
+                    <br>
+                    <b>Proper Deal</b> es una solución que no sólo cubre a detalle todas y cada una de las necesidades de sus clientes, pero que además los asesora integralmente en mejores prácticas y métodos para asegurar que se obtengan: la mejor oferta, el mejor producto, la mejor negociación y por ende, un <b>Proper Deal</b>.
+                </p>
+
+                <h5 class="amber-text text-darken-4">Estrategias</h5>
+                <p>
+                    Conocer, entender y valorar el tiempo, el dinero y el entusiasmo que los DESARROLLADORES, invierten en cada proyecto, es primordial para poder ofrecerles una oferta de servicios exclusivo y a la medida.<br>
+                    <br>
+                    La fórmula para el éxito de <b>Proper Deal</b>, está basada en brindar a nuestros clientes una solución integral que, a través de un equipo de trabajo multidisciplinario conformado por nuestro capital humano y por empresas especializadas en la comercialización de proyectos inmobiliarios, generen desde el análisis, las estrategias, y las herramientas profesionales ideales para cada desarrollo.<br>
+                    <br>
+                    Parte muy importante de nuestra cultura de trabajo consiste en seleccionar minuciosamente los proyectos que comercializamos, poder ofrecer a nuestros clientes la seguridad económica, la integridad y el profesionalismo de nuestros desarrolladores velando siempre por su tranquilidad.
+                </p>
+            </div>
+        </div>
+
+        <div class="row"/>
+    </div>
+
+{% endblock %}
+
+{% block stylesheets %}
+    <style>
+        div.row
+        {
+            margin-left: 20px;
+        }
+
+        p {
+            font-size: small;
+            line-height: 130% !important;
+        }
+
+        body{
+            background-color: white;
+        }
+
+        h5
+        {
+            font-weight: bold;
+        }
+
+        h4
+        {
+            margin-left: 20px !important;
+        }
+    </style>
+{% endblock %}
+

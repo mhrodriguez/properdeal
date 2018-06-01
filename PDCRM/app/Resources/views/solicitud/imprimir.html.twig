@@ -1,0 +1,96 @@
+{% extends 'baseabc.html.twig' %}
+
+{% block body %}
+    <div id="wrapper">
+        <div id="container">
+            <!-- Page Layout here -->
+            <br/><br/>
+
+            <div class="row">
+                <a href="#" id="imprimir" onclick="window.print();">Imprimir</a>
+            </div>
+
+            <div class="row">
+                <h5 class="center-align">Solicitudes</h5>
+                <table class="striped">
+                    <thead>
+                    <th><b>ID</b></th>
+                    <th><b>Tipo de Inmueble</b></th>
+                    <td><b>Operaci&oacute;n</b></td>
+                    <td><b>Estado</b></td>
+                    <td><b>Ciudad</b></td>
+                    <td><b>Colonia</b></td>
+                    <td><b>m2 de costrucci&oacute;n</b></td>
+                    <td><b>m2 de costrucci&oacute;n (hasta)</b></td>
+                    <td><b>m2 de terreno</b></td>
+                    <td><b>m2 de terreno (hasta)</b></td>
+                    <th><b>Precio</b></th>
+                    <th><b>Precio (hasta)</b></th>
+                    <th><b>Moneda</b></th>
+                    </thead>
+                    <tbody>
+                    {% for solicitud in solicitudes %}
+                        <tr>
+                            <td>
+                                {{ solicitud.idSolicitud }}
+                            </td>
+                            <td>
+                                {{ solicitud.idTipoInmueble.nombre }}
+                            </td>
+                            <td>
+                                {{ solicitud.idOperacionInmueble.nombre }}
+                            </td>
+                            <td>
+                                {{ solicitud.idEstado.nombre }}
+                            </td>
+                            <td>
+                                {{ solicitud.idMunicipio.nombre }}
+                            </td>
+                            <td>
+                                {{ solicitud.idColonia.nombre }}
+                            </td>
+                            <td>
+                                {{ solicitud.metrosconstruccion }}
+                            </td>
+                            <td>
+                                {{ solicitud.metrosconstruccionmax }}
+                            </td>
+                            <td>
+                                {{ solicitud.metrosterreno }}
+                            </td>
+                            <td>
+                                {{ solicitud.metrosterrenomax }}
+                            </td>
+                            <td>
+                                {{ solicitud.precio }}
+                            </td>
+                            <td>
+                                {{ solicitud.preciomax }}
+                            </td>
+                            <td>
+                                {{ solicitud.idMoneda.nombre }}
+                            </td>
+                        </tr>
+                    {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+
+        </div>
+    </div>
+{% endblock %}
+
+{% block stylesheets %}
+
+    <style>
+        body {
+            background: white;
+            height: 100vh;
+        }
+        p
+        {
+            font-size: small;
+        }
+    </style>
+
+{% endblock %}

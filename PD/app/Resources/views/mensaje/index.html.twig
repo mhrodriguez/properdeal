@@ -1,0 +1,47 @@
+{% extends 'base2.html.twig' %}
+
+{% block body %}
+<div id="wrapper">
+    <div id="container">
+        <!-- Page Layout here -->
+        <br/>
+
+        <div class="row">
+            {% for mensaje in mensajes %}
+            <div class="col s12 m8 offset-m2 l6 offset-l3">
+                <div class="card-panel grey lighten-5 z-depth-1">
+                    <div class="row valign-wrapper">
+                        <div class="col s2">
+                            {% image '@FrameworkBundle/Resources/public/images/ic_usuario.jpg' %}
+                            <img src="{{ asset_url }}" alt="" class="circle responsive-img" style="width:50%;margin-left: 25%">
+                            {% endimage %}
+                        </div>
+                        <div class="col s10">
+                                    <span class="black-text">
+                                        <h5>{{ mensaje.titulo }}</h5>
+                                        <p>{{ mensaje.fechaCreacion |date("d/m/Y H:i:s")  }}</p>
+
+                                        {{ mensaje.texto }}
+                                    </span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+    </div>
+</div>
+{% endblock %}
+
+{% block stylesheets %}
+<style>
+    body {
+        background: white;
+        height: 200vh;
+    }
+</style>
+
+{% endblock %}
+
+{% block javascripts %}
+{% endblock %}

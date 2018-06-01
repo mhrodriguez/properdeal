@@ -1,0 +1,67 @@
+{% extends 'baseabc.html.twig' %}
+
+{% block body %}
+    <div id="wrapper">
+        <div id="container">
+            <!-- Page Layout here -->
+            <br/>
+            <div class="row">
+                <nav>
+                    <div class="nav-wrapper z-depth-1">
+                        <div class="col s12  blue darken-1 ">
+                            <a href="#!" class="breadcrumb">Enlaces</a>
+                        </div>
+                    </div>
+                </nav>
+            </div>
+            <div class="row">
+                <table class="striped">
+                    <thead>
+                    <tr>
+                        <th>Nombre</th>
+                        <th>URL</th>
+                    </tr>
+                    </thead>
+
+                    <tbody>
+                    {% for enlace in enlaces %}
+                        <tr>
+                            <td>
+                                {{ enlace.nombre }}
+                            </td>
+                            <td>
+                                {% if enlace.idEnlace == 3 %}
+
+                                    <a href="{{ enlace.url }}" target="_blank">
+                                        {% image '@FrameworkBundle/Resources/public/images/lamudi.png' %}
+                                            <img src="{{ asset_url }}" style="width:50px; height:50px"/>
+                                        {% endimage %}
+                                    </a>
+
+                                {% else %}
+
+                                    <a href="{{ enlace.url }}" target="_blank">{{ enlace.url }}</a>
+
+                                {% endif %}
+                            </td>
+                        </tr>
+                    {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+{% endblock %}
+
+{% block stylesheets %}
+    <style>
+        body {
+            background: white;
+            height: 200vh;
+        }
+    </style>
+
+{% endblock %}
+
+{% block javascripts %}
+{% endblock %}

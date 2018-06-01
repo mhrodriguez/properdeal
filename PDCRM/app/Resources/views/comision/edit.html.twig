@@ -1,0 +1,223 @@
+{% extends 'baseabc.html.twig' %}
+
+{% block body %}
+    <div class="container">
+        <br/>
+        <div class="row">
+            <nav>
+                <div class="nav-wrapper z-depth-1">
+                    <div class="col s12  blue darken-1 ">
+                        <a href="#" class="breadcrumb">Comisión</a>
+                        <a href="#" class="breadcrumb">Editar</a>
+                    </div>
+                </div>
+            </nav>
+        </div>
+        <br/><br/>
+
+        {{ form_start(form) }}
+
+        <div class="row">
+            <div class="input-field col s6">
+                {{ form_widget(form.asesor) }}
+                {{ form_label(form.asesor) }}
+                {{ form_errors(form.asesor) }}
+            </div>
+            <div class="input-field col s6 activelabel">
+                <div class="datepicker">
+                    Fecha:
+                    <input type="text" id="comision_fecha" name="comision_fecha" required="required" value="{{ comision.fecha|date('Y-m-d') }}" />
+                    <a id="fechaError" style="visibility:hidden;color:black">Fecha inválida<br></a>
+                </div>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="input-field col s6">
+                {{ form_widget(form.comparte) }}
+                {{ form_label(form.comparte) }}
+                {{ form_errors(form.comparte) }}
+            </div>
+            <div class="input-field col s6">
+                {{ form_widget(form.inmueble) }}
+                {{ form_label(form.inmueble) }}
+                {{ form_errors(form.inmueble) }}
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="input-field col s6">
+                {{ form_widget(form.operacioninmueble) }}
+                {{ form_label(form.operacioninmueble) }}
+                {{ form_errors(form.operacioninmueble) }}
+            </div>
+            <div class="input-field col s6">
+                {{ form_widget(form.cliente) }}
+                {{ form_label(form.cliente) }}
+                {{ form_errors(form.cliente) }}
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="input-field col s6">
+                {{ form_widget(form.monto) }}
+                {{ form_label(form.monto) }}
+                {{ form_errors(form.monto) }}
+            </div>
+            <div class="input-field col s6">
+                {{ form_widget(form.propiedadexterna) }}
+                {{ form_label(form.propiedadexterna) }}
+                {{ form_errors(form.propiedadexterna) }}
+            </div>
+        </div>
+
+        <div class="row">
+            <h5>Comisiones</h5>
+        </div>
+
+        <div class="row">
+            <div class="input-field col s6">
+                {{ form_widget(form.comision) }}
+                {{ form_label(form.comision) }}
+                {{ form_errors(form.comision) }}
+            </div>
+            <div class="input-field col s6">
+                Monto de Comisión: <label id="lbl_monto_comision"></label>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="input-field col s6">
+                {{ form_widget(form.comisionoficina) }}
+                {{ form_label(form.comisionoficina) }}
+                {{ form_errors(form.comisionoficina) }}
+            </div>
+            <div class="input-field col s6">
+                Monto de Comisión: <label id="lbl_monto_comisionoficina"></label>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="input-field col s6">
+                {{ form_widget(form.comisionasesor) }}
+                {{ form_label(form.comisionasesor) }}
+                {{ form_errors(form.comisionasesor) }}
+            </div>
+            <div class="input-field col s6">
+                Monto de Comisión: <label id="lbl_monto_comisionasesor"></label>
+            </div>
+        </div>
+
+
+        <input type="submit" value="Guardar" class="waves-effect waves-light btn blue darken-4 right" onclick="document.getElementById('comision_inmueble').disabled = ''; return fechaHoraConFormato();" />
+        <a href="{{ path('comision_index', {}) }}" class="waves-effect waves-light btn blue darken-4 right">Cancelar</a>
+
+        {{ form_end(form) }}
+
+        <script>
+
+            $(document).ready(function() {
+                $('select').material_select();
+            });
+
+            $('#comision_fecha').pickadate({
+                selectMonths: true, // Creates a dropdown to control month
+                format: 'yyyy-mm-dd',
+                monthsFull: [ 'Enero', 'Febrero', 'Marzo', 'Abril', 'Mayo', 'Junio', 'Julio', 'Agosto', 'Septiembre', 'Octubre', 'Noviembre', 'Diciembre' ],
+                monthsShort: [ 'Ene', 'Feb', 'Mar', 'Abr', 'May', 'Jun', 'Jul', 'Ago', 'Sep', 'Oct', 'Nov', 'Dic' ],
+                weekdaysFull: [ 'Domingo', 'Lunes', 'Martes', 'Miércoles', 'Jueves', 'Viernes', 'Sabado' ],
+                weekdaysShort: [ 'Dom', 'Lun', 'Mar', 'Mie', 'Jue', 'Vie', 'Sab' ],
+                weekdaysLetter: [ 'D', 'L', 'M', 'M', 'J', 'V', 'S' ],
+                today: 'Hoy',
+                clear: 'Limpiar',
+                close: 'Cerrar',
+                labelMonthNext: 'Siguiente mes',
+                labelMonthPrev: 'Mes anterior',
+                labelMonthSelect: 'Selecciona un mes',
+                labelYearSelect: 'Selecciona un año'
+            });
+
+            function fechaHoraConFormato()
+            {
+                if (document.getElementById('comision_fecha').value == "")
+                {
+                    document.getElementById('fechaError').style.visibility="";
+                    alert('La fecha es inválida');
+                    return false;
+                }
+
+                document.getElementById('comision_fecha').value  = document.getElementById('comision_fecha').value.replace(' 00:00:00', '');
+
+                document.getElementById('comision_fecha').value += ' 00:00:00';
+
+                return true;
+            }
+
+            document.getElementById('comision_monto').addEventListener('change', actualizarComisiones, false);
+            document.getElementById('comision_comision').addEventListener('change', actualizarComisiones, false);
+            document.getElementById('comision_comisionoficina').addEventListener('change', actualizarComisiones, false);
+            document.getElementById('comision_comisionasesor').addEventListener('change', actualizarComisiones, false);
+            actualizarComisiones();
+
+            function actualizarComisiones()
+            {
+                monto = parseFloat(document.getElementById('comision_monto').value);
+                comision = parseFloat(document.getElementById('comision_comision').value);
+                comisionoficina = parseFloat(document.getElementById('comision_comisionoficina').value);
+                comisionasesor = parseFloat(document.getElementById('comision_comisionasesor').value);
+
+                ncomision=0;
+                ncomisionoficina=0;
+                ncomisionasesor=0;
+
+
+                if (monto > 0) {
+                    if (comision >= 0) {
+
+                        ncomision = (monto) * (comision / 100);
+
+                        if (comisionoficina >= 0) {
+
+                            ncomisionoficina = ncomision * (comisionoficina / 100);
+
+                            if (comisionasesor >= 0)
+                            {
+                                ncomisionasesor = ncomisionoficina * (comisionasesor / 100);
+                            }
+
+                        }
+                    }
+                }
+
+                lbl_comision = document.getElementById('lbl_monto_comision');
+                lbl_comisionoficina = document.getElementById('lbl_monto_comisionoficina');
+                lbl_comisionasesor = document.getElementById('lbl_monto_comisionasesor');
+
+                lbl_comision.innerHTML = '$ ' + ncomision;
+                lbl_comisionoficina.innerHTML = '$ ' + ncomisionoficina;
+                lbl_comisionasesor.innerHTML = '$ ' + ncomisionasesor;
+
+            }
+
+            document.getElementById('comision_inmueble').disabled = 'disabled';
+        </script>
+
+        <style>
+            body{
+                background-color: white;
+                height: 100vh;
+            }
+
+            #solicitud_caracteristicas label
+            {
+                margin-right: 20px;
+            }
+
+            .activelabel label {
+                font-size: 0.8rem;
+                -webkit-transform: translateY(-140%);
+                transform: translateY(-140%);
+            }
+        </style>
+    </div>
+{% endblock %}

@@ -1,0 +1,60 @@
+{% extends 'baseabc.html.twig' %}
+
+{% block body %}
+    <div id="wrapper">
+        <div id="container">
+            <!-- Page Layout here -->
+            <br/>
+            <div class="row">
+                <nav>
+                    <div class="nav-wrapper z-depth-1">
+                        <div class="col s12  blue darken-1 ">
+                            <a href="#!" class="breadcrumb">Permisos</a>
+                        </div>
+                    </div>
+                </nav>
+            </div>
+
+            <div class="row">
+                <table class="striped">
+                    <thead>
+                    <tr>
+                        <th data-field="id">Asesor</th>
+                        <th data-field="name">Datos</th>
+                        <th data-field="price">Registro</th>
+                        <th data-field="price">Opciones</th>
+                    </tr>
+                    </thead>
+
+                    <tbody>
+                    {% for asesorpermiso in asesorpermisos %}
+                        <tr>
+                            <td style="width:100px">
+                                {% image '@FrameworkBundle/Resources/public/images/ic_usuario.jpg' %}
+                                <img src="{{ asset_url }}" alt="" class="circle responsive-img">
+                                {% endimage %}
+                            </td>
+                            <td>{{ asesorpermiso.usuario.nombre }}</td>
+                            <td>Desde: {{ asesorpermiso.usuario.fechaCreacion|date('d-m-Y') }}</td>
+                            <td>
+                                <a href="{{ path('asesorpermiso_edit', {'id' : asesorpermiso.id}) }}">Permisos</a>
+                            </td>
+                        </tr>
+                    {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+{% endblock %}
+
+{% block stylesheets %}
+
+    <style>
+        body {
+            background: white;
+            height: 100vh;
+        }
+    </style>
+
+{% endblock %}

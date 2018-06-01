@@ -1,0 +1,192 @@
+{% extends 'base2.html.twig' %}
+
+{% block body %}
+    <div id="wrapper">
+        <div id="container">
+
+            <div class="row">
+                <div class="col s12 m12 l12">
+                    <div class="slider">
+                        <ul class="slides">
+                            {% for inmueble in inmuebles %}
+                            <li>
+                                {% if (inmueble.Imagenes|length>0) %}
+                                <img class="img-responsive" src="{{ inmueble.Imagenes[0].getWebPath() }}"/>
+                                {% endif %}
+
+                                <div class="caption left-align" style="width: 300px">
+
+                                    <div class="card white" style="opacity: 0.8">
+                                        <div class="card-content black-text">
+                                            <span class="card-title">ID: {{ inmueble.legacyid }} {{ inmueble.nombreid }}</span>
+                                            <p class="black-text">{{ inmueble.idMunicipio.nombre }}, {{ inmueble.idEstado.nombre }}, {{ inmueble.colonia }}</p>
+                                            <p class="black-text" style="line-height:105%;">
+                                                {{ inmueble.idTipoInmueble.nombre }} en {{ inmueble.idOperacionInmueble.nombre }}<br>
+                                                ${{ inmueble.precio|number_format(2, '.', ',') }}<br>
+                                                {{ inmueble.recamaras }} Recámaras<br>
+
+                                                {% if inmueble.metrosconstruccion is not null %}
+                                                {{ inmueble.metrosconstruccion }} Metros de Construcción<br>
+                                                {% endif %}
+
+                                                {% if inmueble.metrosterreno is not null %}
+                                                {{ inmueble.metrosterreno }} Metros de Terreno<br>
+                                                {% endif %}
+
+                                                {% if inmueble.plantas > 0 %}
+                                                    {{ inmueble.plantas }} Plantas<br>
+                                                {% endif %}
+
+                                                {{ inmueble.banos }} Baño(s)<br>
+
+                                                {% if inmueble.mediobanos is not null %}
+                                                    {{ inmueble.mediobanos }} Medios Baño(s)<br>
+                                                {% endif %}
+                                            </p>
+                                        </div>
+                                        <div class="card-action">
+                                            <a href="{{ path('buscarinmueble_showfs', {'id': inmueble.idInmueble}) }}">Detalles</a>
+                                        </div>
+                                    </div>
+                                </div>
+                            </li>
+                            {% endfor %}
+                        </ul>
+                    </div>
+
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col s12 m12 l12">
+                    <div id="divBusqueda">
+                        {{ render(controller(
+                        'AppBundle:BuscarInmueble:buscarform',
+                        { }
+                        )) }}
+                    </div>
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col s12 m12 l12">
+                    {%  for asesor in asesores  %}
+                        <div class="col s2 m2 l2 ">
+                            <div class="card medium">
+                                <div class="card-image">
+                                    {% if (asesor.getWebPathFoto() is null)  %}
+                                        {% image '@FrameworkBundle/Resources/public/images/ic_usuario.jpg' %}
+                                        <img src="{{ asset_url }}" alt="" class="activator">
+                                        {% endimage %}
+                                    {% else %}
+                                        <img src="{{ asesor.getWebPathFoto() }}" class="activator"/>
+                                    {%  endif  %}
+                                </div>
+                                <div class="card-content">
+                                    <p><b>{{ asesor.nombre }}</b></p>
+                                    <p><i class="material-icons left">phone</i>{{ asesor.telefono }}</p>
+                                    <p><i class="material-icons left">email</i>{{ asesor.email }}</p>
+                                </div>
+                                <div class="card-action">
+                                    <a href="{{ path('inmueble_index', {}) }}?idAsesor={{ asesor.id }}">Mis propiedades</a>
+                                </div>
+                            </div>
+                        </div>
+                    {% endfor %}
+                </div>
+            </div>
+
+            <div class="row">
+                <h4>La Mejor Oferta Inmobiliaria para Invertir en todo México</h4>
+                <div class="col s12 m12 l12">
+                    {%  for inmueble in inmuebles2  %}
+                        <div class="col s2 m2 l2 ">
+                            <div class="card medium">
+                                <div class="card-image">
+                                    {% if (inmueble.Imagenes|length>0) %}
+                                        <img class="img-responsive" src="{{ inmueble.Imagenes[0].getWebPath() }}"/>
+                                    {% endif %}
+                                </div>
+                                <div class="card-content">
+                                    <p style="font-size:medium">ID: {{ inmueble.legacyid }}, {{ inmueble.nombreid }}
+                                    </p>
+
+                                    {{ inmueble.idTipoInmueble.nombre }} en {{ inmueble.idOperacionInmueble.nombre }}<br>
+                                    ${{ inmueble.precio|number_format(2, '.', ',') }}<br>
+
+                                    {% if inmueble.recamaras is not null %}
+                                        {% if inmueble.recamaras > 0 %}
+                                            {{ inmueble.recamaras }} Recámara(s)<br>
+                                        {% endif %}
+                                    {% endif %}
+
+                                    {% if inmueble.metrosconstruccion is not null %}
+                                        {% if inmueble.metrosconstruccion > 0 %}
+                                            {{ inmueble.metrosconstruccion }} m2 de Construcción<br>
+                                        {% endif %}
+                                    {% endif %}
+
+                                    {% if inmueble.metrosterreno is not null %}
+                                        {% if inmueble.metrosterreno > 0 %}
+                                            {{ inmueble.metrosterreno }} m2 de Terreno<br>
+                                        {% endif %}
+                                    {% endif %}
+
+                                    {% if inmueble.plantas is not null %}
+                                        {% if inmueble.plantas > 0 %}
+                                            {{ inmueble.plantas }} Planta(s)
+                                        {% endif %}
+                                    {% endif %}
+
+                                </div>
+                                <div class="card-action">
+                                    <a href="{{ path('buscarinmueble_showfs', {'id': inmueble.idInmueble}) }}">Detalles</a>
+                                </div>
+                            </div>
+                        </div>
+                    {% endfor %}
+                </div>
+            </div>
+
+        </div>
+    </div>
+    <script>
+        $(document).ready(function(){
+            $('.slider').slider({full_width: true});
+        });
+
+    </script>
+{% endblock %}
+
+{% block stylesheets %}
+    <style>
+        #divBusqueda {
+            height: 400px;
+        }
+
+        #divDestacados {
+            background: lightgray;
+            height: 560px;
+        }
+
+        p {
+            line-height: 50%;
+        }
+
+        h4 {
+            text-align: center;
+        }
+
+        .slider .indicators .indicator-item {
+            background-color: #666666;
+            border: 3px solid #ffffff;
+        }
+
+        .slider .indicators .indicator-item.active {
+            background-color: #eeeeee;
+            color: #eeeeee;
+        }
+
+    </style>
+{% endblock %}
+

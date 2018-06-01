@@ -1,0 +1,95 @@
+{% extends 'baseabc.html.twig' %}
+
+{% block body %}
+    <div id="wrapper">
+        <div id="container">
+            <!-- Page Layout here -->
+            <br/>
+
+            <div class="row">
+                <table class="striped">
+                    <tbody>
+                    {% for inmueble in inmuebles %}
+                        <tr>
+                            <td rowspan="1" style="width:250px">
+                                {% if (inmueble.Imagenes|length>0) %}
+                                <a href="#"><img class="imginmueble" src="{{ inmueble.Imagenes[0].getWebPath() }}"></a>
+                                {% endif %}
+                            </td>
+                            <td>
+                                <h5>ID: {{ inmueble.legacyid }} {{ inmueble.nombreid }}</h5>
+                                <h5>{{ inmueble.idTipoInmueble.nombre }} en {{ inmueble.idOperacionInmueble.nombre }}</h5>
+                                <p>{{ inmueble.idMunicipio.nombre }}, {{ inmueble.idEstado.nombre }}, {{ inmueble.calle }}</p>
+                                <ul>
+
+                                    {% if inmueble.recamaras is not null %}
+                                        {% if inmueble.recamaras > 0 %}
+                                        <li>{{ inmueble.recamaras }} Recámara(s)</li>
+                                        {% endif %}
+                                    {% endif %}
+
+                                    {% if inmueble.metrosconstruccion is not null %}
+                                        {% if inmueble.metrosconstruccion > 0 %}
+                                            {{ inmueble.metrosconstruccion }} m2 de Construcción<br>
+                                        {% endif %}
+                                    {% endif %}
+
+                                    {% if inmueble.metrosterreno is not null %}
+                                        {% if inmueble.metrosterreno > 0 %}
+                                            {{ inmueble.metrosterreno }} m2 de Terreno<br>
+                                        {% endif %}
+                                    {% endif %}
+
+                                    {% if inmueble.banos > 0 %}
+                                    <li>{{ inmueble.banos }} Baño(s)</li>
+                                    {% endif %}
+
+                                    {% if inmueble.mediobanos is not null %}
+                                        {% if inmueble.mediobanos > 0 %}
+                                            {{ inmueble.mediobanos }} Medios Baño(s)<br>
+                                        {% endif %}
+                                    {% endif %}
+
+                                    {% if inmueble.plantas is not null %}
+                                        {% if inmueble.plantas > 0 %}
+                                            <li>{{ inmueble.plantas }} Plantas</li>
+                                        {% endif %}
+                                    {% endif %}
+                                </ul>
+                            </td>
+                            <td style="width:250px">
+                                <h5 class=".right-align">{{ inmueble.idMoneda.simbolo }} {{ inmueble.precio|number_format(2, '.', ',') }}</h5>
+                                <a href="{{ path('buscarinmueble_show', {'id': inmueble.idInmueble}) }}"  class="waves-effect waves-light btn left blue-grey darken-4">
+                                    Ver Detalles
+                                    <i class="material-icons left">search</i>
+                                </a>
+                            </td>
+                        </tr>
+                    {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+
+        </div>
+    </div>
+{% endblock %}
+
+{% block stylesheets %}
+
+    <style>
+        body {
+            background: white;
+            height: 120vh;
+        }
+        p
+        {
+            font-size: small;
+        }
+        .imginmueble
+        {
+            width: 200px;
+            height: 160px;
+        }
+    </style>
+
+{% endblock %}

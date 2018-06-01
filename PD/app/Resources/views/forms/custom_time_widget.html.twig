@@ -1,0 +1,21 @@
+{% block time_widget -%}
+{% if widget == 'single_text' %}
+{{- block('form_widget_simple') -}}
+{% else -%}
+{% set attr = attr|merge({class: (attr.class|default('') ~ '')|trim}) -%}
+{% if datetime is not defined or false == datetime -%}
+<div {{ block('widget_container_attributes') -}}>
+{%- endif -%}
+
+    <table>
+        <tr>
+            <td>Hora: {{- form_widget(form.hour) }}</td>
+            <td>{% if with_minutes %}Minuto: {{ form_widget(form.minute) }}{% endif %}{% if with_seconds %}:{{ form_widget(form.second) }}{% endif %}</td>
+        </tr>
+    </table>
+
+    {% if datetime is not defined or false == datetime -%}
+</div>
+{%- endif -%}
+{% endif %}
+{%- endblock time_widget %}

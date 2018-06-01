@@ -1,0 +1,319 @@
+<?php
+/**
+ * Created by PhpStorm.
+ * User: davatar
+ * Date: 3/24/16
+ * Time: 7:47 p.m.
+ */
+
+namespace AppBundle\Repository;
+
+use Doctrine\ORM\EntityRepository;
+
+class InmuebleRepository extends EntityRepository
+{
+    public function findByTop5()
+    {
+        $resultset = $this->getEntityManager()
+            ->createQuery(
+                "SELECT i FROM AppBundle:Inmueble i WHERE i.activo = 1 ORDER BY i.fechaCreacion DESC"
+            )->setMaxResults(5)->getResult();
+
+
+        return $resultset;
+    }
+
+    public function findByOwner($idUsuario)
+    {
+        $resultset1 = $this->findBy(array('id_usuario' => $idUsuario));
+
+        $resultset2 = $this->getEntityManager()
+            ->createQuery(
+                'SELECT i FROM AppBundle:Inmueble i JOIN i.id_usuario u WHERE u.idUsuarioPadre = :idUsuario'
+            )->setParameter('idUsuario', $idUsuario)->getResult();
+
+        return array_merge($resultset2, $resultset1);
+    }
+
+    public function findByOwnerCount($idUsuario)
+    {
+        $count1 = count($this->findBy(array('id_usuario' => $idUsuario)));
+
+        $count2 = $this->getEntityManager()
+            ->createQuery(
+                'SELECT count(i.idInmueble) FROM AppBundle:Inmueble i JOIN i.id_usuario u WHERE u.idUsuarioPadre = :idUsuario'
+            )->setParameter('idUsuario', $idUsuario)->getSingleScalarResult();
+
+        return $count1 + $count2;
+    }
+
+    /**
+     * @param $idTipoInmueble
+     * @param $idOperacionInmueble
+     * @param $idEstado
+     * @param $idMunicipio
+     * @param $idColonia
+     * @param $precio
+     * @param $preciomax
+     * @param $metrosterreno
+     * @param $metrosterrenomax
+     * @param $recamaras
+     * @param $plantas
+     */
+    public function findByParameters($idTipoInmueble, $idOperacionInmueble, $idCategoriaInmueble, $idEstado, $ciudad, $colonia, $precio,
+                                     $preciomax, $metrosterreno, $metrosterrenomax, $recamaras, $plantas, $idZona)
+    {
+        $query = 'SELECT i FROM AppBundle:Inmueble i
+                  INNER JOIN AppBundle:OperacionInmueble oi WITH i.id_operacion_inmueble = oi.idOperacionInmueble
+                  INNER JOIN AppBundle:TipoInmueble ti WITH i.id_tipo_inmueble = ti.idTipoInmueble
+                  INNER JOIN AppBundle:Zona z WITH i.id_zona = z.idZona
+                  INNER JOIN AppBundle:Estado e WITH i.id_estado = e.idEstado';
+
+        if ($idTipoInmueble > 0 || $idOperacionInmueble >= 0 || $idCategoriaInmueble >= 0 || $idEstado >= 0 || $ciudad != NULL || $colonia != NULL || $precio != NULL ||
+            $preciomax != NULL || $metrosterreno != NULL || $metrosterrenomax != NULL || $recamaras != NULL || $plantas != NULL || $idZona >= 0)
+        {
+            $query = $query . ' WHERE ';
+            $colocarAnd = false;
+
+            if ($idTipoInmueble > 0)
+            {
+                if ($colocarAnd)
+                {
+                    $query = $query . ' AND ';
+                }
+                $query = $query . ' i.id_tipo_inmueble = :idTipoInmueble';
+                $colocarAnd = true;
+            }
+
+            if ($idCategoriaInmueble > 0)
+            {
+                if ($colocarAnd)
+                {
+                    $query = $query . ' AND ';
+                }
+                $query = $query . ' ti.id_categoria_inmueble = :idCategoriaInmueble';
+                $colocarAnd = true;
+            }
+
+            if ($idOperacionInmueble > 0)
+            {
+                if ($colocarAnd)
+                {
+                    $query = $query . ' AND ';
+                }
+                $query = $query . ' i.id_operacion_inmueble = :idOperacionInmueble';
+                $colocarAnd = true;
+            }
+
+            if ($idEstado > 0)
+            {
+                if ($colocarAnd)
+                {
+                    $query = $query . ' AND ';
+                }
+                $query = $query . ' i.id_estado = :idEstado';
+                $colocarAnd = true;
+            }
+
+            if ($idZona > 0)
+            {
+                if ($colocarAnd)
+                {
+                    $query = $query . ' AND ';
+                }
+                $query = $query . ' i.id_zona = :idZona';
+                $colocarAnd = true;
+            }
+
+            if ($ciudad != NULL)
+            {
+                if ($colocarAnd)
+                {
+                    $query = $query . ' AND ';
+                }
+                $query = $query . ' i.ciudad LIKE :ciudad';
+                $colocarAnd = true;
+            }
+
+            if ($colonia != NULL)
+            {
+                if ($colocarAnd)
+                {
+                    $query = $query . ' AND ';
+                }
+                $query = $query . ' i.colonia LIKE :colonia';
+                $colocarAnd = true;
+            }
+
+            if ($precio != NULL)
+            {
+                if ($colocarAnd)
+                {
+                    $query = $query . ' AND ';
+                }
+                $query = $query . ' i.precio >= :precio';
+                $colocarAnd = true;
+            }
+
+            if ($preciomax != NULL)
+            {
+                if ($colocarAnd)
+                {
+                    $query = $query . ' AND ';
+                }
+                $query = $query . ' i.precio <= :preciomax';
+                $colocarAnd = true;
+            }
+
+            if ($metrosterreno != NULL)
+            {
+                if ($colocarAnd)
+                {
+                    $query = $query . ' AND ';
+                }
+                $query = $query . ' i.metrosterreno >= :metrosterreno';
+                $colocarAnd = true;
+            }
+
+            if ($metrosterrenomax != NULL)
+            {
+                if ($colocarAnd)
+                {
+                    $query = $query . ' AND ';
+                }
+                $query = $query . ' i.metrosterreno <= :metrosterrenomax';
+                $colocarAnd = true;
+            }
+
+            if ($recamaras != NULL)
+            {
+                if ($colocarAnd)
+                {
+                    $query = $query . ' AND ';
+                }
+                $query = $query . ' i.recamaras <= :recamaras';
+                $colocarAnd = true;
+            }
+
+            if ($plantas != NULL)
+            {
+                if ($colocarAnd)
+                {
+                    $query = $query . ' AND ';
+                }
+                $query = $query . ' i.plantas <= :plantas';
+                $colocarAnd = true;
+            }
+        }
+
+        $queryobject = $this->getEntityManager()
+            ->createQuery($query);
+
+
+        if ($idTipoInmueble > 0 || $idOperacionInmueble >= 0 || $idCategoriaInmueble >= 0 || $idEstado >= 0 || $ciudad != NULL || $colonia != NULL || $precio != NULL ||
+            $preciomax != NULL || $metrosterreno != NULL || $metrosterrenomax != NULL || $recamaras > 0 || $plantas > 0 || $idZona >= 0)
+        {
+            if ($idTipoInmueble > 0)
+            {
+                $queryobject->setParameter('idTipoInmueble', $idTipoInmueble);
+            }
+
+            if ($idOperacionInmueble > 0)
+            {
+                $queryobject->setParameter('idOperacionInmueble', $idOperacionInmueble);
+            }
+
+            if ($idCategoriaInmueble > 0)
+            {
+                $queryobject->setParameter('idCategoriaInmueble', $idCategoriaInmueble);
+            }
+
+            if ($idEstado > 0)
+            {
+                $queryobject->setParameter('idEstado', $idEstado);
+            }
+
+            if ($idZona > 0)
+            {
+                $queryobject->setParameter('idZona', $idZona);
+            }
+
+            if ($ciudad != NULL)
+            {
+                $queryobject->setParameter('ciudad', '%' . $ciudad . '%');
+            }
+
+            if ($colonia != NULL)
+            {
+                $queryobject->setParameter('colonia', '%' . $colonia . '%');
+            }
+
+            if ($precio != NULL)
+            {
+                $queryobject->setParameter('precio', $precio);
+            }
+            if ($preciomax != NULL)
+            {
+                $queryobject->setParameter('preciomax', $preciomax);
+            }
+            if ($metrosterreno != NULL)
+            {
+                $queryobject->setParameter('metrosterreno', $metrosterreno);
+            }
+            if ($metrosterrenomax != NULL)
+            {
+                $queryobject->setParameter('metrosterrenomax', $metrosterrenomax);
+            }
+            if ($recamaras != NULL)
+            {
+                $queryobject->setParameter('recamaras', $recamaras);
+            }
+            if ($plantas != NULL)
+            {
+                $queryobject->setParameter('plantas', $plantas);
+            }
+        }
+
+        $resulset = $queryobject->getResult();
+
+        /*if ($idZona == NULL)
+        {
+            $resulset2 = array();
+
+            foreach ($resulset as $inmueble) {
+                    if ($inmueble->getActivo() == true) {
+                        array_push($resulset2, $inmueble);
+                }
+            }
+        }
+        else {
+            $resulset2 = array();
+
+            foreach ($resulset as $inmueble) {
+                $zonas = $inmueble->getZonas();
+
+                foreach ($zonas as $zona) {
+                    if ($zona->getIdZona() == $idZona && $inmueble->getActivo() == true) {
+                        array_push($resulset2, $inmueble);
+                    }
+                }
+            }
+        }
+
+        */
+        //echo 'count->' . count($resulset);
+        //echo $query;
+
+        /*$query = 'SELECT i FROM AppBundle:Inmueble i
+                  INNER JOIN AppBundle:OperacionInmueble oi WITH i.id_operacion_inmueble = oi.idOperacionInmueble
+                  INNER JOIN AppBundle:TipoInmueble ti WITH i.id_tipo_inmueble = ti.idTipoInmueble
+                  INNER JOIN AppBundle:Zona z WITH i.id_zona = z.idZona
+                  INNER JOIN AppBundle:Estado e WITH i.id_estado = e.idEstado';
+        $queryobject = $this->getEntityManager()
+            ->createQuery($query);
+        $resulset = $queryobject->getResult();
+        echo 'count->' . count($resulset);*/
+
+        return $resulset;
+    }
+}
